@@ -99,5 +99,22 @@ namespace YnabApp.Forms
                 ValueType = Type.GetType("System.String")
             });
         }
+
+        private void c_reflectButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (c_budgetGrid.SelectedRows.Count > 0)
+                {
+                    BudgetData data = c_budgetGrid.SelectedRows[0].DataBoundItem as BudgetData;
+                    if (data != null)
+                        MainView.ShowReflectView(data);
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowError(ex);
+            }
+        }
     }
 }

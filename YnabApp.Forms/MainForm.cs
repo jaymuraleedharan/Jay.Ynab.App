@@ -11,6 +11,7 @@ using YnabApp.UI;
 using YnabApp.UI.ListAccounts;
 using YnabApp.UI.OpenBudget;
 using YnabApp.BL.ListBudgets;
+using YnabApp.UI.Reflect;
 
 namespace YnabApp.Forms
 {
@@ -19,6 +20,7 @@ namespace YnabApp.Forms
         private readonly MainPresenter _presenter = null;
         private OpenBudgetForm _openBudgetForm = null;
         private ShowAccountsTransactionsForm _showAccountsForm = null;
+        private ReflectForm _reflectForm = null;
 
         public MainForm()
         {
@@ -78,6 +80,23 @@ namespace YnabApp.Forms
                 ConfigureAndShowChildForm(_showAccountsForm);
 
                 ((IListAccountsView)_showAccountsForm).InitializeView(budgetData);
+            }
+            catch (Exception ex)
+            {
+                ShowError(ex);
+            }
+        }
+
+        public void ShowReflectView(BudgetData budgetData)
+        {
+            try
+            {
+                if (_reflectForm == null || _reflectForm.Disposing || _reflectForm.IsDisposed)
+                    _reflectForm = new ReflectForm();
+
+                ConfigureAndShowChildForm(_reflectForm);
+
+                ((IReflectView)_reflectForm).InitializeView(budgetData);
             }
             catch (Exception ex)
             {

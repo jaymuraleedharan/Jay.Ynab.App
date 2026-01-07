@@ -1,0 +1,20 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using YnabApp.BL.ListBudgets;
+using YnabApp.BL.ListCategories;
+using YnabApp.BL.ListTransactions;
+
+namespace YnabApp.UI.Reflect
+{
+    public interface IReflectColumnView
+    {
+        IReflectView ReflectView { get; }
+
+        void InitializeView();
+
+        void ShowReport(DateTime asOfDate, bool isYearlyReport, CategoryGroupData[] categoryDatas, TransactionData[] transactionDatas);
+    }
+}

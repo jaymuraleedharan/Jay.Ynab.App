@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using YnabApp.BL.ListBudgets;
 
-namespace YnabApp.UI
+namespace YnabApp.UI.Reflect
 {
-    public interface IMainView
+    public interface IReflectView
     {
-        void ShowAccountsView(BudgetData budgetData);
+        IMainView MainView { get; }
 
-        void ShowReflectView(BudgetData budgetData);
+        void InitializeView(BudgetData budgetData);
     }
 }

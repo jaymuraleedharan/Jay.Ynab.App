@@ -29,55 +29,65 @@ namespace YnabApp.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            this.c_budgetGrid = new System.Windows.Forms.DataGridView();
-            this.c_openBudget = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.c_budgetGrid)).BeginInit();
-            this.SuspendLayout();
+            c_budgetGrid = new System.Windows.Forms.DataGridView();
+            c_openBudget = new System.Windows.Forms.Button();
+            c_reflectButton = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)c_budgetGrid).BeginInit();
+            SuspendLayout();
             // 
             // c_budgetGrid
             // 
-            this.c_budgetGrid.AllowUserToAddRows = false;
-            this.c_budgetGrid.AllowUserToDeleteRows = false;
-            this.c_budgetGrid.AllowUserToResizeColumns = false;
-            this.c_budgetGrid.AllowUserToResizeRows = false;
-            this.c_budgetGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.c_budgetGrid.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.c_budgetGrid.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.c_budgetGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.c_budgetGrid.Location = new System.Drawing.Point(13, 13);
-            this.c_budgetGrid.MultiSelect = false;
-            this.c_budgetGrid.Name = "c_budgetGrid";
-            this.c_budgetGrid.ReadOnly = true;
-            this.c_budgetGrid.RowHeadersVisible = false;
-            this.c_budgetGrid.RowTemplate.Height = 25;
-            this.c_budgetGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.c_budgetGrid.Size = new System.Drawing.Size(1230, 592);
-            this.c_budgetGrid.TabIndex = 0;
+            c_budgetGrid.AllowUserToAddRows = false;
+            c_budgetGrid.AllowUserToDeleteRows = false;
+            c_budgetGrid.AllowUserToResizeColumns = false;
+            c_budgetGrid.AllowUserToResizeRows = false;
+            c_budgetGrid.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            c_budgetGrid.BackgroundColor = System.Drawing.SystemColors.Control;
+            c_budgetGrid.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            c_budgetGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            c_budgetGrid.Location = new System.Drawing.Point(13, 13);
+            c_budgetGrid.MultiSelect = false;
+            c_budgetGrid.Name = "c_budgetGrid";
+            c_budgetGrid.ReadOnly = true;
+            c_budgetGrid.RowHeadersVisible = false;
+            c_budgetGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            c_budgetGrid.Size = new System.Drawing.Size(1230, 592);
+            c_budgetGrid.TabIndex = 0;
             // 
             // c_openBudget
             // 
-            this.c_openBudget.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.c_openBudget.Location = new System.Drawing.Point(1272, 12);
-            this.c_openBudget.Name = "c_openBudget";
-            this.c_openBudget.Size = new System.Drawing.Size(132, 33);
-            this.c_openBudget.TabIndex = 2;
-            this.c_openBudget.Text = "Open Budget...";
-            this.c_openBudget.UseVisualStyleBackColor = true;
-            this.c_openBudget.Click += new System.EventHandler(this.c_openBudget_Click);
+            c_openBudget.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            c_openBudget.Location = new System.Drawing.Point(1272, 12);
+            c_openBudget.Name = "c_openBudget";
+            c_openBudget.Size = new System.Drawing.Size(132, 33);
+            c_openBudget.TabIndex = 2;
+            c_openBudget.Text = "Open Budget...";
+            c_openBudget.UseVisualStyleBackColor = true;
+            c_openBudget.Click += c_openBudget_Click;
+            // 
+            // c_reflectButton
+            // 
+            c_reflectButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            c_reflectButton.Location = new System.Drawing.Point(1272, 63);
+            c_reflectButton.Name = "c_reflectButton";
+            c_reflectButton.Size = new System.Drawing.Size(132, 33);
+            c_reflectButton.TabIndex = 3;
+            c_reflectButton.Text = "Reflect...";
+            c_reflectButton.UseVisualStyleBackColor = true;
+            c_reflectButton.Click += c_reflectButton_Click;
             // 
             // OpenBudgetForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1416, 617);
-            this.Controls.Add(this.c_openBudget);
-            this.Controls.Add(this.c_budgetGrid);
-            this.Name = "OpenBudgetForm";
-            this.Text = "OpenBudgetForm";
-            ((System.ComponentModel.ISupportInitialize)(this.c_budgetGrid)).EndInit();
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            ClientSize = new System.Drawing.Size(1416, 617);
+            Controls.Add(c_reflectButton);
+            Controls.Add(c_openBudget);
+            Controls.Add(c_budgetGrid);
+            Name = "OpenBudgetForm";
+            Text = "OpenBudgetForm";
+            ((System.ComponentModel.ISupportInitialize)c_budgetGrid).EndInit();
+            ResumeLayout(false);
 
         }
 
@@ -85,5 +95,6 @@ namespace YnabApp.Forms
 
         private System.Windows.Forms.DataGridView c_budgetGrid;
         private System.Windows.Forms.Button c_openBudget;
+        private System.Windows.Forms.Button c_reflectButton;
     }
 }
