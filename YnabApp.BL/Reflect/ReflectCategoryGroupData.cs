@@ -9,6 +9,8 @@ namespace YnabApp.BL.Reflect
     public record ReflectCategoryGroupData(string CategoryGroupName)
     {
         public decimal Amount { get; set; }
+
+        public decimal MonthlyAmount { get { return Amount / 12; } } 
     }
 
     public record ReflectCategoryData(string CategoryGroupName, string CategoryName)
@@ -16,5 +18,7 @@ namespace YnabApp.BL.Reflect
         public string FullCategoryName => $"{CategoryGroupName} :: {CategoryName}";
 
         public decimal Amount { get; set; }
+
+        public decimal MonthlyAmount { get { return Amount / 12; } }
     };
 }

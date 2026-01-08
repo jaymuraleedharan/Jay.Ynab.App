@@ -52,6 +52,7 @@
             // 
             // groupBox1
             // 
+            groupBox1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             groupBox1.Controls.Add(c_categoryGroupDataListView);
             groupBox1.Location = new System.Drawing.Point(7, 31);
             groupBox1.Name = "groupBox1";

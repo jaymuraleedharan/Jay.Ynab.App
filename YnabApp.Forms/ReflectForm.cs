@@ -58,9 +58,9 @@ namespace YnabApp.Forms
             c_chkColumn3.Checked = true;
             c_datePicker3.Value = DateTime.Today.AddYears(-2);
 
-            ((IReflectColumnView)c_reflectColumn1).InitializeView();
-            ((IReflectColumnView)c_reflectColumn2).InitializeView();
-            ((IReflectColumnView)c_reflectColumn3).InitializeView();
+            ((IReflectColumnView)c_reflectColumn1).InitializeView(c_radioDurationYearly.Checked);
+            ((IReflectColumnView)c_reflectColumn2).InitializeView(c_radioDurationYearly.Checked);
+            ((IReflectColumnView)c_reflectColumn3).InitializeView(c_radioDurationYearly.Checked);
         }
 
         private async void c_btnShow_Click(object sender, EventArgs e)
@@ -69,9 +69,9 @@ namespace YnabApp.Forms
             {
                 ValidateControls();
 
-                ((IReflectColumnView)c_reflectColumn1).InitializeView();
-                ((IReflectColumnView)c_reflectColumn2).InitializeView();
-                ((IReflectColumnView)c_reflectColumn3).InitializeView();
+                ((IReflectColumnView)c_reflectColumn1).InitializeView(c_radioDurationYearly.Checked);
+                ((IReflectColumnView)c_reflectColumn2).InitializeView(c_radioDurationYearly.Checked);
+                ((IReflectColumnView)c_reflectColumn3).InitializeView(c_radioDurationYearly.Checked);
 
                 var categoriesData = await _presenter.GetCategoriesAsync(_budgetData.Id);
 
@@ -81,10 +81,10 @@ namespace YnabApp.Forms
 
                 if (c_chkColumn1.Checked == true)
                     ((IReflectColumnView)c_reflectColumn1).ShowReport(c_datePicker1.Value, c_radioDurationYearly.Checked, categoriesData, transactionsData);
-                
-                if(c_chkColumn2.Checked == true)
+
+                if (c_chkColumn2.Checked == true)
                     ((IReflectColumnView)c_reflectColumn2).ShowReport(c_datePicker2.Value, c_radioDurationYearly.Checked, categoriesData, transactionsData);
-                
+
                 if (c_chkColumn3.Checked == true)
                     ((IReflectColumnView)c_reflectColumn3).ShowReport(c_datePicker3.Value, c_radioDurationYearly.Checked, categoriesData, transactionsData);
 
@@ -93,12 +93,12 @@ namespace YnabApp.Forms
             {
                 ShowError(ex);
             }
-            
+
         }
 
         private void ValidateControls()
         {
-            if(!c_chkColumn1.Checked && !c_chkColumn2.Checked && !c_chkColumn3.Checked)
+            if (!c_chkColumn1.Checked && !c_chkColumn2.Checked && !c_chkColumn3.Checked)
             {
                 throw new Exception("At least one Date must be selected.");
             }
@@ -129,8 +129,48 @@ namespace YnabApp.Forms
                 if (c_chkColumn3.Checked && c_datePicker3.Value < earliestDate)
                     earliestDate = new DateTime(c_datePicker3.Value.Year, c_datePicker3.Value.Month, 1);
             }
-            
+
             return earliestDate;
+        }
+
+        private void c_selectLastThreeYears_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                c_radioDurationYearly.Checked = true;
+
+                c_datePicker1.Value = DateTime.Today;
+                c_datePicker2.Value = DateTime.Today.AddYears(-1);
+                c_datePicker3.Value = DateTime.Today.AddYears(-2);
+
+                c_chkColumn1.Checked = true;
+                c_chkColumn2.Checked = true;
+                c_chkColumn3.Checked = true;
+            }
+            catch (Exception ex)
+            {
+                ShowError(ex);
+            }
+        }
+
+        private void c_selectLastThreeMonths_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                c_radioDurationMonthly.Checked = true;
+
+                c_datePicker1.Value = DateTime.Today;
+                c_datePicker2.Value = DateTime.Today.AddMonths(-1);
+                c_datePicker3.Value = DateTime.Today.AddMonths(-2);
+
+                c_chkColumn1.Checked = true;
+                c_chkColumn2.Checked = true;
+                c_chkColumn3.Checked = true;
+            }
+            catch (Exception ex)
+            {
+                ShowError(ex);
+            }
         }
     }
 }

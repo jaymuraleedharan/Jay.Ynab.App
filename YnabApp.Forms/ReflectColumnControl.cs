@@ -33,9 +33,9 @@ namespace YnabApp.Forms
             get { return this.ParentForm as IReflectView; }
         }
 
-        public void InitializeView()
+        public void InitializeView(bool isYearlyReport)
         {
-            ResetUI();
+            ResetUI(isYearlyReport);
         }
 
         public async void ShowReport(DateTime asOfDate, bool isYearlyReport, CategoryGroupData[] categoryDatas, TransactionData[] transactionDatas)
@@ -57,6 +57,8 @@ namespace YnabApp.Forms
             {
                 ListViewItem item = new ListViewItem(categoryGroup.CategoryGroupName);
                 item.SubItems.Add(categoryGroup.Amount.ToString("#,###,##0.00"));
+                if(isYearlyReport)
+                    item.SubItems.Add(categoryGroup.MonthlyAmount.ToString("#,###,##0.00"));
                 c_categoryGroupDataListView.Items.Add(item);
             }
             
@@ -70,6 +72,8 @@ namespace YnabApp.Forms
             {
                 ListViewItem item = new ListViewItem(category.FullCategoryName);
                 item.SubItems.Add(category.Amount.ToString("#,###,##0.00"));
+                if (isYearlyReport)
+                    item.SubItems.Add(category.MonthlyAmount.ToString("#,###,##0.00"));
                 c_categoryDataListView.Items.Add(item);
             }
 
@@ -81,27 +85,31 @@ namespace YnabApp.Forms
         }   
 
 
-        private void ResetUI()
+        private void ResetUI(bool isYearlyReport)
         {
             c_headerLabel.Text = string.Empty;
-            ResetCategoryListView();
-            ResetCategoryGroupListView();
+            ResetCategoryListView(isYearlyReport);
+            ResetCategoryGroupListView(isYearlyReport);
         }
 
-        private void ResetCategoryGroupListView()
+        private void ResetCategoryGroupListView(bool isYearlyReport)
         {
             c_categoryGroupDataListView.Columns.Clear();
             c_categoryGroupDataListView.Columns.Add("Category Group");
             c_categoryGroupDataListView.Columns.Add("Amount", 300, HorizontalAlignment.Right);
+            if (isYearlyReport)
+                c_categoryGroupDataListView.Columns.Add("Monthly", 300, HorizontalAlignment.Right);
             c_categoryGroupDataListView.Groups.Clear();
             c_categoryGroupDataListView.Items.Clear();
         }
 
-        private void ResetCategoryListView()
+        private void ResetCategoryListView(bool isYearlyReport)
         {
             c_categoryDataListView.Columns.Clear();
             c_categoryDataListView.Columns.Add("Category");
             c_categoryDataListView.Columns.Add("Amount", 300, HorizontalAlignment.Right);
+            if(isYearlyReport)
+                c_categoryDataListView.Columns.Add("Monthly", 300, HorizontalAlignment.Right);
             c_categoryDataListView.Groups.Clear();
             c_categoryDataListView.Items.Clear();
         }

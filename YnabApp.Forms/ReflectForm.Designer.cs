@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             groupBox1 = new System.Windows.Forms.GroupBox();
+            c_selectLastThreeMonths = new System.Windows.Forms.Button();
+            c_selectLastThreeYears = new System.Windows.Forms.Button();
             c_btnShow = new System.Windows.Forms.Button();
             c_chkColumn3 = new System.Windows.Forms.CheckBox();
             c_chkColumn2 = new System.Windows.Forms.CheckBox();
@@ -57,6 +59,8 @@
             // groupBox1
             // 
             groupBox1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            groupBox1.Controls.Add(c_selectLastThreeMonths);
+            groupBox1.Controls.Add(c_selectLastThreeYears);
             groupBox1.Controls.Add(c_btnShow);
             groupBox1.Controls.Add(c_chkColumn3);
             groupBox1.Controls.Add(c_chkColumn2);
@@ -68,10 +72,30 @@
             groupBox1.Controls.Add(c_datePicker1);
             groupBox1.Location = new System.Drawing.Point(10, 11);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new System.Drawing.Size(954, 72);
+            groupBox1.Size = new System.Drawing.Size(1030, 109);
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "Criteria";
+            // 
+            // c_selectLastThreeMonths
+            // 
+            c_selectLastThreeMonths.Location = new System.Drawing.Point(502, 72);
+            c_selectLastThreeMonths.Name = "c_selectLastThreeMonths";
+            c_selectLastThreeMonths.Size = new System.Drawing.Size(155, 25);
+            c_selectLastThreeMonths.TabIndex = 15;
+            c_selectLastThreeMonths.Text = "Select Last Three Months";
+            c_selectLastThreeMonths.UseVisualStyleBackColor = true;
+            c_selectLastThreeMonths.Click += c_selectLastThreeMonths_Click;
+            // 
+            // c_selectLastThreeYears
+            // 
+            c_selectLastThreeYears.Location = new System.Drawing.Point(320, 72);
+            c_selectLastThreeYears.Name = "c_selectLastThreeYears";
+            c_selectLastThreeYears.Size = new System.Drawing.Size(155, 25);
+            c_selectLastThreeYears.TabIndex = 14;
+            c_selectLastThreeYears.Text = "Select Last Three Years";
+            c_selectLastThreeYears.UseVisualStyleBackColor = true;
+            c_selectLastThreeYears.Click += c_selectLastThreeYears_Click;
             // 
             // c_btnShow
             // 
@@ -141,7 +165,7 @@
             c_datePicker3.CustomFormat = "MMM/yyyy";
             c_datePicker3.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             c_datePicker3.Location = new System.Drawing.Point(693, 28);
-            c_datePicker3.MaxDate = new System.DateTime(2026, 1, 6, 0, 0, 0, 0);
+            c_datePicker3.MaxDate = new System.DateTime(2200, 1, 1, 0, 0, 0, 0);
             c_datePicker3.Name = "c_datePicker3";
             c_datePicker3.Size = new System.Drawing.Size(105, 23);
             c_datePicker3.TabIndex = 6;
@@ -152,7 +176,7 @@
             c_datePicker2.CustomFormat = "MMM/yyyy";
             c_datePicker2.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             c_datePicker2.Location = new System.Drawing.Point(523, 28);
-            c_datePicker2.MaxDate = new System.DateTime(2026, 1, 6, 0, 0, 0, 0);
+            c_datePicker2.MaxDate = new System.DateTime(2200, 1, 1, 0, 0, 0, 0);
             c_datePicker2.Name = "c_datePicker2";
             c_datePicker2.Size = new System.Drawing.Size(105, 23);
             c_datePicker2.TabIndex = 4;
@@ -163,7 +187,7 @@
             c_datePicker1.CustomFormat = "MMM/yyyy";
             c_datePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             c_datePicker1.Location = new System.Drawing.Point(341, 28);
-            c_datePicker1.MaxDate = new System.DateTime(2026, 1, 6, 0, 0, 0, 0);
+            c_datePicker1.MaxDate = new System.DateTime(2200, 1, 1, 0, 0, 0, 0);
             c_datePicker1.Name = "c_datePicker1";
             c_datePicker1.Size = new System.Drawing.Size(105, 23);
             c_datePicker1.TabIndex = 2;
@@ -172,7 +196,7 @@
             // c_splitContainer1
             // 
             c_splitContainer1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            c_splitContainer1.Location = new System.Drawing.Point(10, 102);
+            c_splitContainer1.Location = new System.Drawing.Point(10, 126);
             c_splitContainer1.Name = "c_splitContainer1";
             // 
             // c_splitContainer1.Panel1
@@ -182,8 +206,8 @@
             // c_splitContainer1.Panel2
             // 
             c_splitContainer1.Panel2.Controls.Add(c_splitContainer2);
-            c_splitContainer1.Size = new System.Drawing.Size(954, 352);
-            c_splitContainer1.SplitterDistance = 318;
+            c_splitContainer1.Size = new System.Drawing.Size(1030, 657);
+            c_splitContainer1.SplitterDistance = 343;
             c_splitContainer1.TabIndex = 1;
             // 
             // c_reflectColumn1
@@ -192,7 +216,7 @@
             c_reflectColumn1.Dock = System.Windows.Forms.DockStyle.Fill;
             c_reflectColumn1.Location = new System.Drawing.Point(0, 0);
             c_reflectColumn1.Name = "c_reflectColumn1";
-            c_reflectColumn1.Size = new System.Drawing.Size(318, 352);
+            c_reflectColumn1.Size = new System.Drawing.Size(343, 657);
             c_reflectColumn1.TabIndex = 0;
             // 
             // c_splitContainer2
@@ -208,8 +232,8 @@
             // c_splitContainer2.Panel2
             // 
             c_splitContainer2.Panel2.Controls.Add(c_reflectColumn3);
-            c_splitContainer2.Size = new System.Drawing.Size(632, 352);
-            c_splitContainer2.SplitterDistance = 210;
+            c_splitContainer2.Size = new System.Drawing.Size(683, 657);
+            c_splitContainer2.SplitterDistance = 226;
             c_splitContainer2.TabIndex = 0;
             // 
             // c_reflectColumn2
@@ -218,7 +242,7 @@
             c_reflectColumn2.Dock = System.Windows.Forms.DockStyle.Fill;
             c_reflectColumn2.Location = new System.Drawing.Point(0, 0);
             c_reflectColumn2.Name = "c_reflectColumn2";
-            c_reflectColumn2.Size = new System.Drawing.Size(210, 352);
+            c_reflectColumn2.Size = new System.Drawing.Size(226, 657);
             c_reflectColumn2.TabIndex = 0;
             // 
             // c_reflectColumn3
@@ -227,14 +251,14 @@
             c_reflectColumn3.Dock = System.Windows.Forms.DockStyle.Fill;
             c_reflectColumn3.Location = new System.Drawing.Point(0, 0);
             c_reflectColumn3.Name = "c_reflectColumn3";
-            c_reflectColumn3.Size = new System.Drawing.Size(418, 352);
+            c_reflectColumn3.Size = new System.Drawing.Size(453, 657);
             c_reflectColumn3.TabIndex = 0;
             // 
             // ReflectForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(976, 450);
+            ClientSize = new System.Drawing.Size(1052, 779);
             Controls.Add(c_splitContainer1);
             Controls.Add(groupBox1);
             Name = "ReflectForm";
@@ -270,5 +294,7 @@
         private ReflectColumnControl c_reflectColumn1;
         private ReflectColumnControl c_reflectColumn2;
         private ReflectColumnControl c_reflectColumn3;
+        private System.Windows.Forms.Button c_selectLastThreeMonths;
+        private System.Windows.Forms.Button c_selectLastThreeYears;
     }
 }
