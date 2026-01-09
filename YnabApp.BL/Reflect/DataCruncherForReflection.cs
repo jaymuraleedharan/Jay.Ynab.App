@@ -50,7 +50,7 @@ namespace YnabApp.BL.Reflect
                 if (categoryGroupExcludeList.Contains(categoryGroup.Name) || categoryGroup.Name.Contains("[?]"))
                     continue;
 
-                ReflectCategoryGroupData reflectCategoryGroup = new(categoryGroup.Name);
+                ReflectCategoryGroupData reflectCategoryGroup = new(categoryGroup.Id, categoryGroup.Name, categoryGroup);
                 foreach (var caregory in categoryGroup.Categories)
                 {
                     var categoryTransactions = matchingTransactions.Where(t => t.CategoryId == caregory.Id);
@@ -96,7 +96,7 @@ namespace YnabApp.BL.Reflect
                 
                 foreach (var category in categoryGroup.Categories)
                 {
-                    ReflectCategoryData reflectCategory = new(categoryGroup.Name, category.Name);
+                    ReflectCategoryData reflectCategory = new(category.Id, categoryGroup.Name, category.Name, category);
 
                     var categoryTransactions = matchingTransactions.Where(t => t.CategoryId == category.Id);
                     if (categoryTransactions.Any())
@@ -110,6 +110,46 @@ namespace YnabApp.BL.Reflect
             }
 
             return reflectCategoryDatas.OrderBy(cg => cg.Amount).ToList();
+        }
+
+        public List<TransactionData> FilterCategoryGroupTransactions(ReflectCategoryGroupData categoryGroupData, TransactionData[] transactionDatas, bool isYearly, DateTime reportDate)
+        {
+            IEnumerable<TransactionData> matchingTransactions;
+            if (isYearly)
+                matchingTransactions = transactionDatas.Where(t => t.TransDateTime.Year == reportDate.Year);
+            else
+                matchingTransactions = transactionDatas.Where(t => t.TransDateTime.Year == reportDate.Year && t.TransDateTime.Month == reportDate.Month);
+
+            List<TransactionData> filteredTransactions = new List<TransactionData>();
+            foreach (TransactionData transactionData in matchingTransactions)
+            {
+                foreach (var categoryData in categoryGroupData.CategoryGroup.Categories)
+                {
+                    if (transactionData.CategoryId == categoryData.Id)
+                        filteredTransactions.Add(transactionData);
+                }
+            }
+            return filteredTransactions;
+        }
+
+
+
+        public List<TransactionData> FilterCategoryTransactions(ReflectCategoryData categoryData, TransactionData[] transactionDatas, bool isYearly, DateTime reportDate)
+        {
+            IEnumerable<TransactionData> matchingTransactions;
+            if (isYearly)
+                matchingTransactions = transactionDatas.Where(t => t.TransDateTime.Year == reportDate.Year);
+            else
+                matchingTransactions = transactionDatas.Where(t => t.TransDateTime.Year == reportDate.Year && t.TransDateTime.Month == reportDate.Month);
+
+
+            List<TransactionData> filteredTransactions = new List<TransactionData>();
+            foreach (TransactionData transactionData in matchingTransactions)
+            {
+                if (transactionData.CategoryId == categoryData.ID)
+                    filteredTransactions.Add(transactionData);
+            }
+            return filteredTransactions;
         }
     }
 }
