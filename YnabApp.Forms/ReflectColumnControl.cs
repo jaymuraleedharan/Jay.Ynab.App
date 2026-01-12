@@ -61,6 +61,40 @@ namespace YnabApp.Forms
             DataCruncherForReflection dataCruncher = new DataCruncherForReflection();
 
             //-------------------------------------------//
+            // Summary
+            //-------------------------------------------//
+            var summaryResults = await dataCruncher.CrunchSummaryDataAsync(categoryDatas, transactionDatas, isYearlyReport, asOfDate);
+
+            foreach (var summaryData in summaryResults)
+            {
+                ListViewItem item = new ListViewItem(summaryData.SummaryName);
+                item.SubItems.Add(summaryData.Amount.ToString("#,###,##0.00"));
+                if (isYearlyReport)
+                    item.SubItems.Add(summaryData.MonthlyAmount2(asOfDate).ToString("#,###,##0.00"));
+                item.Tag = summaryData;
+                c_summaryListView.Items.Add(item);
+            }
+            c_summaryListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+
+            //-------------------------------------------//
+            // Incomes
+            //-------------------------------------------//
+            var incomeResults = await dataCruncher.CrunchIncomeDataAsync(transactionDatas, isYearlyReport, asOfDate);
+
+            foreach(var incomeData in incomeResults)
+            {
+                ListViewItem item = new ListViewItem(incomeData.FullName);
+                item.SubItems.Add(incomeData.Amount.ToString("#,###,##0.00"));
+                if (isYearlyReport)
+                    item.SubItems.Add(incomeData.MonthlyAmount2(asOfDate).ToString("#,###,##0.00"));
+                item.Tag = incomeData;
+                c_incomeListView.Items.Add(item);
+            }
+            c_incomeListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+
+            //-------------------------------------------//
+            // Category Groups
+            //-------------------------------------------//
 
             var categoryGroupResults = await dataCruncher.CrunchCategroyGroupDataAsync(categoryDatas, transactionDatas, isYearlyReport, asOfDate);
 
@@ -69,13 +103,15 @@ namespace YnabApp.Forms
                 ListViewItem item = new ListViewItem(categoryGroup.CategoryGroupName);
                 item.SubItems.Add(categoryGroup.Amount.ToString("#,###,##0.00"));
                 if (isYearlyReport)
-                    item.SubItems.Add(categoryGroup.MonthlyAmount.ToString("#,###,##0.00"));
+                    item.SubItems.Add(categoryGroup.MonthlyAmount2(asOfDate).ToString("#,###,##0.00"));
                 item.Tag = categoryGroup;
                 c_categoryGroupDataListView.Items.Add(item);
             }
 
             c_categoryGroupDataListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
 
+            //-------------------------------------------//
+            // Categories
             //-------------------------------------------//
 
             var categoryResults = await dataCruncher.CrunchCategroyDataAsync(categoryDatas, transactionDatas, isYearlyReport, asOfDate);
@@ -85,7 +121,7 @@ namespace YnabApp.Forms
                 ListViewItem item = new ListViewItem(category.FullCategoryName);
                 item.SubItems.Add(category.Amount.ToString("#,###,##0.00"));
                 if (isYearlyReport)
-                    item.SubItems.Add(category.MonthlyAmount.ToString("#,###,##0.00"));
+                    item.SubItems.Add(category.MonthlyAmount2(asOfDate).ToString("#,###,##0.00"));
                 item.Tag = category;
                 c_categoryDataListView.Items.Add(item);
             }
@@ -101,30 +137,21 @@ namespace YnabApp.Forms
         private void ResetUI(bool isYearlyReport)
         {
             c_headerLabel.Text = string.Empty;
-            ResetCategoryListView(isYearlyReport);
-            ResetCategoryGroupListView(isYearlyReport);
+            ResetListView(c_summaryListView, "Summary", isYearlyReport);
+            ResetListView(c_incomeListView, "Income", isYearlyReport);
+            ResetListView(c_categoryGroupDataListView, "Category Group", isYearlyReport);
+            ResetListView(c_categoryDataListView, "Category", isYearlyReport);
         }
 
-        private void ResetCategoryGroupListView(bool isYearlyReport)
+        private void ResetListView(ListView listViewControl, string columnName, bool isYearly)
         {
-            c_categoryGroupDataListView.Columns.Clear();
-            c_categoryGroupDataListView.Columns.Add("Category Group");
-            c_categoryGroupDataListView.Columns.Add("Amount", 300, HorizontalAlignment.Right);
-            if (isYearlyReport)
-                c_categoryGroupDataListView.Columns.Add("Monthly", 300, HorizontalAlignment.Right);
-            c_categoryGroupDataListView.Groups.Clear();
-            c_categoryGroupDataListView.Items.Clear();
-        }
-
-        private void ResetCategoryListView(bool isYearlyReport)
-        {
-            c_categoryDataListView.Columns.Clear();
-            c_categoryDataListView.Columns.Add("Category");
-            c_categoryDataListView.Columns.Add("Amount", 300, HorizontalAlignment.Right);
-            if (isYearlyReport)
-                c_categoryDataListView.Columns.Add("Monthly", 300, HorizontalAlignment.Right);
-            c_categoryDataListView.Groups.Clear();
-            c_categoryDataListView.Items.Clear();
+            listViewControl.Columns.Clear();
+            listViewControl.Columns.Add("Category");
+            listViewControl.Columns.Add("Amount", 300, HorizontalAlignment.Right);
+            if (isYearly)
+                listViewControl.Columns.Add("Monthly", 300, HorizontalAlignment.Right);
+            listViewControl.Groups.Clear();
+            listViewControl.Items.Clear();
         }
 
         private void c_categoryGroupDataListView_DoubleClick(object sender, EventArgs e)

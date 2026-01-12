@@ -19,5 +19,28 @@ namespace YnabApp.BL.ListCategories
         public List<CategoryData> Categories = new();
 
         public decimal CrunchedAmount { get; set; }
+
+        public bool HasCategory(string categoryId)
+        {
+            bool retValue = false;
+            if (Categories != null)
+            {
+                var category = Categories.Find(c => c.Id == categoryId);
+                retValue = category != null;
+            }
+            return retValue;
+        }
+
+        public bool IsActualSavings
+        {
+            get
+            {
+                if(Name.Equals("INVESTMENTS", StringComparison.InvariantCultureIgnoreCase) 
+                    || Name.Equals("SAVINGS", StringComparison.CurrentCultureIgnoreCase))
+                    return true;
+                else
+                    return false;
+            }
+        }
     }
 }

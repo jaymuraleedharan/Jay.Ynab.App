@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace YnabApp.BL.ListTransactions
 {
@@ -34,5 +35,20 @@ namespace YnabApp.BL.ListTransactions
 
         public string CategoryName { get; set; }
 
+        public bool IsIncome
+        {
+            get 
+            { 
+                return CategoryName.StartsWith("Inflow", StringComparison.InvariantCultureIgnoreCase); 
+            }
+        }
+
+        public bool CanExclude
+        {
+            get
+            {
+                return false;
+            }
+        }
     }
 }
