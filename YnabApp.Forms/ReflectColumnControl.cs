@@ -114,6 +114,8 @@ namespace YnabApp.Forms
                 if (_isYearlyReport)
                     item.SubItems.Add(categoryGroup.MonthlyAmountAccurate(_asOfDate).ToString("#,###,##0.00"));
                 item.Tag = categoryGroup;
+                item.BackColor = ReflectColorizer.GetBackColor(categoryGroup.CategoryGroupName);
+                item.ForeColor = ReflectColorizer.GetFontColor(categoryGroup.CategoryGroupName);
                 c_categoryGroupDataListView.Items.Add(item);
             }
 
@@ -133,6 +135,8 @@ namespace YnabApp.Forms
                 if (_isYearlyReport)
                     item.SubItems.Add(category.MonthlyAmountAccurate(_asOfDate).ToString("#,###,##0.00"));
                 item.Tag = category;
+                item.BackColor = ReflectColorizer.GetBackColor(category.CategoryGroupName);
+                item.ForeColor = ReflectColorizer.GetFontColor(category.CategoryGroupName);
                 c_categoryDataListView.Items.Add(item);
             }
 

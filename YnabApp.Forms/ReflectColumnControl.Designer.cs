@@ -72,7 +72,6 @@
             c_categoryGroupDataListView.BackColor = System.Drawing.SystemColors.Control;
             c_categoryGroupDataListView.Dock = System.Windows.Forms.DockStyle.Fill;
             c_categoryGroupDataListView.FullRowSelect = true;
-            c_categoryGroupDataListView.GridLines = true;
             c_categoryGroupDataListView.Location = new System.Drawing.Point(3, 19);
             c_categoryGroupDataListView.Name = "c_categoryGroupDataListView";
             c_categoryGroupDataListView.Size = new System.Drawing.Size(539, 146);
@@ -97,7 +96,6 @@
             c_categoryDataListView.BackColor = System.Drawing.SystemColors.Control;
             c_categoryDataListView.Dock = System.Windows.Forms.DockStyle.Fill;
             c_categoryDataListView.FullRowSelect = true;
-            c_categoryDataListView.GridLines = true;
             c_categoryDataListView.Location = new System.Drawing.Point(3, 19);
             c_categoryDataListView.Name = "c_categoryDataListView";
             c_categoryDataListView.Size = new System.Drawing.Size(539, 380);
