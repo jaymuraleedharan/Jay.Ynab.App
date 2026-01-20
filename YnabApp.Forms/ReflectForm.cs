@@ -57,7 +57,7 @@ namespace YnabApp.Forms
         {
             c_radioDurationYearly.Checked = true;
 
-            ShowLastMonths();
+            ShowLastMonths(DateTime.Today);
         }
 
         private async void c_btnShow_Click(object sender, EventArgs e)
@@ -82,7 +82,7 @@ namespace YnabApp.Forms
 
                 int controlCounter = 0;
                 foreach (var reportDate in datesSelected)
-                {                    
+                {
                     c_reflectControlsTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, columnWidthPercentage));
                     ReflectColumnControl reflectColumnControl = new ReflectColumnControl();
                     reflectColumnControl.InitializeView(c_radioDurationYearly.Checked, reportDate);
@@ -98,7 +98,7 @@ namespace YnabApp.Forms
 
                 var transactionsData = await _presenter.GetTransactionsAsync(_budgetData.Id, earliestDate);
 
-                foreach(Control ctrl in c_reflectControlsTable.Controls)
+                foreach (Control ctrl in c_reflectControlsTable.Controls)
                 {
                     var reflectCtrl = ctrl as ReflectColumnControl;
                     if (reflectCtrl != null)
@@ -182,7 +182,7 @@ namespace YnabApp.Forms
         {
             try
             {
-                ShowLastYears();
+                ShowLastYears(DateTime.Today);
             }
             catch (Exception ex)
             {
@@ -194,7 +194,7 @@ namespace YnabApp.Forms
         {
             try
             {
-                ShowLastMonths();
+                ShowLastMonths(DateTime.Today);
             }
             catch (Exception ex)
             {
@@ -220,28 +220,28 @@ namespace YnabApp.Forms
             }
         }
 
-        private void ShowLastMonths()
+        private void ShowLastMonths(DateTime start)
         {
             c_radioDurationMonthly.Checked = true;
 
-            c_dtPckData1.Value = DateTime.Today;
-            c_dtPckData2.Value = DateTime.Today.AddMonths(-1);
-            c_dtPckData3.Value = DateTime.Today.AddMonths(-2);
-            c_dtPckData4.Value = DateTime.Today.AddMonths(-3);
-            c_dtPckData5.Value = DateTime.Today.AddMonths(-4);
-            c_dtPckData6.Value = DateTime.Today.AddMonths(-5);
+            c_dtPckData1.Value = start;
+            c_dtPckData2.Value = start.AddMonths(-1);
+            c_dtPckData3.Value = start.AddMonths(-2);
+            c_dtPckData4.Value = start.AddMonths(-3);
+            c_dtPckData5.Value = start.AddMonths(-4);
+            c_dtPckData6.Value = start.AddMonths(-5);
         }
 
-        private void ShowLastYears()
+        private void ShowLastYears(DateTime start)
         {
             c_radioDurationYearly.Checked = true;
 
-            c_dtPckData1.Value = DateTime.Today;
-            c_dtPckData2.Value = DateTime.Today.AddYears(-1);
-            c_dtPckData3.Value = DateTime.Today.AddYears(-2);
-            c_dtPckData4.Value = DateTime.Today.AddYears(-3);
-            c_dtPckData5.Value = DateTime.Today.AddYears(-4);
-            c_dtPckData6.Value = DateTime.Today.AddYears(-5);
+            c_dtPckData1.Value = start;
+            c_dtPckData2.Value = start.AddYears(-1);
+            c_dtPckData3.Value = start.AddYears(-2);
+            c_dtPckData4.Value = start.AddYears(-3);
+            c_dtPckData5.Value = start.AddYears(-4);
+            c_dtPckData6.Value = start.AddYears(-5);
         }
 
         private List<DateTime> GetSelectedDates()
@@ -264,6 +264,58 @@ namespace YnabApp.Forms
             return dates;
         }
 
+        //Contrary to the button name, this is actually for moving forward in time
+        private void c_moveBackButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if(c_radioDurationYearly.Checked)
+                {
+                    if (c_dtPckData1.Value.Year == DateTime.Today.Year)
+                        return;
+                    DateTime start = c_dtPckData1.Value.AddYears(1);
+                    ShowLastYears(start);
+                }
+                else
+                {
+                    if (c_dtPckData1.Value.Year == DateTime.Today.Year && c_dtPckData1.Value.Month == DateTime.Today.Month)
+                        return;
+                    DateTime start = c_dtPckData1.Value.AddMonths(1);
+                    ShowLastMonths(start);
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowError(ex);
+            }
+        }
 
+        //Contrary to the button name, this is actually for moving back in time
+        private void c_moveForwardButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int minYear = 2016, minMonth = 1;
+
+                if (c_radioDurationYearly.Checked)
+                {
+                    if (c_dtPckData6.Value.Year == minYear)
+                        return;
+                    DateTime start = c_dtPckData1.Value.AddYears(-1);
+                    ShowLastYears(start);
+                }
+                else
+                {
+                    if (c_dtPckData6.Value.Year == minYear && c_dtPckData6.Value.Month == minMonth)
+                        return;
+                    DateTime start = c_dtPckData1.Value.AddMonths(-1);
+                    ShowLastMonths(start);
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowError(ex);
+            }
+        }
     }
 }

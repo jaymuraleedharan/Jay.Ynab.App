@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             groupBox1 = new System.Windows.Forms.GroupBox();
+            c_moveForwardButton = new System.Windows.Forms.Button();
+            c_moveBackButton = new System.Windows.Forms.Button();
             groupBox7 = new System.Windows.Forms.GroupBox();
             c_chkBoxData6 = new System.Windows.Forms.CheckBox();
             c_dtPckData6 = new System.Windows.Forms.DateTimePicker();
@@ -67,6 +69,8 @@
             // groupBox1
             // 
             groupBox1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            groupBox1.Controls.Add(c_moveForwardButton);
+            groupBox1.Controls.Add(c_moveBackButton);
             groupBox1.Controls.Add(groupBox7);
             groupBox1.Controls.Add(groupBox6);
             groupBox1.Controls.Add(groupBox5);
@@ -84,6 +88,26 @@
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "Criteria";
+            // 
+            // c_moveForwardButton
+            // 
+            c_moveForwardButton.Location = new System.Drawing.Point(659, 21);
+            c_moveForwardButton.Name = "c_moveForwardButton";
+            c_moveForwardButton.Size = new System.Drawing.Size(34, 26);
+            c_moveForwardButton.TabIndex = 22;
+            c_moveForwardButton.Text = "▶";
+            c_moveForwardButton.UseVisualStyleBackColor = true;
+            c_moveForwardButton.Click += c_moveForwardButton_Click;
+            // 
+            // c_moveBackButton
+            // 
+            c_moveBackButton.Location = new System.Drawing.Point(252, 21);
+            c_moveBackButton.Name = "c_moveBackButton";
+            c_moveBackButton.Size = new System.Drawing.Size(34, 26);
+            c_moveBackButton.TabIndex = 21;
+            c_moveBackButton.Text = "◀";
+            c_moveBackButton.UseVisualStyleBackColor = true;
+            c_moveBackButton.Click += c_moveBackButton_Click;
             // 
             // groupBox7
             // 
@@ -295,9 +319,9 @@
             // 
             // c_selectLastThreeMonths
             // 
-            c_selectLastThreeMonths.Location = new System.Drawing.Point(481, 22);
+            c_selectLastThreeMonths.Location = new System.Drawing.Point(483, 21);
             c_selectLastThreeMonths.Name = "c_selectLastThreeMonths";
-            c_selectLastThreeMonths.Size = new System.Drawing.Size(155, 25);
+            c_selectLastThreeMonths.Size = new System.Drawing.Size(155, 26);
             c_selectLastThreeMonths.TabIndex = 15;
             c_selectLastThreeMonths.Text = "Select Recent Months";
             c_selectLastThreeMonths.UseVisualStyleBackColor = true;
@@ -305,9 +329,9 @@
             // 
             // c_selectLastThreeYears
             // 
-            c_selectLastThreeYears.Location = new System.Drawing.Point(310, 22);
+            c_selectLastThreeYears.Location = new System.Drawing.Point(307, 21);
             c_selectLastThreeYears.Name = "c_selectLastThreeYears";
-            c_selectLastThreeYears.Size = new System.Drawing.Size(155, 25);
+            c_selectLastThreeYears.Size = new System.Drawing.Size(155, 26);
             c_selectLastThreeYears.TabIndex = 14;
             c_selectLastThreeYears.Text = "Select Recent Years";
             c_selectLastThreeYears.UseVisualStyleBackColor = true;
@@ -422,5 +446,7 @@
         private System.Windows.Forms.DateTimePicker c_dtPckData2;
         private System.Windows.Forms.Panel c_reflectControlsPanel;
         private System.Windows.Forms.TableLayoutPanel c_reflectControlsTable;
+        private System.Windows.Forms.Button c_moveForwardButton;
+        private System.Windows.Forms.Button c_moveBackButton;
     }
 }
