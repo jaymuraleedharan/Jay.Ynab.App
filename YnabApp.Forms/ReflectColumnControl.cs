@@ -37,40 +37,40 @@ namespace YnabApp.Forms
             get { return this.ParentForm as IReflectView; }
         }
 
-        public void InitializeView(bool isYearlyReport)
+        public void InitializeView(bool isYearlyReport, DateTime reportDate)
         {
+            _isYearlyReport = isYearlyReport;
+            _asOfDate = reportDate;
             ResetUI(isYearlyReport);
         }
 
-        public async void ShowReport(DateTime asOfDate, bool isYearlyReport, CategoryGroupData[] categoryDatas, TransactionData[] transactionDatas)
+        public async void ShowReport(CategoryGroupData[] categoryDatas, TransactionData[] transactionDatas)
         {
-            _asOfDate = asOfDate;
             _transactionDatas = transactionDatas;
-            _isYearlyReport = isYearlyReport;
             _categoryDatas = categoryDatas;
 
             //-------------------------------------------//
 
             this.Cursor = Cursors.WaitCursor;
 
-            if (isYearlyReport)
-                c_headerLabel.Text = $"Year: {asOfDate:yyyy}";
+            if (_isYearlyReport)
+                c_headerLabel.Text = $"Year: {_asOfDate:yyyy}";
             else
-                c_headerLabel.Text = $"Month: {asOfDate:MMM/yyyy}";
+                c_headerLabel.Text = $"Month: {_asOfDate:MMM/yyyy}";
 
             DataCruncherForReflection dataCruncher = new DataCruncherForReflection();
 
             //-------------------------------------------//
             // Summary
             //-------------------------------------------//
-            var summaryResults = await dataCruncher.CrunchSummaryDataAsync(categoryDatas, transactionDatas, isYearlyReport, asOfDate);
+            var summaryResults = await dataCruncher.CrunchSummaryDataAsync(categoryDatas, transactionDatas, _isYearlyReport, _asOfDate);
 
             foreach (var summaryData in summaryResults)
             {
                 ListViewItem item = new ListViewItem(summaryData.SummaryName);
                 item.SubItems.Add(summaryData.Amount.ToString("#,###,##0.00"));
-                if (isYearlyReport)
-                    item.SubItems.Add(summaryData.MonthlyAmount2(asOfDate).ToString("#,###,##0.00"));
+                if (_isYearlyReport)
+                    item.SubItems.Add(summaryData.MonthlyAmount2(_asOfDate).ToString("#,###,##0.00"));
                 item.Tag = summaryData;
                 c_summaryListView.Items.Add(item);
             }
@@ -79,14 +79,14 @@ namespace YnabApp.Forms
             //-------------------------------------------//
             // Incomes
             //-------------------------------------------//
-            var incomeResults = await dataCruncher.CrunchIncomeDataAsync(transactionDatas, isYearlyReport, asOfDate);
+            var incomeResults = await dataCruncher.CrunchIncomeDataAsync(transactionDatas, _isYearlyReport, _asOfDate);
 
             foreach(var incomeData in incomeResults)
             {
                 ListViewItem item = new ListViewItem(incomeData.FullName);
                 item.SubItems.Add(incomeData.Amount.ToString("#,###,##0.00"));
-                if (isYearlyReport)
-                    item.SubItems.Add(incomeData.MonthlyAmount2(asOfDate).ToString("#,###,##0.00"));
+                if (_isYearlyReport)
+                    item.SubItems.Add(incomeData.MonthlyAmount2(_asOfDate).ToString("#,###,##0.00"));
                 item.Tag = incomeData;
                 c_incomeListView.Items.Add(item);
             }
@@ -96,14 +96,14 @@ namespace YnabApp.Forms
             // Category Groups
             //-------------------------------------------//
 
-            var categoryGroupResults = await dataCruncher.CrunchCategroyGroupDataAsync(categoryDatas, transactionDatas, isYearlyReport, asOfDate);
+            var categoryGroupResults = await dataCruncher.CrunchCategroyGroupDataAsync(categoryDatas, transactionDatas, _isYearlyReport, _asOfDate);
 
             foreach (var categoryGroup in categoryGroupResults)
             {
                 ListViewItem item = new ListViewItem(categoryGroup.CategoryGroupName);
                 item.SubItems.Add(categoryGroup.Amount.ToString("#,###,##0.00"));
-                if (isYearlyReport)
-                    item.SubItems.Add(categoryGroup.MonthlyAmount2(asOfDate).ToString("#,###,##0.00"));
+                if (_isYearlyReport)
+                    item.SubItems.Add(categoryGroup.MonthlyAmount2(_asOfDate).ToString("#,###,##0.00"));
                 item.Tag = categoryGroup;
                 c_categoryGroupDataListView.Items.Add(item);
             }
@@ -114,14 +114,14 @@ namespace YnabApp.Forms
             // Categories
             //-------------------------------------------//
 
-            var categoryResults = await dataCruncher.CrunchCategroyDataAsync(categoryDatas, transactionDatas, isYearlyReport, asOfDate);
+            var categoryResults = await dataCruncher.CrunchCategroyDataAsync(categoryDatas, transactionDatas, _isYearlyReport, _asOfDate);
 
             foreach (var category in categoryResults)
             {
                 ListViewItem item = new ListViewItem(category.FullCategoryName);
                 item.SubItems.Add(category.Amount.ToString("#,###,##0.00"));
-                if (isYearlyReport)
-                    item.SubItems.Add(category.MonthlyAmount2(asOfDate).ToString("#,###,##0.00"));
+                if (_isYearlyReport)
+                    item.SubItems.Add(category.MonthlyAmount2(_asOfDate).ToString("#,###,##0.00"));
                 item.Tag = category;
                 c_categoryDataListView.Items.Add(item);
             }

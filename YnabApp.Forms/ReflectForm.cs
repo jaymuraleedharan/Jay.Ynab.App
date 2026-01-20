@@ -17,6 +17,7 @@ namespace YnabApp.Forms
     {
         private readonly ReflectPresenter _presenter = null;
         BudgetData _budgetData = null;
+        List<ReflectColumnControl> ReflectColumnControls = new List<ReflectColumnControl>();
 
         public ReflectForm()
         {
@@ -27,8 +28,13 @@ namespace YnabApp.Forms
 
         private void ReflectForm_Load(object sender, EventArgs e)
         {
-            c_splitContainer1.SplitterDistance = c_splitContainer1.Width / 3;
-            c_splitContainer2.SplitterDistance = c_splitContainer2.Width / 2;
+            c_chkBoxData1.Tag = c_dtPckData1;
+            c_chkBoxData2.Tag = c_dtPckData2;
+            c_chkBoxData3.Tag = c_dtPckData3;
+            c_chkBoxData4.Tag = c_dtPckData4;
+            c_chkBoxData5.Tag = c_dtPckData5;
+            c_chkBoxData6.Tag = c_dtPckData6;
+
 
 
         }
@@ -51,16 +57,7 @@ namespace YnabApp.Forms
         {
             c_radioDurationYearly.Checked = true;
 
-            c_chkColumn1.Checked = true;
-            c_datePicker1.Value = DateTime.Today;
-            c_chkColumn2.Checked = true;
-            c_datePicker2.Value = DateTime.Today.AddYears(-1);
-            c_chkColumn3.Checked = true;
-            c_datePicker3.Value = DateTime.Today.AddYears(-2);
-
-            ((IReflectColumnView)c_reflectColumn1).InitializeView(c_radioDurationYearly.Checked);
-            ((IReflectColumnView)c_reflectColumn2).InitializeView(c_radioDurationYearly.Checked);
-            ((IReflectColumnView)c_reflectColumn3).InitializeView(c_radioDurationYearly.Checked);
+            ShowLastMonths();
         }
 
         private async void c_btnShow_Click(object sender, EventArgs e)
@@ -69,9 +66,31 @@ namespace YnabApp.Forms
             {
                 ValidateControls();
 
-                ((IReflectColumnView)c_reflectColumn1).InitializeView(c_radioDurationYearly.Checked);
-                ((IReflectColumnView)c_reflectColumn2).InitializeView(c_radioDurationYearly.Checked);
-                ((IReflectColumnView)c_reflectColumn3).InitializeView(c_radioDurationYearly.Checked);
+                var datesSelected = GetSelectedDates();
+
+                //CLEAR REFLECT CONTROLS TABLE
+                c_reflectControlsTable.RowCount = 0;
+                c_reflectControlsTable.ColumnCount = 0;
+                c_reflectControlsTable.Controls.Clear();
+                c_reflectControlsTable.RowStyles.Clear();
+                c_reflectControlsTable.ColumnStyles.Clear();
+
+                c_reflectControlsTable.RowCount = 1;
+                c_reflectControlsTable.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
+                c_reflectControlsTable.ColumnCount = datesSelected.Count;
+                float columnWidthPercentage = 100 / datesSelected.Count;
+
+                int controlCounter = 0;
+                foreach (var reportDate in datesSelected)
+                {                    
+                    c_reflectControlsTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, columnWidthPercentage));
+                    ReflectColumnControl reflectColumnControl = new ReflectColumnControl();
+                    reflectColumnControl.InitializeView(c_radioDurationYearly.Checked, reportDate);
+
+                    c_reflectControlsTable.Controls.Add(reflectColumnControl, controlCounter, 0);
+                    reflectColumnControl.Dock = DockStyle.Fill;
+                    controlCounter++;
+                }
 
                 var categoriesData = await _presenter.GetCategoriesAsync(_budgetData.Id);
 
@@ -79,14 +98,21 @@ namespace YnabApp.Forms
 
                 var transactionsData = await _presenter.GetTransactionsAsync(_budgetData.Id, earliestDate);
 
-                if (c_chkColumn1.Checked == true)
-                    ((IReflectColumnView)c_reflectColumn1).ShowReport(c_datePicker1.Value, c_radioDurationYearly.Checked, categoriesData, transactionsData);
+                foreach(Control ctrl in c_reflectControlsTable.Controls)
+                {
+                    var reflectCtrl = ctrl as ReflectColumnControl;
+                    if (reflectCtrl != null)
+                        reflectCtrl.ShowReport(categoriesData, transactionsData);
+                }
 
-                if (c_chkColumn2.Checked == true)
-                    ((IReflectColumnView)c_reflectColumn2).ShowReport(c_datePicker2.Value, c_radioDurationYearly.Checked, categoriesData, transactionsData);
+                //if (c_chkBoxData1.Checked == true)
+                //    ((IReflectColumnView)c_reflectColumn1).ShowReport(c_dtPckData1.Value, c_radioDurationYearly.Checked, categoriesData, transactionsData);
 
-                if (c_chkColumn3.Checked == true)
-                    ((IReflectColumnView)c_reflectColumn3).ShowReport(c_datePicker3.Value, c_radioDurationYearly.Checked, categoriesData, transactionsData);
+                //if (c_chkBoxData2.Checked == true)
+                //    ((IReflectColumnView)c_reflectColumn2).ShowReport(c_dtPckData2.Value, c_radioDurationYearly.Checked, categoriesData, transactionsData);
+
+                //if (c_chkBoxData3.Checked == true)
+                //    ((IReflectColumnView)c_reflectColumn3).ShowReport(c_dtPckData3.Value, c_radioDurationYearly.Checked, categoriesData, transactionsData);
 
             }
             catch (Exception ex)
@@ -98,7 +124,7 @@ namespace YnabApp.Forms
 
         private void ValidateControls()
         {
-            if (!c_chkColumn1.Checked && !c_chkColumn2.Checked && !c_chkColumn3.Checked)
+            if (!c_chkBoxData1.Checked && !c_chkBoxData2.Checked && !c_chkBoxData3.Checked)
             {
                 throw new Exception("At least one Date must be selected.");
             }
@@ -109,25 +135,44 @@ namespace YnabApp.Forms
             DateTime earliestDate = DateTime.MaxValue;
             if (c_radioDurationYearly.Checked)
             {
-                if (c_chkColumn1.Checked && c_datePicker1.Value < earliestDate)
-                    earliestDate = new DateTime(c_datePicker1.Value.Year, 1, 1);
+                if (c_chkBoxData1.Checked && c_dtPckData1.Value < earliestDate)
+                    earliestDate = new DateTime(c_dtPckData1.Value.Year, 1, 1);
 
-                if (c_chkColumn2.Checked && c_datePicker2.Value < earliestDate)
-                    earliestDate = new DateTime(c_datePicker2.Value.Year, 1, 1);
+                if (c_chkBoxData2.Checked && c_dtPckData2.Value < earliestDate)
+                    earliestDate = new DateTime(c_dtPckData3.Value.Year, 1, 1);
 
-                if (c_chkColumn3.Checked && c_datePicker3.Value < earliestDate)
-                    earliestDate = new DateTime(c_datePicker3.Value.Year, 1, 1);
+                if (c_chkBoxData3.Checked && c_dtPckData3.Value < earliestDate)
+                    earliestDate = new DateTime(c_dtPckData3.Value.Year, 1, 1);
+
+                if (c_chkBoxData4.Checked && c_dtPckData4.Value < earliestDate)
+                    earliestDate = new DateTime(c_dtPckData4.Value.Year, 1, 1);
+
+                if (c_chkBoxData5.Checked && c_dtPckData5.Value < earliestDate)
+                    earliestDate = new DateTime(c_dtPckData5.Value.Year, 1, 1);
+
+                if (c_chkBoxData6.Checked && c_dtPckData6.Value < earliestDate)
+                    earliestDate = new DateTime(c_dtPckData6.Value.Year, 1, 1);
+
             }
             else
             {
-                if (c_chkColumn1.Checked && c_datePicker1.Value < earliestDate)
-                    earliestDate = new DateTime(c_datePicker1.Value.Year, c_datePicker1.Value.Month, 1);
+                if (c_chkBoxData1.Checked && c_dtPckData1.Value < earliestDate)
+                    earliestDate = new DateTime(c_dtPckData1.Value.Year, c_dtPckData1.Value.Month, 1);
 
-                if (c_chkColumn2.Checked && c_datePicker2.Value < earliestDate)
-                    earliestDate = new DateTime(c_datePicker2.Value.Year, c_datePicker2.Value.Month, 1);
+                if (c_chkBoxData2.Checked && c_dtPckData2.Value < earliestDate)
+                    earliestDate = new DateTime(c_dtPckData2.Value.Year, c_dtPckData2.Value.Month, 1);
 
-                if (c_chkColumn3.Checked && c_datePicker3.Value < earliestDate)
-                    earliestDate = new DateTime(c_datePicker3.Value.Year, c_datePicker3.Value.Month, 1);
+                if (c_chkBoxData3.Checked && c_dtPckData3.Value < earliestDate)
+                    earliestDate = new DateTime(c_dtPckData3.Value.Year, c_dtPckData3.Value.Month, 1);
+
+                if (c_chkBoxData4.Checked && c_dtPckData4.Value < earliestDate)
+                    earliestDate = new DateTime(c_dtPckData4.Value.Year, c_dtPckData4.Value.Month, 1);
+
+                if (c_chkBoxData5.Checked && c_dtPckData5.Value < earliestDate)
+                    earliestDate = new DateTime(c_dtPckData5.Value.Year, c_dtPckData5.Value.Month, 1);
+
+                if (c_chkBoxData6.Checked && c_dtPckData6.Value < earliestDate)
+                    earliestDate = new DateTime(c_dtPckData6.Value.Year, c_dtPckData6.Value.Month, 1);
             }
 
             return earliestDate;
@@ -137,15 +182,7 @@ namespace YnabApp.Forms
         {
             try
             {
-                c_radioDurationYearly.Checked = true;
-
-                c_datePicker1.Value = DateTime.Today;
-                c_datePicker2.Value = DateTime.Today.AddYears(-1);
-                c_datePicker3.Value = DateTime.Today.AddYears(-2);
-
-                c_chkColumn1.Checked = true;
-                c_chkColumn2.Checked = true;
-                c_chkColumn3.Checked = true;
+                ShowLastYears();
             }
             catch (Exception ex)
             {
@@ -157,20 +194,76 @@ namespace YnabApp.Forms
         {
             try
             {
-                c_radioDurationMonthly.Checked = true;
-
-                c_datePicker1.Value = DateTime.Today;
-                c_datePicker2.Value = DateTime.Today.AddMonths(-1);
-                c_datePicker3.Value = DateTime.Today.AddMonths(-2);
-
-                c_chkColumn1.Checked = true;
-                c_chkColumn2.Checked = true;
-                c_chkColumn3.Checked = true;
+                ShowLastMonths();
             }
             catch (Exception ex)
             {
                 ShowError(ex);
             }
         }
+
+        private void c_chkBoxData_CheckedChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                CheckBox cb = sender as CheckBox;
+                if (cb != null)
+                {
+                    DateTimePicker dp = cb.Tag as DateTimePicker;
+                    if (dp != null)
+                        dp.Enabled = cb.Checked;
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowError(ex);
+            }
+        }
+
+        private void ShowLastMonths()
+        {
+            c_radioDurationMonthly.Checked = true;
+
+            c_dtPckData1.Value = DateTime.Today;
+            c_dtPckData2.Value = DateTime.Today.AddMonths(-1);
+            c_dtPckData3.Value = DateTime.Today.AddMonths(-2);
+            c_dtPckData4.Value = DateTime.Today.AddMonths(-3);
+            c_dtPckData5.Value = DateTime.Today.AddMonths(-4);
+            c_dtPckData6.Value = DateTime.Today.AddMonths(-5);
+        }
+
+        private void ShowLastYears()
+        {
+            c_radioDurationYearly.Checked = true;
+
+            c_dtPckData1.Value = DateTime.Today;
+            c_dtPckData2.Value = DateTime.Today.AddYears(-1);
+            c_dtPckData3.Value = DateTime.Today.AddYears(-2);
+            c_dtPckData4.Value = DateTime.Today.AddYears(-3);
+            c_dtPckData5.Value = DateTime.Today.AddYears(-4);
+            c_dtPckData6.Value = DateTime.Today.AddYears(-5);
+        }
+
+        private List<DateTime> GetSelectedDates()
+        {
+            List<DateTime> dates = new List<DateTime>();
+
+            if (c_chkBoxData1.Checked)
+                dates.Add(c_dtPckData1.Value);
+            if (c_chkBoxData2.Checked)
+                dates.Add(c_dtPckData2.Value);
+            if (c_chkBoxData3.Checked)
+                dates.Add(c_dtPckData3.Value);
+            if (c_chkBoxData4.Checked)
+                dates.Add(c_dtPckData4.Value);
+            if (c_chkBoxData5.Checked)
+                dates.Add(c_dtPckData5.Value);
+            if (c_chkBoxData6.Checked)
+                dates.Add(c_dtPckData6.Value);
+
+            return dates;
+        }
+
+
     }
 }

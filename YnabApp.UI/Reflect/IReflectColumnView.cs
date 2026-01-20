@@ -13,8 +13,8 @@ namespace YnabApp.UI.Reflect
     {
         IReflectView ReflectView { get; }
 
-        void InitializeView(bool isYearlyReport);
+        void InitializeView(bool isYearlyReport, DateTime reportDate);
 
-        void ShowReport(DateTime asOfDate, bool isYearlyReport, CategoryGroupData[] categoryDatas, TransactionData[] transactionDatas);
+        void ShowReport(CategoryGroupData[] categoryDatas, TransactionData[] transactionDatas);
     }
 }
