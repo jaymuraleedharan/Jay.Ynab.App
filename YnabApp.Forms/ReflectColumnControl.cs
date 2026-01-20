@@ -25,6 +25,9 @@ namespace YnabApp.Forms
         CategoryGroupData[] _categoryDatas;
         TransactionData[] _transactionDatas;
 
+        decimal TotalIncome {  get; set; }
+
+
         public ReflectColumnControl()
         {
             InitializeComponent();
@@ -69,10 +72,14 @@ namespace YnabApp.Forms
             {
                 ListViewItem item = new ListViewItem(summaryData.SummaryName);
                 item.SubItems.Add(summaryData.Amount.ToString("#,###,##0.00"));
+                item.SubItems.Add(summaryData.Percentage.ToString("#0.00"));
                 if (_isYearlyReport)
-                    item.SubItems.Add(summaryData.MonthlyAmount2(_asOfDate).ToString("#,###,##0.00"));
+                    item.SubItems.Add(summaryData.MonthlyAmountAccurate(_asOfDate).ToString("#,###,##0.00"));
                 item.Tag = summaryData;
                 c_summaryListView.Items.Add(item);
+
+                if (summaryData.SummaryName.Equals("All Incomes"))
+                    TotalIncome = summaryData.Amount;
             }
             c_summaryListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
 
@@ -85,8 +92,9 @@ namespace YnabApp.Forms
             {
                 ListViewItem item = new ListViewItem(incomeData.FullName);
                 item.SubItems.Add(incomeData.Amount.ToString("#,###,##0.00"));
+                item.SubItems.Add(incomeData.Percentage.ToString("#0.00"));
                 if (_isYearlyReport)
-                    item.SubItems.Add(incomeData.MonthlyAmount2(_asOfDate).ToString("#,###,##0.00"));
+                    item.SubItems.Add(incomeData.MonthlyAmountAccurate(_asOfDate).ToString("#,###,##0.00"));
                 item.Tag = incomeData;
                 c_incomeListView.Items.Add(item);
             }
@@ -96,14 +104,15 @@ namespace YnabApp.Forms
             // Category Groups
             //-------------------------------------------//
 
-            var categoryGroupResults = await dataCruncher.CrunchCategroyGroupDataAsync(categoryDatas, transactionDatas, _isYearlyReport, _asOfDate);
+            var categoryGroupResults = await dataCruncher.CrunchCategroyGroupDataAsync(categoryDatas, transactionDatas, _isYearlyReport, _asOfDate, TotalIncome);
 
             foreach (var categoryGroup in categoryGroupResults)
             {
                 ListViewItem item = new ListViewItem(categoryGroup.CategoryGroupName);
                 item.SubItems.Add(categoryGroup.Amount.ToString("#,###,##0.00"));
+                item.SubItems.Add(categoryGroup.Percentage.ToString("#0.00"));
                 if (_isYearlyReport)
-                    item.SubItems.Add(categoryGroup.MonthlyAmount2(_asOfDate).ToString("#,###,##0.00"));
+                    item.SubItems.Add(categoryGroup.MonthlyAmountAccurate(_asOfDate).ToString("#,###,##0.00"));
                 item.Tag = categoryGroup;
                 c_categoryGroupDataListView.Items.Add(item);
             }
@@ -114,14 +123,15 @@ namespace YnabApp.Forms
             // Categories
             //-------------------------------------------//
 
-            var categoryResults = await dataCruncher.CrunchCategroyDataAsync(categoryDatas, transactionDatas, _isYearlyReport, _asOfDate);
+            var categoryResults = await dataCruncher.CrunchCategroyDataAsync(categoryDatas, transactionDatas, _isYearlyReport, _asOfDate, TotalIncome);
 
             foreach (var category in categoryResults)
             {
                 ListViewItem item = new ListViewItem(category.FullCategoryName);
                 item.SubItems.Add(category.Amount.ToString("#,###,##0.00"));
+                item.SubItems.Add(category.Percentage.ToString("#0.00"));
                 if (_isYearlyReport)
-                    item.SubItems.Add(category.MonthlyAmount2(_asOfDate).ToString("#,###,##0.00"));
+                    item.SubItems.Add(category.MonthlyAmountAccurate(_asOfDate).ToString("#,###,##0.00"));
                 item.Tag = category;
                 c_categoryDataListView.Items.Add(item);
             }
@@ -148,6 +158,7 @@ namespace YnabApp.Forms
             listViewControl.Columns.Clear();
             listViewControl.Columns.Add("Category");
             listViewControl.Columns.Add("Amount", 300, HorizontalAlignment.Right);
+            listViewControl.Columns.Add("% of Income", 150, HorizontalAlignment.Right);
             if (isYearly)
                 listViewControl.Columns.Add("Monthly", 300, HorizontalAlignment.Right);
             listViewControl.Groups.Clear();

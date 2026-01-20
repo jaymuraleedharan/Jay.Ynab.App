@@ -25,20 +25,22 @@ namespace YnabApp.BL.Reflect
         }
 
         #region Category Group & Category Expenses Summary
-        public async Task<List<ReflectCategoryGroupData>> CrunchCategroyGroupDataAsync(CategoryGroupData[] categoryGroupDatas, TransactionData[] transactionDatas, bool isYearly, DateTime reportDate)
+        public async Task<List<ReflectCategoryGroupData>> CrunchCategroyGroupDataAsync(CategoryGroupData[] categoryGroupDatas, TransactionData[] transactionDatas, bool isYearly, DateTime reportDate,
+                                                                                        decimal totalIncome)
         {
             List<ReflectCategoryGroupData> reflectCategoryGroupDatas = new List<ReflectCategoryGroupData>();
 
             await Task.Run(() =>
             {
-                reflectCategoryGroupDatas = GenerateCrunchCategroyGroupData(categoryGroupDatas, transactionDatas, isYearly, reportDate);
+                reflectCategoryGroupDatas = GenerateCrunchCategroyGroupData(categoryGroupDatas, transactionDatas, isYearly, reportDate, totalIncome);
 
             });
 
             return reflectCategoryGroupDatas;
         }
 
-        private List<ReflectCategoryGroupData> GenerateCrunchCategroyGroupData(CategoryGroupData[] categoryGroupDatas, TransactionData[] transactionDatas, bool isYearly, DateTime reportDate)
+        private List<ReflectCategoryGroupData> GenerateCrunchCategroyGroupData(CategoryGroupData[] categoryGroupDatas, TransactionData[] transactionDatas, bool isYearly, DateTime reportDate, 
+                                                                                    decimal totalIncome)
         {
             List<ReflectCategoryGroupData> reflectCategoryGroupDatas = new List<ReflectCategoryGroupData>();
 
@@ -66,23 +68,29 @@ namespace YnabApp.BL.Reflect
                 reflectCategoryGroupDatas.Add(reflectCategoryGroup);
             }
 
+            //Calculate Percentages
+            //decimal totalAmount = Math.Abs(reflectCategoryGroupDatas.Sum(r => r.Amount));
+            reflectCategoryGroupDatas.ForEach(r => r.Percentage = Math.Abs(r.Amount) * 100 / totalIncome);
+
             return reflectCategoryGroupDatas.OrderBy(cg => cg.Amount).ToList();
         }
 
 
-        public async Task<List<ReflectCategoryData>> CrunchCategroyDataAsync(CategoryGroupData[] categoryGroupData, TransactionData[] transactionDatas, bool isYearly, DateTime reportDate)
+        public async Task<List<ReflectCategoryData>> CrunchCategroyDataAsync(CategoryGroupData[] categoryGroupData, TransactionData[] transactionDatas, bool isYearly, DateTime reportDate,
+                                                                                    decimal totalIncome)
         {
             List<ReflectCategoryData> reflectCategoryDatas = new List<ReflectCategoryData>();
 
             await Task.Run(() =>
             {
-                reflectCategoryDatas = GenerateCrunchCategoryData(categoryGroupData, transactionDatas, isYearly, reportDate);
+                reflectCategoryDatas = GenerateCrunchCategoryData(categoryGroupData, transactionDatas, isYearly, reportDate, totalIncome);
             });
 
             return reflectCategoryDatas;
         }
 
-        private List<ReflectCategoryData> GenerateCrunchCategoryData(CategoryGroupData[] categoryGroupDatas, TransactionData[] transactionDatas, bool isYearly, DateTime reportDate)
+        private List<ReflectCategoryData> GenerateCrunchCategoryData(CategoryGroupData[] categoryGroupDatas, TransactionData[] transactionDatas, bool isYearly, DateTime reportDate,
+                                                                                    decimal totalIncome)
         {
             List<ReflectCategoryData> reflectCategoryDatas = new List<ReflectCategoryData>();
 
@@ -111,6 +119,9 @@ namespace YnabApp.BL.Reflect
                     reflectCategoryDatas.Add(reflectCategory);
                 }
             }
+
+            //Calculate Percentages
+            reflectCategoryDatas.ForEach(r => r.Percentage = Math.Abs(r.Amount) * 100 / totalIncome);
 
             return reflectCategoryDatas.OrderBy(cg => cg.Amount).ToList();
         }
@@ -183,11 +194,17 @@ namespace YnabApp.BL.Reflect
             //Identify Income Transactions
             var filteredList = matchingTransactions.Where(t => t.IsIncome).ToList();
 
+            //Get Total Income
+            decimal totalIncome = filteredList.Sum(t => t.Amount);
+
             //Group by Payee & Account
             var groupedList = filteredList.GroupBy(t => new { t.PayeeName, t.AccountName });
 
             //Generate Reflection Data
             reflectIncomeDatas = groupedList.Select(y => new ReflectIncomeData(y.Key.PayeeName, y.Key.AccountName) { Amount = y.Sum(z => z.Amount) }).ToList();
+
+            //Calculate Percentage
+            reflectIncomeDatas.ForEach( r => r.Percentage = (r.Amount * 100) / totalIncome);
 
             //Sorrt by Amount 
             reflectIncomeDatas = reflectIncomeDatas.OrderByDescending(y => y.Amount).ToList();
@@ -252,6 +269,12 @@ namespace YnabApp.BL.Reflect
             //Corection for No Savings
             if (unspentSummaryData.Amount < 0)
                 unspentSummaryData.Amount = 0;
+
+            //Setting Percentages
+            incomeSummaryData.Percentage = 100;
+            expenseSummaryData.Percentage = (Math.Abs(expenseSummaryData.Amount) * 100) / Math.Abs(incomeSummaryData.Amount);
+            indirectSavingsSummaryData.Percentage = (Math.Abs(indirectSavingsSummaryData.Amount) * 100) / Math.Abs(incomeSummaryData.Amount);
+            unspentSummaryData.Percentage = (Math.Abs(unspentSummaryData.Amount) * 100) / Math.Abs(incomeSummaryData.Amount);
 
             reflectSummaryDatas.Add(incomeSummaryData);
             reflectSummaryDatas.Add(expenseSummaryData);
