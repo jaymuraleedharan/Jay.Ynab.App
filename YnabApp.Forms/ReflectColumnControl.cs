@@ -76,6 +76,8 @@ namespace YnabApp.Forms
                 if (_isYearlyReport)
                     item.SubItems.Add(summaryData.MonthlyAmountAccurate(_asOfDate).ToString("#,###,##0.00"));
                 item.Tag = summaryData;
+                item.BackColor = ReflectColorizer.GetSummaryBackColor(summaryData.SummaryName);
+                item.ForeColor = ReflectColorizer.GetSummaryFontColor(summaryData.SummaryName);
                 c_summaryListView.Items.Add(item);
 
                 if (summaryData.SummaryName.Equals("All Incomes"))

@@ -47,5 +47,28 @@ namespace YnabApp.UI.Reflect
             }
         }
 
+        public static Color GetSummaryBackColor(string summaryName)
+        {
+            switch (summaryName)
+            {
+                case "All Incomes": return Color.LightGreen;
+                case "All Expenses": return Color.LightPink;
+                case "Savings": return Color.LightGreen;
+                case "Unspent": return Color.LightGreen;
+                default: return Color.LightPink;
+            }
+        }
+
+        public static Color GetSummaryFontColor(string summaryName)
+        {
+            switch (summaryName)
+            {
+                case "All Incomes": return Color.Black;
+                case "All Expenses": return Color.Black;
+                case "Savings": return Color.Black;
+                case "Unspent": return Color.Black;
+                default: return Color.Black;
+            }
+        }
     }
 }
