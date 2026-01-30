@@ -25,7 +25,7 @@ namespace YnabApp.Forms
         CategoryGroupData[] _categoryDatas;
         TransactionData[] _transactionDatas;
 
-        decimal TotalIncome {  get; set; }
+        decimal TotalIncome { get; set; }
 
 
         public ReflectColumnControl()
@@ -90,7 +90,7 @@ namespace YnabApp.Forms
             //-------------------------------------------//
             var incomeResults = await dataCruncher.CrunchIncomeDataAsync(transactionDatas, _isYearlyReport, _asOfDate);
 
-            foreach(var incomeData in incomeResults)
+            foreach (var incomeData in incomeResults)
             {
                 ListViewItem item = new ListViewItem(incomeData.FullName);
                 item.SubItems.Add(incomeData.Amount.ToString("#,###,##0.00"));
@@ -199,6 +199,25 @@ namespace YnabApp.Forms
                     var catData = c_categoryDataListView.SelectedItems[0].Tag as ReflectCategoryData;
 
                     ReflectTransactionsForm.ShowModal(null, catData, _asOfDate, _isYearlyReport, _transactionDatas);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"{ex.Message}{Environment.NewLine}{ex.StackTrace}",
+               "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
+        }
+
+        private void c_incomeListView_DoubleClick(object sender, EventArgs e)
+        {
+            try
+            {
+                if (c_incomeListView.SelectedItems.Count > 0)
+                {
+                    var incomeData = c_incomeListView.SelectedItems[0].Tag as ReflectIncomeData;
+
+                    ReflectTransactionsForm.ShowModal(incomeData, _asOfDate, _isYearlyReport, _transactionDatas);
                 }
             }
             catch (Exception ex)

@@ -213,6 +213,28 @@ namespace YnabApp.BL.Reflect
         }
         #endregion
 
+        #region Income Transactions
+
+        public List<TransactionData> FilterIncomeTransactions(ReflectIncomeData incomeData, TransactionData[] transactionDatas, bool isYearly, DateTime reportDate)
+        {
+            //Filter by Data Criteria
+            IEnumerable<TransactionData> matchingTransactions;
+            if (isYearly)
+                matchingTransactions = transactionDatas.Where(t => t.TransDateTime.Year == reportDate.Year);
+            else
+                matchingTransactions = transactionDatas.Where(t => t.TransDateTime.Year == reportDate.Year && t.TransDateTime.Month == reportDate.Month);
+
+            //Identify Income Transactions
+            var filteredList = matchingTransactions.Where(t => t.IsIncome).ToList();
+
+            //Identify Payee and Account
+            var incomeList = filteredList.Where(t => t.PayeeName.Equals(incomeData.payeeName, StringComparison.InvariantCultureIgnoreCase)
+                                                    && t.AccountName.Equals(incomeData.accountName, StringComparison.InvariantCultureIgnoreCase)).ToList();
+
+            return incomeList;
+        }
+
+        #endregion
 
         #region Overall Summary & Transactions
         public async Task<List<ReflectSummaryData>> CrunchSummaryDataAsync(CategoryGroupData[] categoryGroupData, TransactionData[] transactionDatas, bool isYearly, DateTime reportDate)

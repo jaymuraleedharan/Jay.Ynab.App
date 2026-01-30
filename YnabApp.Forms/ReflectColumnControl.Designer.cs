@@ -127,6 +127,7 @@
             c_incomeListView.TabIndex = 16;
             c_incomeListView.UseCompatibleStateImageBehavior = false;
             c_incomeListView.View = System.Windows.Forms.View.Details;
+            c_incomeListView.DoubleClick += c_incomeListView_DoubleClick;
             // 
             // groupBox4
             // 

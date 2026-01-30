@@ -48,7 +48,7 @@ namespace YnabApp.Forms
         {
             try
             {
-                MessageBox.Show(text: "This app was developed to keep myself up to date on .NET 5", 
+                MessageBox.Show(text: $"YNAB Windows App for additional insights into our Personal Finance.{Environment.NewLine}Developed using .NET 8 and YNAB API.", 
                     caption: $"About Jay's YNAB App");
             }
             catch (Exception ex)

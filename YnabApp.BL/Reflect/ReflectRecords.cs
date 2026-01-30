@@ -45,7 +45,7 @@ namespace YnabApp.BL.Reflect
 
     public record ReflectIncomeData(string payeeName, string accountName)
     {
-        public string FullName => $"{payeeName} -> {accountName}";
+        public string FullName => $"{payeeName}  ▶ {accountName}";
 
         public decimal Amount { get; set; }
 

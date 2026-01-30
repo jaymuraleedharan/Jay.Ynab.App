@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -19,6 +20,7 @@ namespace YnabApp.Forms
     {
         ReflectCategoryGroupData _catGroupData;
         ReflectCategoryData _catData;
+        ReflectIncomeData _incomeData;
         DateTime _asOfDate;
         bool _isYearlyReport;
         TransactionData[] _transactionDatas;
@@ -34,10 +36,11 @@ namespace YnabApp.Forms
             this.Close();
         }
 
-        public void SetData(ReflectCategoryGroupData catGroupData, ReflectCategoryData catData, DateTime asOfDate, bool isYearlyReport, TransactionData[] transactionDatas)
+        public void SetData(ReflectCategoryGroupData catGroupData, ReflectCategoryData catData, ReflectIncomeData incomeData, DateTime asOfDate, bool isYearlyReport, TransactionData[] transactionDatas)
         {
             _catGroupData = catGroupData;
             _catData = catData;
+            _incomeData = incomeData;
             _asOfDate = asOfDate;
             _isYearlyReport = isYearlyReport;
             _transactionDatas = transactionDatas;
@@ -45,20 +48,25 @@ namespace YnabApp.Forms
             DataCruncherForReflection dataCruncher = new();
             if (catGroupData != null)
                 _filteredTransactions = dataCruncher.FilterCategoryGroupTransactions(catGroupData, transactionDatas, isYearlyReport, asOfDate);
-            else
+            else if(catData != null)
                 _filteredTransactions = dataCruncher.FilterCategoryTransactions(catData, transactionDatas, isYearlyReport, asOfDate);
+            else if(incomeData != null)
+                _filteredTransactions = dataCruncher.FilterIncomeTransactions(incomeData, transactionDatas, isYearlyReport, asOfDate);
 
             _filteredTransactions = _filteredTransactions.OrderBy(t => t.Amount).ToList();
 
             ShowData();
         }
 
+
         private void ShowData()
         {
-            if(_catGroupData != null) 
+            if (_catGroupData != null)
                 c_cateogryLabel.Text = _catGroupData.CategoryGroupName;
-            else
+            else if (_catData != null)
                 c_cateogryLabel.Text = _catData.FullCategoryName;
+            else if (_incomeData != null)
+                c_cateogryLabel.Text = _incomeData.FullName;
 
             if (_isYearlyReport)
                 c_durationLabel.Text = $"Year: {_asOfDate.Year}";
@@ -92,7 +100,16 @@ namespace YnabApp.Forms
         {
             ReflectTransactionsForm reflectTransactionsForm = new ReflectTransactionsForm();
             reflectTransactionsForm.Activate();
-            reflectTransactionsForm.SetData(catGroupData, catData, asOfDate, isYearlyReport, transactionDatas);
+            reflectTransactionsForm.SetData(catGroupData, catData, null, asOfDate, isYearlyReport, transactionDatas);
+            reflectTransactionsForm.ShowDialog();
+        }
+
+
+        public static void ShowModal(ReflectIncomeData incomeData, DateTime asOfDate, bool isYearlyReport, TransactionData[] transactionDatas)
+        {
+            ReflectTransactionsForm reflectTransactionsForm = new ReflectTransactionsForm();
+            reflectTransactionsForm.Activate();
+            reflectTransactionsForm.SetData(null, null, incomeData, asOfDate, isYearlyReport, transactionDatas);
             reflectTransactionsForm.ShowDialog();
         }
 
