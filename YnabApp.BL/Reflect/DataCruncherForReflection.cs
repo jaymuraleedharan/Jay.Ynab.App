@@ -26,13 +26,13 @@ namespace YnabApp.BL.Reflect
 
         #region Category Group & Category Expenses Summary
         public async Task<List<ReflectCategoryGroupData>> CrunchCategroyGroupDataAsync(CategoryGroupData[] categoryGroupDatas, TransactionData[] transactionDatas, bool isYearly, DateTime reportDate,
-                                                                                        decimal totalIncome)
+                                                                                        decimal totalIncome, Person person = Person.All)
         {
             List<ReflectCategoryGroupData> reflectCategoryGroupDatas = new List<ReflectCategoryGroupData>();
 
             await Task.Run(() =>
             {
-                reflectCategoryGroupDatas = GenerateCrunchCategroyGroupData(categoryGroupDatas, transactionDatas, isYearly, reportDate, totalIncome);
+                reflectCategoryGroupDatas = GenerateCrunchCategroyGroupData(categoryGroupDatas, transactionDatas, isYearly, reportDate, totalIncome, person);
 
             });
 
@@ -40,7 +40,7 @@ namespace YnabApp.BL.Reflect
         }
 
         private List<ReflectCategoryGroupData> GenerateCrunchCategroyGroupData(CategoryGroupData[] categoryGroupDatas, TransactionData[] transactionDatas, bool isYearly, DateTime reportDate, 
-                                                                                    decimal totalIncome)
+                                                                                    decimal totalIncome, Person person = Person.All)
         {
             List<ReflectCategoryGroupData> reflectCategoryGroupDatas = new List<ReflectCategoryGroupData>();
 
@@ -49,6 +49,12 @@ namespace YnabApp.BL.Reflect
                 matchingTransactions = transactionDatas.Where(t => t.TransDateTime.Year == reportDate.Year);
             else
                 matchingTransactions = transactionDatas.Where(t => t.TransDateTime.Year == reportDate.Year && t.TransDateTime.Month == reportDate.Month);
+
+            //Filter by Person
+            if (person != Person.All)
+            {
+                matchingTransactions = matchingTransactions.Where(t => AccountFilter.IsPersonAccount(t.AccountId, person)).ToList();
+            }
 
             foreach (var categoryGroup in categoryGroupDatas)
             {
@@ -77,20 +83,20 @@ namespace YnabApp.BL.Reflect
 
 
         public async Task<List<ReflectCategoryData>> CrunchCategroyDataAsync(CategoryGroupData[] categoryGroupData, TransactionData[] transactionDatas, bool isYearly, DateTime reportDate,
-                                                                                    decimal totalIncome)
+                                                                                    decimal totalIncome, Person person = Person.All)
         {
             List<ReflectCategoryData> reflectCategoryDatas = new List<ReflectCategoryData>();
 
             await Task.Run(() =>
             {
-                reflectCategoryDatas = GenerateCrunchCategoryData(categoryGroupData, transactionDatas, isYearly, reportDate, totalIncome);
+                reflectCategoryDatas = GenerateCrunchCategoryData(categoryGroupData, transactionDatas, isYearly, reportDate, totalIncome, person);
             });
 
             return reflectCategoryDatas;
         }
 
         private List<ReflectCategoryData> GenerateCrunchCategoryData(CategoryGroupData[] categoryGroupDatas, TransactionData[] transactionDatas, bool isYearly, DateTime reportDate,
-                                                                                    decimal totalIncome)
+                                                                                    decimal totalIncome, Person person = Person.All)
         {
             List<ReflectCategoryData> reflectCategoryDatas = new List<ReflectCategoryData>();
 
@@ -99,6 +105,12 @@ namespace YnabApp.BL.Reflect
                 matchingTransactions = transactionDatas.Where(t => t.TransDateTime.Year == reportDate.Year);
             else
                 matchingTransactions = transactionDatas.Where(t => t.TransDateTime.Year == reportDate.Year && t.TransDateTime.Month == reportDate.Month);
+
+            //Filter by Person
+            if (person != Person.All)
+            {
+                matchingTransactions = matchingTransactions.Where(t => AccountFilter.IsPersonAccount(t.AccountId, person)).ToList();
+            }
 
             foreach (var categoryGroup in categoryGroupDatas)
             {
@@ -128,7 +140,8 @@ namespace YnabApp.BL.Reflect
         #endregion
 
         #region Category Group & Category Expenses Transactions
-        public List<TransactionData> FilterCategoryGroupTransactions(ReflectCategoryGroupData categoryGroupData, TransactionData[] transactionDatas, bool isYearly, DateTime reportDate)
+        public List<TransactionData> FilterCategoryGroupTransactions(ReflectCategoryGroupData categoryGroupData, TransactionData[] transactionDatas, 
+                                                                    bool isYearly, DateTime reportDate, Person person = Person.All)
         {
             IEnumerable<TransactionData> matchingTransactions;
             if (isYearly)
@@ -148,7 +161,8 @@ namespace YnabApp.BL.Reflect
             return filteredTransactions;
         }
 
-        public List<TransactionData> FilterCategoryTransactions(ReflectCategoryData categoryData, TransactionData[] transactionDatas, bool isYearly, DateTime reportDate)
+        public List<TransactionData> FilterCategoryTransactions(ReflectCategoryData categoryData, TransactionData[] transactionDatas, 
+                                                            bool isYearly, DateTime reportDate, Person person = Person.All)
         {
             IEnumerable<TransactionData> matchingTransactions;
             if (isYearly)
@@ -156,6 +170,11 @@ namespace YnabApp.BL.Reflect
             else
                 matchingTransactions = transactionDatas.Where(t => t.TransDateTime.Year == reportDate.Year && t.TransDateTime.Month == reportDate.Month);
 
+            //Filter by Person
+            if (person != Person.All)
+            {
+                matchingTransactions = matchingTransactions.Where(t => AccountFilter.IsPersonAccount(t.AccountId, person)).ToList();
+            }
 
             List<TransactionData> filteredTransactions = new List<TransactionData>();
             foreach (TransactionData transactionData in matchingTransactions)
@@ -168,19 +187,19 @@ namespace YnabApp.BL.Reflect
         #endregion
 
         #region Income Summary & Transactions
-        public async Task<List<ReflectIncomeData>> CrunchIncomeDataAsync(TransactionData[] transactionDatas, bool isYearly, DateTime reportDate)
+        public async Task<List<ReflectIncomeData>> CrunchIncomeDataAsync(TransactionData[] transactionDatas, bool isYearly, DateTime reportDate, Person person = Person.All)
         {
             List<ReflectIncomeData> reflectIncomeDatas = new List<ReflectIncomeData>();
 
             await Task.Run(() =>
             {
-                reflectIncomeDatas = GenerateIncomeData(transactionDatas, isYearly, reportDate);
+                reflectIncomeDatas = GenerateIncomeData(transactionDatas, isYearly, reportDate, person);
 
             });
 
             return reflectIncomeDatas;
         }
-        private List<ReflectIncomeData> GenerateIncomeData(TransactionData[] transactionDatas, bool isYearly, DateTime reportDate)
+        private List<ReflectIncomeData> GenerateIncomeData(TransactionData[] transactionDatas, bool isYearly, DateTime reportDate, Person person = Person.All)
         {
             List<ReflectIncomeData> reflectIncomeDatas = new();
 
@@ -215,7 +234,7 @@ namespace YnabApp.BL.Reflect
 
         #region Income Transactions
 
-        public List<TransactionData> FilterIncomeTransactions(ReflectIncomeData incomeData, TransactionData[] transactionDatas, bool isYearly, DateTime reportDate)
+        public List<TransactionData> FilterIncomeTransactions(ReflectIncomeData incomeData, TransactionData[] transactionDatas, bool isYearly, DateTime reportDate, Person person = Person.All)
         {
             //Filter by Data Criteria
             IEnumerable<TransactionData> matchingTransactions;
@@ -227,6 +246,12 @@ namespace YnabApp.BL.Reflect
             //Identify Income Transactions
             var filteredList = matchingTransactions.Where(t => t.IsIncome).ToList();
 
+            //Filter by Person
+            if(person != Person.All)
+            {
+                filteredList = matchingTransactions.Where(t => AccountFilter.IsPersonAccount(t.AccountId, person)).ToList();
+            }
+
             //Identify Payee and Account
             var incomeList = filteredList.Where(t => t.PayeeName.Equals(incomeData.payeeName, StringComparison.InvariantCultureIgnoreCase)
                                                     && t.AccountName.Equals(incomeData.accountName, StringComparison.InvariantCultureIgnoreCase)).ToList();
@@ -237,19 +262,22 @@ namespace YnabApp.BL.Reflect
         #endregion
 
         #region Overall Summary & Transactions
-        public async Task<List<ReflectSummaryData>> CrunchSummaryDataAsync(CategoryGroupData[] categoryGroupData, TransactionData[] transactionDatas, bool isYearly, DateTime reportDate)
+        public async Task<List<ReflectSummaryData>> CrunchSummaryDataAsync(CategoryGroupData[] categoryGroupData, TransactionData[] transactionDatas, 
+                                                                                        bool isYearly, DateTime reportDate, Person person = Person.All)
         {
             List<ReflectSummaryData> reflectIncomeDatas = new List<ReflectSummaryData>();
 
             await Task.Run(() =>
             {
-                reflectIncomeDatas = GenerateSummaryData(categoryGroupData, transactionDatas, isYearly, reportDate);
+                reflectIncomeDatas = GenerateSummaryData(categoryGroupData, transactionDatas, isYearly, reportDate, person);
 
             });
 
             return reflectIncomeDatas;
         }
-        private List<ReflectSummaryData> GenerateSummaryData(CategoryGroupData[] categoryGroupData, TransactionData[] transactionDatas, bool isYearly, DateTime reportDate)
+
+        private List<ReflectSummaryData> GenerateSummaryData(CategoryGroupData[] categoryGroupData, TransactionData[] transactionDatas, 
+                                                        bool isYearly, DateTime reportDate, Person person = Person.All)
         {
             List<ReflectSummaryData> reflectSummaryDatas = new();
 
@@ -260,6 +288,12 @@ namespace YnabApp.BL.Reflect
                 matchingTransactions = transactionDatas.Where(t => t.TransDateTime.Year == reportDate.Year);
             else
                 matchingTransactions = transactionDatas.Where(t => t.TransDateTime.Year == reportDate.Year && t.TransDateTime.Month == reportDate.Month);
+
+            //Filter by Person
+            if (person != Person.All)
+            {
+                matchingTransactions = matchingTransactions.Where(t => AccountFilter.IsPersonAccount(t.AccountId, person)).ToList();
+            }
 
             ReflectSummaryData incomeSummaryData = new("All Incomes");
             ReflectSummaryData expenseSummaryData = new("All Expenses");

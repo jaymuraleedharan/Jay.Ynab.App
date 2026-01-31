@@ -22,8 +22,11 @@ namespace YnabApp.Forms
         ReflectColumnPresenter _presenter = null;
         DateTime _asOfDate;
         bool _isYearlyReport;
+        PersonSelected _personSelected;
+
         CategoryGroupData[] _categoryDatas;
         TransactionData[] _transactionDatas;
+
 
         decimal TotalIncome { get; set; }
 
@@ -40,11 +43,27 @@ namespace YnabApp.Forms
             get { return this.ParentForm as IReflectView; }
         }
 
-        public void InitializeView(bool isYearlyReport, DateTime reportDate)
+        public void InitializeView(bool isYearlyReport, DateTime reportDate, PersonSelected personSelected)
         {
             _isYearlyReport = isYearlyReport;
             _asOfDate = reportDate;
+            _personSelected = personSelected;
+
             ResetUI(isYearlyReport);
+        }
+
+        private Person BL_Person
+        {
+            get
+            {
+                switch(_personSelected)
+                {
+                    case PersonSelected.All: return Person.All;
+                    case PersonSelected.Jay: return Person.Jay;
+                    case PersonSelected.Shar: return Person.Shar;
+                    default: return Person.All;
+                }
+            }
         }
 
         public async void ShowReport(CategoryGroupData[] categoryDatas, TransactionData[] transactionDatas)
@@ -66,7 +85,7 @@ namespace YnabApp.Forms
             //-------------------------------------------//
             // Summary
             //-------------------------------------------//
-            var summaryResults = await dataCruncher.CrunchSummaryDataAsync(categoryDatas, transactionDatas, _isYearlyReport, _asOfDate);
+            var summaryResults = await dataCruncher.CrunchSummaryDataAsync(categoryDatas, transactionDatas, _isYearlyReport, _asOfDate, BL_Person);
 
             foreach (var summaryData in summaryResults)
             {
@@ -88,7 +107,7 @@ namespace YnabApp.Forms
             //-------------------------------------------//
             // Incomes
             //-------------------------------------------//
-            var incomeResults = await dataCruncher.CrunchIncomeDataAsync(transactionDatas, _isYearlyReport, _asOfDate);
+            var incomeResults = await dataCruncher.CrunchIncomeDataAsync(transactionDatas, _isYearlyReport, _asOfDate, BL_Person);
 
             foreach (var incomeData in incomeResults)
             {
@@ -106,7 +125,7 @@ namespace YnabApp.Forms
             // Category Groups
             //-------------------------------------------//
 
-            var categoryGroupResults = await dataCruncher.CrunchCategroyGroupDataAsync(categoryDatas, transactionDatas, _isYearlyReport, _asOfDate, TotalIncome);
+            var categoryGroupResults = await dataCruncher.CrunchCategroyGroupDataAsync(categoryDatas, transactionDatas, _isYearlyReport, _asOfDate, TotalIncome, BL_Person);
 
             foreach (var categoryGroup in categoryGroupResults)
             {
@@ -127,7 +146,7 @@ namespace YnabApp.Forms
             // Categories
             //-------------------------------------------//
 
-            var categoryResults = await dataCruncher.CrunchCategroyDataAsync(categoryDatas, transactionDatas, _isYearlyReport, _asOfDate, TotalIncome);
+            var categoryResults = await dataCruncher.CrunchCategroyDataAsync(categoryDatas, transactionDatas, _isYearlyReport, _asOfDate, TotalIncome, BL_Person);
 
             foreach (var category in categoryResults)
             {

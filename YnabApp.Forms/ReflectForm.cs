@@ -67,6 +67,7 @@ namespace YnabApp.Forms
                 ValidateControls();
 
                 var datesSelected = GetSelectedDates();
+                var personSelected = GetPersonSelected();
 
                 //CLEAR REFLECT CONTROLS TABLE
                 c_reflectControlsTable.RowCount = 0;
@@ -75,6 +76,7 @@ namespace YnabApp.Forms
                 c_reflectControlsTable.RowStyles.Clear();
                 c_reflectControlsTable.ColumnStyles.Clear();
 
+                //CREATING REFLECTCOLUMNCONTROLS BASED ON THE NUMBER OF DATES SELECTED
                 c_reflectControlsTable.RowCount = 1;
                 c_reflectControlsTable.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
                 c_reflectControlsTable.ColumnCount = datesSelected.Count;
@@ -85,35 +87,27 @@ namespace YnabApp.Forms
                 {
                     c_reflectControlsTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, columnWidthPercentage));
                     ReflectColumnControl reflectColumnControl = new ReflectColumnControl();
-                    reflectColumnControl.InitializeView(c_radioDurationYearly.Checked, reportDate);
+                    reflectColumnControl.InitializeView(c_radioDurationYearly.Checked, reportDate, personSelected);
 
                     c_reflectControlsTable.Controls.Add(reflectColumnControl, controlCounter, 0);
                     reflectColumnControl.Dock = DockStyle.Fill;
                     controlCounter++;
                 }
 
+                //DOWNLOADING DATA FROM YNAB
                 var categoriesData = await _presenter.GetCategoriesAsync(_budgetData.Id);
 
                 DateTime earliestDate = GetEarliestDate();
 
                 var transactionsData = await _presenter.GetTransactionsAsync(_budgetData.Id, earliestDate);
 
+                //RENDERING DATA
                 foreach (Control ctrl in c_reflectControlsTable.Controls)
                 {
                     var reflectCtrl = ctrl as ReflectColumnControl;
                     if (reflectCtrl != null)
                         reflectCtrl.ShowReport(categoriesData, transactionsData);
                 }
-
-                //if (c_chkBoxData1.Checked == true)
-                //    ((IReflectColumnView)c_reflectColumn1).ShowReport(c_dtPckData1.Value, c_radioDurationYearly.Checked, categoriesData, transactionsData);
-
-                //if (c_chkBoxData2.Checked == true)
-                //    ((IReflectColumnView)c_reflectColumn2).ShowReport(c_dtPckData2.Value, c_radioDurationYearly.Checked, categoriesData, transactionsData);
-
-                //if (c_chkBoxData3.Checked == true)
-                //    ((IReflectColumnView)c_reflectColumn3).ShowReport(c_dtPckData3.Value, c_radioDurationYearly.Checked, categoriesData, transactionsData);
-
             }
             catch (Exception ex)
             {
@@ -176,6 +170,18 @@ namespace YnabApp.Forms
             }
 
             return earliestDate;
+        }
+
+        private PersonSelected GetPersonSelected()
+        {
+            if (c_radioPersonAll.Checked)
+                return PersonSelected.All;
+            else if (c_radioPersonJay.Checked)
+                return PersonSelected.Jay;
+            else if (c_radioPersonShar.Checked)
+                return PersonSelected.Shar;
+            else
+                return PersonSelected.All;
         }
 
         private void c_selectLastThreeYears_Click(object sender, EventArgs e)

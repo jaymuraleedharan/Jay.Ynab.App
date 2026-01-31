@@ -56,6 +56,10 @@
             c_radioDurationMonthly = new System.Windows.Forms.RadioButton();
             c_reflectControlsPanel = new System.Windows.Forms.Panel();
             c_reflectControlsTable = new System.Windows.Forms.TableLayoutPanel();
+            groupBox8 = new System.Windows.Forms.GroupBox();
+            c_radioPersonAll = new System.Windows.Forms.RadioButton();
+            c_radioPersonJay = new System.Windows.Forms.RadioButton();
+            c_radioPersonShar = new System.Windows.Forms.RadioButton();
             groupBox1.SuspendLayout();
             groupBox7.SuspendLayout();
             groupBox6.SuspendLayout();
@@ -64,11 +68,13 @@
             groupBox3.SuspendLayout();
             groupBox2.SuspendLayout();
             c_reflectControlsPanel.SuspendLayout();
+            groupBox8.SuspendLayout();
             SuspendLayout();
             // 
             // groupBox1
             // 
             groupBox1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            groupBox1.Controls.Add(groupBox8);
             groupBox1.Controls.Add(c_moveForwardButton);
             groupBox1.Controls.Add(c_moveBackButton);
             groupBox1.Controls.Add(groupBox7);
@@ -339,7 +345,7 @@
             // 
             // c_btnShow
             // 
-            c_btnShow.Location = new System.Drawing.Point(1054, 61);
+            c_btnShow.Location = new System.Drawing.Point(1143, 72);
             c_btnShow.Name = "c_btnShow";
             c_btnShow.Size = new System.Drawing.Size(105, 43);
             c_btnShow.TabIndex = 13;
@@ -390,6 +396,52 @@
             c_reflectControlsTable.Size = new System.Drawing.Size(1603, 604);
             c_reflectControlsTable.TabIndex = 0;
             // 
+            // groupBox8
+            // 
+            groupBox8.Controls.Add(c_radioPersonShar);
+            groupBox8.Controls.Add(c_radioPersonJay);
+            groupBox8.Controls.Add(c_radioPersonAll);
+            groupBox8.Location = new System.Drawing.Point(1045, 21);
+            groupBox8.Name = "groupBox8";
+            groupBox8.Size = new System.Drawing.Size(92, 113);
+            groupBox8.TabIndex = 23;
+            groupBox8.TabStop = false;
+            groupBox8.Text = "Select Person";
+            // 
+            // c_radioPersonAll
+            // 
+            c_radioPersonAll.AutoSize = true;
+            c_radioPersonAll.Checked = true;
+            c_radioPersonAll.Location = new System.Drawing.Point(17, 28);
+            c_radioPersonAll.Name = "c_radioPersonAll";
+            c_radioPersonAll.Size = new System.Drawing.Size(39, 19);
+            c_radioPersonAll.TabIndex = 0;
+            c_radioPersonAll.Tag = "c_radioPersonAll";
+            c_radioPersonAll.Text = "All";
+            c_radioPersonAll.UseVisualStyleBackColor = true;
+            // 
+            // c_radioPersonJay
+            // 
+            c_radioPersonJay.AutoSize = true;
+            c_radioPersonJay.Location = new System.Drawing.Point(17, 53);
+            c_radioPersonJay.Name = "c_radioPersonJay";
+            c_radioPersonJay.Size = new System.Drawing.Size(41, 19);
+            c_radioPersonJay.TabIndex = 1;
+            c_radioPersonJay.Tag = "c_radioPersonJay";
+            c_radioPersonJay.Text = "Jay";
+            c_radioPersonJay.UseVisualStyleBackColor = true;
+            // 
+            // c_radioPersonShar
+            // 
+            c_radioPersonShar.AutoSize = true;
+            c_radioPersonShar.Location = new System.Drawing.Point(17, 78);
+            c_radioPersonShar.Name = "c_radioPersonShar";
+            c_radioPersonShar.Size = new System.Drawing.Size(48, 19);
+            c_radioPersonShar.TabIndex = 2;
+            c_radioPersonShar.Tag = "c_radioPersonShar";
+            c_radioPersonShar.Text = "Shar";
+            c_radioPersonShar.UseVisualStyleBackColor = true;
+            // 
             // ReflectForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -415,6 +467,8 @@
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
             c_reflectControlsPanel.ResumeLayout(false);
+            groupBox8.ResumeLayout(false);
+            groupBox8.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -448,5 +502,9 @@
         private System.Windows.Forms.TableLayoutPanel c_reflectControlsTable;
         private System.Windows.Forms.Button c_moveForwardButton;
         private System.Windows.Forms.Button c_moveBackButton;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.RadioButton c_radioPersonAll;
+        private System.Windows.Forms.RadioButton c_radioPersonShar;
+        private System.Windows.Forms.RadioButton c_radioPersonJay;
     }
 }
