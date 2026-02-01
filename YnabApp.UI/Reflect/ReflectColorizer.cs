@@ -19,17 +19,22 @@ namespace YnabApp.UI.Reflect
 
     public static class ReflectColorizer
     {
+        private static readonly Color LIGHTYELLOW = Color.FromArgb(255, 255, 204);
+        private static readonly Color LIGHTGREEN = Color.FromArgb(204, 255, 204);
+        private static readonly Color LIGHTRED = Color.FromArgb(255, 204, 204);
+        private static readonly Color LIGHTBLUE = Color.FromArgb(204, 236, 255);
+
         public static Color GetBackColor(string categoryGroupName)
         {
             switch(categoryGroupName)
             {
-                case "NECESSITIES": return Color.LightGoldenrodYellow;
-                case "NECESSITIES-TAX": return Color.LightGoldenrodYellow;
-                case "DISCRETIONARY": return Color.LightPink;
-                case "HELP": return Color.LightGreen;
-                case "SAVINGS": return Color.LightGreen;
-                case "INVESTMENTS": return Color.LightGreen;
-                default: return Color.DarkRed;
+                case "NECESSITIES": return LIGHTYELLOW;
+                case "NECESSITIES-TAX": return LIGHTYELLOW;
+                case "DISCRETIONARY": return LIGHTRED;
+                case "HELP": return LIGHTBLUE;
+                case "SAVINGS": return LIGHTGREEN;
+                case "INVESTMENTS": return LIGHTGREEN;
+                default: return LIGHTRED;
             }
         }
 
@@ -43,7 +48,7 @@ namespace YnabApp.UI.Reflect
                 case "HELP": return Color.Black;
                 case "SAVINGS": return Color.Black;
                 case "INVESTMENTS": return Color.Black;
-                default: return Color.White;
+                default: return Color.Black;
             }
         }
 
@@ -51,11 +56,11 @@ namespace YnabApp.UI.Reflect
         {
             switch (summaryName)
             {
-                case "All Incomes": return Color.LightGreen;
-                case "All Expenses": return Color.LightPink;
-                case "Savings": return Color.LightGreen;
-                case "Unspent": return Color.LightGreen;
-                default: return Color.LightPink;
+                case "All Incomes": return LIGHTGREEN;
+                case "All Expenses": return LIGHTRED;
+                case "Savings": return LIGHTGREEN;
+                case "Unspent": return LIGHTGREEN;
+                default: return LIGHTRED;
             }
         }
 
