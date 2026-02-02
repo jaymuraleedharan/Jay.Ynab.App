@@ -217,6 +217,12 @@ namespace YnabApp.BL.Reflect
             //Identify Income Transactions
             var filteredList = matchingTransactions.Where(t => t.IsIncome).ToList();
 
+            //Filter by Person
+            if (person != Person.All)
+            {
+                filteredList = filteredList.Where(t => AccountFilter.IsPersonAccount(t.AccountId, person)).ToList();
+            }
+
             //Get Total Income
             decimal totalIncome = filteredList.Sum(t => t.Amount);
 
