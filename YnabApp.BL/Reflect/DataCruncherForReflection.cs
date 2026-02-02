@@ -83,20 +83,20 @@ namespace YnabApp.BL.Reflect
 
 
         public async Task<List<ReflectCategoryData>> CrunchCategroyDataAsync(CategoryGroupData[] categoryGroupData, TransactionData[] transactionDatas, bool isYearly, DateTime reportDate,
-                                                                                    decimal totalIncome, Person person = Person.All)
+                                                                                    decimal totalIncome, Person person = Person.All, bool isHideZeroCategorties = true)
         {
             List<ReflectCategoryData> reflectCategoryDatas = new List<ReflectCategoryData>();
 
             await Task.Run(() =>
             {
-                reflectCategoryDatas = GenerateCrunchCategoryData(categoryGroupData, transactionDatas, isYearly, reportDate, totalIncome, person);
+                reflectCategoryDatas = GenerateCrunchCategoryData(categoryGroupData, transactionDatas, isYearly, reportDate, totalIncome, person, isHideZeroCategorties);
             });
 
             return reflectCategoryDatas;
         }
 
         private List<ReflectCategoryData> GenerateCrunchCategoryData(CategoryGroupData[] categoryGroupDatas, TransactionData[] transactionDatas, bool isYearly, DateTime reportDate,
-                                                                                    decimal totalIncome, Person person = Person.All)
+                                                                                    decimal totalIncome, Person person = Person.All, bool isHideZeroCategorties = true)
         {
             List<ReflectCategoryData> reflectCategoryDatas = new List<ReflectCategoryData>();
 
@@ -126,9 +126,13 @@ namespace YnabApp.BL.Reflect
                     {
                         decimal categoryTotal = categoryTransactions.Sum(t => t.Amount);
                         reflectCategory.Amount += categoryTotal;
+                        reflectCategoryDatas.Add(reflectCategory);
                     }
-
-                    reflectCategoryDatas.Add(reflectCategory);
+                    else if (!isHideZeroCategorties)
+                    {
+                        //Do not Show if there are not transactions for the Category
+                        reflectCategoryDatas.Add(reflectCategory);
+                    }
                 }
             }
 

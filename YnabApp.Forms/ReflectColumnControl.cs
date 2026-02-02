@@ -23,6 +23,7 @@ namespace YnabApp.Forms
         DateTime _asOfDate;
         bool _isYearlyReport;
         PersonSelected _personSelected;
+        bool _isHideZeroCategorties;
 
         CategoryGroupData[] _categoryDatas;
         TransactionData[] _transactionDatas;
@@ -43,11 +44,12 @@ namespace YnabApp.Forms
             get { return this.ParentForm as IReflectView; }
         }
 
-        public void InitializeView(bool isYearlyReport, DateTime reportDate, PersonSelected personSelected)
+        public void InitializeView(bool isYearlyReport, DateTime reportDate, PersonSelected personSelected, bool isHideZeroCategorties)
         {
             _isYearlyReport = isYearlyReport;
             _asOfDate = reportDate;
             _personSelected = personSelected;
+            _isHideZeroCategorties = isHideZeroCategorties;
 
             ResetUI(isYearlyReport);
         }

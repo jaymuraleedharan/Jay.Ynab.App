@@ -60,6 +60,8 @@
             c_radioDurationMonthly = new System.Windows.Forms.RadioButton();
             c_reflectControlsPanel = new System.Windows.Forms.Panel();
             c_reflectControlsTable = new System.Windows.Forms.TableLayoutPanel();
+            groupBox9 = new System.Windows.Forms.GroupBox();
+            c_chkBoxHideZeroCategories = new System.Windows.Forms.CheckBox();
             groupBox1.SuspendLayout();
             groupBox8.SuspendLayout();
             groupBox7.SuspendLayout();
@@ -69,11 +71,13 @@
             groupBox3.SuspendLayout();
             groupBox2.SuspendLayout();
             c_reflectControlsPanel.SuspendLayout();
+            groupBox9.SuspendLayout();
             SuspendLayout();
             // 
             // groupBox1
             // 
             groupBox1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            groupBox1.Controls.Add(groupBox9);
             groupBox1.Controls.Add(groupBox8);
             groupBox1.Controls.Add(c_moveForwardButton);
             groupBox1.Controls.Add(c_moveBackButton);
@@ -90,7 +94,7 @@
             groupBox1.Controls.Add(c_radioDurationMonthly);
             groupBox1.Location = new System.Drawing.Point(10, 11);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new System.Drawing.Size(1603, 146);
+            groupBox1.Size = new System.Drawing.Size(1603, 128);
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "Criteria";
@@ -100,9 +104,9 @@
             groupBox8.Controls.Add(c_radioPersonShar);
             groupBox8.Controls.Add(c_radioPersonJay);
             groupBox8.Controls.Add(c_radioPersonAll);
-            groupBox8.Location = new System.Drawing.Point(1045, 21);
+            groupBox8.Location = new System.Drawing.Point(882, 21);
             groupBox8.Name = "groupBox8";
-            groupBox8.Size = new System.Drawing.Size(92, 113);
+            groupBox8.Size = new System.Drawing.Size(95, 97);
             groupBox8.TabIndex = 23;
             groupBox8.TabStop = false;
             groupBox8.Text = "Select Person";
@@ -110,7 +114,7 @@
             // c_radioPersonShar
             // 
             c_radioPersonShar.AutoSize = true;
-            c_radioPersonShar.Location = new System.Drawing.Point(17, 78);
+            c_radioPersonShar.Location = new System.Drawing.Point(17, 68);
             c_radioPersonShar.Name = "c_radioPersonShar";
             c_radioPersonShar.Size = new System.Drawing.Size(48, 19);
             c_radioPersonShar.TabIndex = 2;
@@ -121,7 +125,7 @@
             // c_radioPersonJay
             // 
             c_radioPersonJay.AutoSize = true;
-            c_radioPersonJay.Location = new System.Drawing.Point(17, 53);
+            c_radioPersonJay.Location = new System.Drawing.Point(17, 45);
             c_radioPersonJay.Name = "c_radioPersonJay";
             c_radioPersonJay.Size = new System.Drawing.Size(41, 19);
             c_radioPersonJay.TabIndex = 1;
@@ -133,7 +137,7 @@
             // 
             c_radioPersonAll.AutoSize = true;
             c_radioPersonAll.Checked = true;
-            c_radioPersonAll.Location = new System.Drawing.Point(17, 28);
+            c_radioPersonAll.Location = new System.Drawing.Point(17, 22);
             c_radioPersonAll.Name = "c_radioPersonAll";
             c_radioPersonAll.Size = new System.Drawing.Size(39, 19);
             c_radioPersonAll.TabIndex = 0;
@@ -166,9 +170,9 @@
             // 
             groupBox7.Controls.Add(c_chkBoxData6);
             groupBox7.Controls.Add(c_dtPckData6);
-            groupBox7.Location = new System.Drawing.Point(873, 55);
+            groupBox7.Location = new System.Drawing.Point(738, 55);
             groupBox7.Name = "groupBox7";
-            groupBox7.Size = new System.Drawing.Size(166, 79);
+            groupBox7.Size = new System.Drawing.Size(138, 63);
             groupBox7.TabIndex = 17;
             groupBox7.TabStop = false;
             groupBox7.Text = "Data #6";
@@ -176,7 +180,7 @@
             // c_chkBoxData6
             // 
             c_chkBoxData6.AutoSize = true;
-            c_chkBoxData6.Location = new System.Drawing.Point(18, 35);
+            c_chkBoxData6.Location = new System.Drawing.Point(11, 26);
             c_chkBoxData6.Name = "c_chkBoxData6";
             c_chkBoxData6.Size = new System.Drawing.Size(15, 14);
             c_chkBoxData6.TabIndex = 12;
@@ -189,10 +193,10 @@
             c_dtPckData6.CustomFormat = "MMM/yyyy";
             c_dtPckData6.Enabled = false;
             c_dtPckData6.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            c_dtPckData6.Location = new System.Drawing.Point(39, 31);
+            c_dtPckData6.Location = new System.Drawing.Point(32, 22);
             c_dtPckData6.MaxDate = new System.DateTime(2200, 1, 1, 0, 0, 0, 0);
             c_dtPckData6.Name = "c_dtPckData6";
-            c_dtPckData6.Size = new System.Drawing.Size(105, 23);
+            c_dtPckData6.Size = new System.Drawing.Size(89, 23);
             c_dtPckData6.TabIndex = 11;
             c_dtPckData6.Value = new System.DateTime(2026, 1, 6, 0, 0, 0, 0);
             // 
@@ -200,9 +204,9 @@
             // 
             groupBox6.Controls.Add(c_chkBoxData5);
             groupBox6.Controls.Add(c_dtPckData5);
-            groupBox6.Location = new System.Drawing.Point(701, 55);
+            groupBox6.Location = new System.Drawing.Point(596, 53);
             groupBox6.Name = "groupBox6";
-            groupBox6.Size = new System.Drawing.Size(166, 79);
+            groupBox6.Size = new System.Drawing.Size(136, 63);
             groupBox6.TabIndex = 20;
             groupBox6.TabStop = false;
             groupBox6.Text = "Data #5";
@@ -210,7 +214,7 @@
             // c_chkBoxData5
             // 
             c_chkBoxData5.AutoSize = true;
-            c_chkBoxData5.Location = new System.Drawing.Point(18, 35);
+            c_chkBoxData5.Location = new System.Drawing.Point(10, 26);
             c_chkBoxData5.Name = "c_chkBoxData5";
             c_chkBoxData5.Size = new System.Drawing.Size(15, 14);
             c_chkBoxData5.TabIndex = 12;
@@ -223,10 +227,10 @@
             c_dtPckData5.CustomFormat = "MMM/yyyy";
             c_dtPckData5.Enabled = false;
             c_dtPckData5.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            c_dtPckData5.Location = new System.Drawing.Point(39, 31);
+            c_dtPckData5.Location = new System.Drawing.Point(31, 22);
             c_dtPckData5.MaxDate = new System.DateTime(2200, 1, 1, 0, 0, 0, 0);
             c_dtPckData5.Name = "c_dtPckData5";
-            c_dtPckData5.Size = new System.Drawing.Size(105, 23);
+            c_dtPckData5.Size = new System.Drawing.Size(91, 23);
             c_dtPckData5.TabIndex = 11;
             c_dtPckData5.Value = new System.DateTime(2026, 1, 6, 0, 0, 0, 0);
             // 
@@ -234,9 +238,9 @@
             // 
             groupBox5.Controls.Add(c_chkBoxData4);
             groupBox5.Controls.Add(c_dtPckData4);
-            groupBox5.Location = new System.Drawing.Point(529, 55);
+            groupBox5.Location = new System.Drawing.Point(453, 53);
             groupBox5.Name = "groupBox5";
-            groupBox5.Size = new System.Drawing.Size(166, 79);
+            groupBox5.Size = new System.Drawing.Size(137, 63);
             groupBox5.TabIndex = 19;
             groupBox5.TabStop = false;
             groupBox5.Text = "Data #4";
@@ -244,7 +248,7 @@
             // c_chkBoxData4
             // 
             c_chkBoxData4.AutoSize = true;
-            c_chkBoxData4.Location = new System.Drawing.Point(18, 35);
+            c_chkBoxData4.Location = new System.Drawing.Point(11, 26);
             c_chkBoxData4.Name = "c_chkBoxData4";
             c_chkBoxData4.Size = new System.Drawing.Size(15, 14);
             c_chkBoxData4.TabIndex = 12;
@@ -257,10 +261,10 @@
             c_dtPckData4.CustomFormat = "MMM/yyyy";
             c_dtPckData4.Enabled = false;
             c_dtPckData4.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            c_dtPckData4.Location = new System.Drawing.Point(39, 31);
+            c_dtPckData4.Location = new System.Drawing.Point(32, 22);
             c_dtPckData4.MaxDate = new System.DateTime(2200, 1, 1, 0, 0, 0, 0);
             c_dtPckData4.Name = "c_dtPckData4";
-            c_dtPckData4.Size = new System.Drawing.Size(105, 23);
+            c_dtPckData4.Size = new System.Drawing.Size(91, 23);
             c_dtPckData4.TabIndex = 11;
             c_dtPckData4.Value = new System.DateTime(2026, 1, 6, 0, 0, 0, 0);
             // 
@@ -268,9 +272,9 @@
             // 
             groupBox4.Controls.Add(c_chkBoxData3);
             groupBox4.Controls.Add(c_dtPckData3);
-            groupBox4.Location = new System.Drawing.Point(357, 55);
+            groupBox4.Location = new System.Drawing.Point(309, 55);
             groupBox4.Name = "groupBox4";
-            groupBox4.Size = new System.Drawing.Size(166, 79);
+            groupBox4.Size = new System.Drawing.Size(138, 63);
             groupBox4.TabIndex = 18;
             groupBox4.TabStop = false;
             groupBox4.Text = "Data #3";
@@ -278,7 +282,7 @@
             // c_chkBoxData3
             // 
             c_chkBoxData3.AutoSize = true;
-            c_chkBoxData3.Location = new System.Drawing.Point(18, 35);
+            c_chkBoxData3.Location = new System.Drawing.Point(11, 26);
             c_chkBoxData3.Name = "c_chkBoxData3";
             c_chkBoxData3.Size = new System.Drawing.Size(15, 14);
             c_chkBoxData3.TabIndex = 12;
@@ -290,10 +294,10 @@
             // 
             c_dtPckData3.CustomFormat = "MMM/yyyy";
             c_dtPckData3.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            c_dtPckData3.Location = new System.Drawing.Point(39, 31);
+            c_dtPckData3.Location = new System.Drawing.Point(32, 22);
             c_dtPckData3.MaxDate = new System.DateTime(2200, 1, 1, 0, 0, 0, 0);
             c_dtPckData3.Name = "c_dtPckData3";
-            c_dtPckData3.Size = new System.Drawing.Size(105, 23);
+            c_dtPckData3.Size = new System.Drawing.Size(90, 23);
             c_dtPckData3.TabIndex = 11;
             c_dtPckData3.Value = new System.DateTime(2026, 1, 6, 0, 0, 0, 0);
             // 
@@ -301,9 +305,9 @@
             // 
             groupBox3.Controls.Add(c_chkBoxData2);
             groupBox3.Controls.Add(c_dtPckData2);
-            groupBox3.Location = new System.Drawing.Point(181, 55);
+            groupBox3.Location = new System.Drawing.Point(158, 55);
             groupBox3.Name = "groupBox3";
-            groupBox3.Size = new System.Drawing.Size(166, 79);
+            groupBox3.Size = new System.Drawing.Size(145, 63);
             groupBox3.TabIndex = 17;
             groupBox3.TabStop = false;
             groupBox3.Text = "Data #2";
@@ -311,7 +315,7 @@
             // c_chkBoxData2
             // 
             c_chkBoxData2.AutoSize = true;
-            c_chkBoxData2.Location = new System.Drawing.Point(18, 35);
+            c_chkBoxData2.Location = new System.Drawing.Point(16, 26);
             c_chkBoxData2.Name = "c_chkBoxData2";
             c_chkBoxData2.Size = new System.Drawing.Size(15, 14);
             c_chkBoxData2.TabIndex = 12;
@@ -323,10 +327,10 @@
             // 
             c_dtPckData2.CustomFormat = "MMM/yyyy";
             c_dtPckData2.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            c_dtPckData2.Location = new System.Drawing.Point(39, 31);
+            c_dtPckData2.Location = new System.Drawing.Point(37, 22);
             c_dtPckData2.MaxDate = new System.DateTime(2200, 1, 1, 0, 0, 0, 0);
             c_dtPckData2.Name = "c_dtPckData2";
-            c_dtPckData2.Size = new System.Drawing.Size(105, 23);
+            c_dtPckData2.Size = new System.Drawing.Size(91, 23);
             c_dtPckData2.TabIndex = 11;
             c_dtPckData2.Value = new System.DateTime(2026, 1, 6, 0, 0, 0, 0);
             // 
@@ -336,7 +340,7 @@
             groupBox2.Controls.Add(c_dtPckData1);
             groupBox2.Location = new System.Drawing.Point(9, 55);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new System.Drawing.Size(166, 79);
+            groupBox2.Size = new System.Drawing.Size(143, 63);
             groupBox2.TabIndex = 16;
             groupBox2.TabStop = false;
             groupBox2.Text = "Data #1";
@@ -347,7 +351,7 @@
             c_chkBoxData1.Checked = true;
             c_chkBoxData1.CheckState = System.Windows.Forms.CheckState.Checked;
             c_chkBoxData1.Enabled = false;
-            c_chkBoxData1.Location = new System.Drawing.Point(18, 35);
+            c_chkBoxData1.Location = new System.Drawing.Point(11, 26);
             c_chkBoxData1.Name = "c_chkBoxData1";
             c_chkBoxData1.Size = new System.Drawing.Size(15, 14);
             c_chkBoxData1.TabIndex = 12;
@@ -359,10 +363,10 @@
             // 
             c_dtPckData1.CustomFormat = "MMM/yyyy";
             c_dtPckData1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            c_dtPckData1.Location = new System.Drawing.Point(39, 31);
+            c_dtPckData1.Location = new System.Drawing.Point(32, 22);
             c_dtPckData1.MaxDate = new System.DateTime(2200, 1, 1, 0, 0, 0, 0);
             c_dtPckData1.Name = "c_dtPckData1";
-            c_dtPckData1.Size = new System.Drawing.Size(105, 23);
+            c_dtPckData1.Size = new System.Drawing.Size(91, 23);
             c_dtPckData1.TabIndex = 11;
             c_dtPckData1.Value = new System.DateTime(2026, 1, 6, 0, 0, 0, 0);
             // 
@@ -388,9 +392,9 @@
             // 
             // c_btnShow
             // 
-            c_btnShow.Location = new System.Drawing.Point(1143, 72);
+            c_btnShow.Location = new System.Drawing.Point(983, 84);
             c_btnShow.Name = "c_btnShow";
-            c_btnShow.Size = new System.Drawing.Size(105, 43);
+            c_btnShow.Size = new System.Drawing.Size(155, 32);
             c_btnShow.TabIndex = 13;
             c_btnShow.Text = "Show";
             c_btnShow.UseVisualStyleBackColor = true;
@@ -422,9 +426,9 @@
             // 
             c_reflectControlsPanel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             c_reflectControlsPanel.Controls.Add(c_reflectControlsTable);
-            c_reflectControlsPanel.Location = new System.Drawing.Point(10, 163);
+            c_reflectControlsPanel.Location = new System.Drawing.Point(10, 145);
             c_reflectControlsPanel.Name = "c_reflectControlsPanel";
-            c_reflectControlsPanel.Size = new System.Drawing.Size(1603, 604);
+            c_reflectControlsPanel.Size = new System.Drawing.Size(1603, 622);
             c_reflectControlsPanel.TabIndex = 1;
             // 
             // c_reflectControlsTable
@@ -436,8 +440,30 @@
             c_reflectControlsTable.Name = "c_reflectControlsTable";
             c_reflectControlsTable.RowCount = 1;
             c_reflectControlsTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            c_reflectControlsTable.Size = new System.Drawing.Size(1603, 604);
+            c_reflectControlsTable.Size = new System.Drawing.Size(1603, 622);
             c_reflectControlsTable.TabIndex = 0;
+            // 
+            // groupBox9
+            // 
+            groupBox9.Controls.Add(c_chkBoxHideZeroCategories);
+            groupBox9.Location = new System.Drawing.Point(983, 21);
+            groupBox9.Name = "groupBox9";
+            groupBox9.Size = new System.Drawing.Size(153, 49);
+            groupBox9.TabIndex = 24;
+            groupBox9.TabStop = false;
+            groupBox9.Text = "Options";
+            // 
+            // c_chkBoxHideZeroCategories
+            // 
+            c_chkBoxHideZeroCategories.AutoSize = true;
+            c_chkBoxHideZeroCategories.Checked = true;
+            c_chkBoxHideZeroCategories.CheckState = System.Windows.Forms.CheckState.Checked;
+            c_chkBoxHideZeroCategories.Location = new System.Drawing.Point(7, 21);
+            c_chkBoxHideZeroCategories.Name = "c_chkBoxHideZeroCategories";
+            c_chkBoxHideZeroCategories.Size = new System.Drawing.Size(143, 19);
+            c_chkBoxHideZeroCategories.TabIndex = 0;
+            c_chkBoxHideZeroCategories.Text = "Hide 'Zero' Categories";
+            c_chkBoxHideZeroCategories.UseVisualStyleBackColor = true;
             // 
             // ReflectForm
             // 
@@ -466,6 +492,8 @@
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
             c_reflectControlsPanel.ResumeLayout(false);
+            groupBox9.ResumeLayout(false);
+            groupBox9.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -503,5 +531,7 @@
         private System.Windows.Forms.RadioButton c_radioPersonAll;
         private System.Windows.Forms.RadioButton c_radioPersonShar;
         private System.Windows.Forms.RadioButton c_radioPersonJay;
+        private System.Windows.Forms.GroupBox groupBox9;
+        private System.Windows.Forms.CheckBox c_chkBoxHideZeroCategories;
     }
 }

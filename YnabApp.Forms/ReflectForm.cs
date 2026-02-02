@@ -87,7 +87,7 @@ namespace YnabApp.Forms
                 {
                     c_reflectControlsTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, columnWidthPercentage));
                     ReflectColumnControl reflectColumnControl = new ReflectColumnControl();
-                    reflectColumnControl.InitializeView(c_radioDurationYearly.Checked, reportDate, personSelected);
+                    reflectColumnControl.InitializeView(c_radioDurationYearly.Checked, reportDate, personSelected, c_chkBoxHideZeroCategories.Checked);
 
                     c_reflectControlsTable.Controls.Add(reflectColumnControl, controlCounter, 0);
                     reflectColumnControl.Dock = DockStyle.Fill;
