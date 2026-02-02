@@ -191,7 +191,7 @@ namespace YnabApp.Forms
         private void ResetListView(ListView listViewControl, string columnName, bool isYearly)
         {
             listViewControl.Columns.Clear();
-            listViewControl.Columns.Add("Category");
+            listViewControl.Columns.Add(columnName);
             listViewControl.Columns.Add("Amount", 300, HorizontalAlignment.Right);
             listViewControl.Columns.Add("% of Income", 150, HorizontalAlignment.Right);
             if (isYearly)

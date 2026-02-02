@@ -15,6 +15,7 @@ namespace YnabApp.BL.Reflect
 
         static AccountFilter()
         {
+            JayAccounts.Add(new("3cfcdb24-37e5-4738-acf9-5adc567614d8", "J_CHS_CHK (9895)", "checking"));
             JayAccounts.Add(new("0bdada36-9db3-46a2-921f-42d19ce106e9", "J_CHS_CHK2 (2278)", "checking"));
             JayAccounts.Add(new("4c9d6116-3abb-4c7a-8ab7-9bd82d0fe423", "J_CHS_SAV (2414)", "savings"));
             JayAccounts.Add(new("68c525f3-ae0b-4c39-9aef-34bb574f27e3", "J_CHS_CRD (5601)", "creditCard"));
