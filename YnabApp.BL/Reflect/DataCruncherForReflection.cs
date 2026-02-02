@@ -76,7 +76,7 @@ namespace YnabApp.BL.Reflect
 
             //Calculate Percentages
             //decimal totalAmount = Math.Abs(reflectCategoryGroupDatas.Sum(r => r.Amount));
-            reflectCategoryGroupDatas.ForEach(r => r.Percentage = Math.Abs(r.Amount) * 100 / totalIncome);
+            reflectCategoryGroupDatas.ForEach(r => r.Percentage = (totalIncome == 0) ? 0 : Math.Abs(r.Amount) * 100 / totalIncome);
 
             return reflectCategoryGroupDatas.OrderBy(cg => cg.Amount).ToList();
         }
@@ -133,7 +133,7 @@ namespace YnabApp.BL.Reflect
             }
 
             //Calculate Percentages
-            reflectCategoryDatas.ForEach(r => r.Percentage = Math.Abs(r.Amount) * 100 / totalIncome);
+            reflectCategoryDatas.ForEach(r => r.Percentage = (totalIncome == 0) ? 0 : Math.Abs(r.Amount) * 100 / totalIncome);
 
             return reflectCategoryDatas.OrderBy(cg => cg.Amount).ToList();
         }
@@ -328,9 +328,9 @@ namespace YnabApp.BL.Reflect
 
             //Setting Percentages
             incomeSummaryData.Percentage = 100;
-            expenseSummaryData.Percentage = (Math.Abs(expenseSummaryData.Amount) * 100) / Math.Abs(incomeSummaryData.Amount);
-            indirectSavingsSummaryData.Percentage = (Math.Abs(indirectSavingsSummaryData.Amount) * 100) / Math.Abs(incomeSummaryData.Amount);
-            unspentSummaryData.Percentage = (Math.Abs(unspentSummaryData.Amount) * 100) / Math.Abs(incomeSummaryData.Amount);
+            expenseSummaryData.Percentage = (incomeSummaryData.Amount == 0)? 0 : (Math.Abs(expenseSummaryData.Amount) * 100) / Math.Abs(incomeSummaryData.Amount);
+            indirectSavingsSummaryData.Percentage = (incomeSummaryData.Amount == 0) ? 0 : (Math.Abs(indirectSavingsSummaryData.Amount) * 100) / Math.Abs(incomeSummaryData.Amount);
+            unspentSummaryData.Percentage = (incomeSummaryData.Amount == 0) ? 0 :  (Math.Abs(unspentSummaryData.Amount) * 100) / Math.Abs(incomeSummaryData.Amount);
 
             reflectSummaryDatas.Add(incomeSummaryData);
             reflectSummaryDatas.Add(expenseSummaryData);
