@@ -75,5 +75,20 @@ namespace YnabApp.UI.Reflect
                 default: return Color.Black;
             }
         }
+
+        public static Color GetNetChangeBackColor(decimal amount)
+        {
+            if (amount == 0)
+                return Color.FromKnownColor(KnownColor.Control);
+            else if (amount < 0)
+                return LIGHTRED;
+            else
+                return LIGHTGREEN;
+        }
+
+        public static Color GetNetChangeFontColor(decimal amount)
+        {
+            return Color.Black;
+        }
     }
 }

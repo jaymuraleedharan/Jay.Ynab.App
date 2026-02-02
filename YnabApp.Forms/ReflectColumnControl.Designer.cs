@@ -60,7 +60,7 @@
             // 
             groupBox1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             groupBox1.Controls.Add(c_categoryGroupDataListView);
-            groupBox1.Location = new System.Drawing.Point(7, 339);
+            groupBox1.Location = new System.Drawing.Point(7, 357);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new System.Drawing.Size(545, 168);
             groupBox1.TabIndex = 1;
@@ -70,6 +70,7 @@
             // c_categoryGroupDataListView
             // 
             c_categoryGroupDataListView.BackColor = System.Drawing.SystemColors.Control;
+            c_categoryGroupDataListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             c_categoryGroupDataListView.Dock = System.Windows.Forms.DockStyle.Fill;
             c_categoryGroupDataListView.FullRowSelect = true;
             c_categoryGroupDataListView.Location = new System.Drawing.Point(3, 19);
@@ -84,9 +85,9 @@
             // 
             groupBox2.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             groupBox2.Controls.Add(c_categoryDataListView);
-            groupBox2.Location = new System.Drawing.Point(7, 512);
+            groupBox2.Location = new System.Drawing.Point(7, 528);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new System.Drawing.Size(545, 402);
+            groupBox2.Size = new System.Drawing.Size(545, 386);
             groupBox2.TabIndex = 2;
             groupBox2.TabStop = false;
             groupBox2.Text = "Expense Categories";
@@ -94,11 +95,12 @@
             // c_categoryDataListView
             // 
             c_categoryDataListView.BackColor = System.Drawing.SystemColors.Control;
+            c_categoryDataListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             c_categoryDataListView.Dock = System.Windows.Forms.DockStyle.Fill;
             c_categoryDataListView.FullRowSelect = true;
             c_categoryDataListView.Location = new System.Drawing.Point(3, 19);
             c_categoryDataListView.Name = "c_categoryDataListView";
-            c_categoryDataListView.Size = new System.Drawing.Size(539, 380);
+            c_categoryDataListView.Size = new System.Drawing.Size(539, 364);
             c_categoryDataListView.TabIndex = 16;
             c_categoryDataListView.UseCompatibleStateImageBehavior = false;
             c_categoryDataListView.View = System.Windows.Forms.View.Details;
@@ -108,7 +110,7 @@
             // 
             groupBox3.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             groupBox3.Controls.Add(c_incomeListView);
-            groupBox3.Location = new System.Drawing.Point(7, 156);
+            groupBox3.Location = new System.Drawing.Point(7, 177);
             groupBox3.Name = "groupBox3";
             groupBox3.Size = new System.Drawing.Size(545, 177);
             groupBox3.TabIndex = 3;
@@ -118,6 +120,7 @@
             // c_incomeListView
             // 
             c_incomeListView.BackColor = System.Drawing.SystemColors.Control;
+            c_incomeListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             c_incomeListView.Dock = System.Windows.Forms.DockStyle.Fill;
             c_incomeListView.FullRowSelect = true;
             c_incomeListView.GridLines = true;
@@ -135,7 +138,7 @@
             groupBox4.Controls.Add(c_summaryListView);
             groupBox4.Location = new System.Drawing.Point(7, 26);
             groupBox4.Name = "groupBox4";
-            groupBox4.Size = new System.Drawing.Size(545, 124);
+            groupBox4.Size = new System.Drawing.Size(545, 148);
             groupBox4.TabIndex = 4;
             groupBox4.TabStop = false;
             groupBox4.Text = "Summary";
@@ -143,12 +146,13 @@
             // c_summaryListView
             // 
             c_summaryListView.BackColor = System.Drawing.SystemColors.Control;
+            c_summaryListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             c_summaryListView.Dock = System.Windows.Forms.DockStyle.Fill;
             c_summaryListView.FullRowSelect = true;
             c_summaryListView.GridLines = true;
             c_summaryListView.Location = new System.Drawing.Point(3, 19);
             c_summaryListView.Name = "c_summaryListView";
-            c_summaryListView.Size = new System.Drawing.Size(539, 102);
+            c_summaryListView.Size = new System.Drawing.Size(539, 126);
             c_summaryListView.TabIndex = 16;
             c_summaryListView.UseCompatibleStateImageBehavior = false;
             c_summaryListView.View = System.Windows.Forms.View.Details;

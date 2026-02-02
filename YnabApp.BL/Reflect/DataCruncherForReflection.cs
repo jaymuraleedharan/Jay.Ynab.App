@@ -303,6 +303,7 @@ namespace YnabApp.BL.Reflect
             ReflectSummaryData expenseSummaryData = new("All Expenses");
             ReflectSummaryData indirectSavingsSummaryData = new("Savings");
             ReflectSummaryData unspentSummaryData = new("Unspent");
+            ReflectSummaryData netChangeSummaryData = new("Net Change");
 
             foreach (var transaction in matchingTransactions)
             {
@@ -330,16 +331,21 @@ namespace YnabApp.BL.Reflect
             if (unspentSummaryData.Amount < 0)
                 unspentSummaryData.Amount = 0;
 
+            //Net Change
+            netChangeSummaryData.Amount = incomeSummaryData.Amount + expenseSummaryData.Amount;
+
             //Setting Percentages
             incomeSummaryData.Percentage = 100;
             expenseSummaryData.Percentage = (incomeSummaryData.Amount == 0)? 0 : (Math.Abs(expenseSummaryData.Amount) * 100) / Math.Abs(incomeSummaryData.Amount);
             indirectSavingsSummaryData.Percentage = (incomeSummaryData.Amount == 0) ? 0 : (Math.Abs(indirectSavingsSummaryData.Amount) * 100) / Math.Abs(incomeSummaryData.Amount);
             unspentSummaryData.Percentage = (incomeSummaryData.Amount == 0) ? 0 :  (Math.Abs(unspentSummaryData.Amount) * 100) / Math.Abs(incomeSummaryData.Amount);
+            netChangeSummaryData.Percentage = (incomeSummaryData.Amount == 0) ? 0 : (Math.Abs(netChangeSummaryData.Amount) * 100) / Math.Abs(incomeSummaryData.Amount);
 
             reflectSummaryDatas.Add(incomeSummaryData);
             reflectSummaryDatas.Add(expenseSummaryData);
             reflectSummaryDatas.Add(indirectSavingsSummaryData);
             reflectSummaryDatas.Add(unspentSummaryData);
+            reflectSummaryDatas.Add(netChangeSummaryData);
 
             return reflectSummaryDatas;
         }     
