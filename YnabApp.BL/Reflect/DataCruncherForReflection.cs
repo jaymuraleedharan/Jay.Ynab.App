@@ -153,6 +153,13 @@ namespace YnabApp.BL.Reflect
             else
                 matchingTransactions = transactionDatas.Where(t => t.TransDateTime.Year == reportDate.Year && t.TransDateTime.Month == reportDate.Month);
 
+
+            //Filter by Person
+            if (person != Person.All)
+            {
+                matchingTransactions = matchingTransactions.Where(t => AccountFilter.IsPersonAccount(t.AccountId, person)).ToList();
+            }
+
             List<TransactionData> filteredTransactions = new List<TransactionData>();
             foreach (TransactionData transactionData in matchingTransactions)
             {

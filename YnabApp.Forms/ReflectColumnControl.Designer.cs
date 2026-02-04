@@ -51,7 +51,7 @@
             c_headerLabel.ForeColor = System.Drawing.SystemColors.HighlightText;
             c_headerLabel.Location = new System.Drawing.Point(-2, 0);
             c_headerLabel.Name = "c_headerLabel";
-            c_headerLabel.Size = new System.Drawing.Size(554, 23);
+            c_headerLabel.Size = new System.Drawing.Size(558, 23);
             c_headerLabel.TabIndex = 0;
             c_headerLabel.Text = "Jan / 2025";
             c_headerLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -62,7 +62,7 @@
             groupBox1.Controls.Add(c_categoryGroupDataListView);
             groupBox1.Location = new System.Drawing.Point(7, 357);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new System.Drawing.Size(545, 168);
+            groupBox1.Size = new System.Drawing.Size(549, 168);
             groupBox1.TabIndex = 1;
             groupBox1.TabStop = false;
             groupBox1.Text = "Expense Category Groups";
@@ -75,7 +75,7 @@
             c_categoryGroupDataListView.FullRowSelect = true;
             c_categoryGroupDataListView.Location = new System.Drawing.Point(3, 19);
             c_categoryGroupDataListView.Name = "c_categoryGroupDataListView";
-            c_categoryGroupDataListView.Size = new System.Drawing.Size(539, 146);
+            c_categoryGroupDataListView.Size = new System.Drawing.Size(543, 146);
             c_categoryGroupDataListView.TabIndex = 16;
             c_categoryGroupDataListView.UseCompatibleStateImageBehavior = false;
             c_categoryGroupDataListView.View = System.Windows.Forms.View.Details;
@@ -87,7 +87,7 @@
             groupBox2.Controls.Add(c_categoryDataListView);
             groupBox2.Location = new System.Drawing.Point(7, 528);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new System.Drawing.Size(545, 386);
+            groupBox2.Size = new System.Drawing.Size(549, 390);
             groupBox2.TabIndex = 2;
             groupBox2.TabStop = false;
             groupBox2.Text = "Expense Categories";
@@ -100,7 +100,7 @@
             c_categoryDataListView.FullRowSelect = true;
             c_categoryDataListView.Location = new System.Drawing.Point(3, 19);
             c_categoryDataListView.Name = "c_categoryDataListView";
-            c_categoryDataListView.Size = new System.Drawing.Size(539, 364);
+            c_categoryDataListView.Size = new System.Drawing.Size(543, 368);
             c_categoryDataListView.TabIndex = 16;
             c_categoryDataListView.UseCompatibleStateImageBehavior = false;
             c_categoryDataListView.View = System.Windows.Forms.View.Details;
@@ -112,7 +112,7 @@
             groupBox3.Controls.Add(c_incomeListView);
             groupBox3.Location = new System.Drawing.Point(7, 177);
             groupBox3.Name = "groupBox3";
-            groupBox3.Size = new System.Drawing.Size(545, 177);
+            groupBox3.Size = new System.Drawing.Size(549, 177);
             groupBox3.TabIndex = 3;
             groupBox3.TabStop = false;
             groupBox3.Text = "Income";
@@ -126,7 +126,7 @@
             c_incomeListView.GridLines = true;
             c_incomeListView.Location = new System.Drawing.Point(3, 19);
             c_incomeListView.Name = "c_incomeListView";
-            c_incomeListView.Size = new System.Drawing.Size(539, 155);
+            c_incomeListView.Size = new System.Drawing.Size(543, 155);
             c_incomeListView.TabIndex = 16;
             c_incomeListView.UseCompatibleStateImageBehavior = false;
             c_incomeListView.View = System.Windows.Forms.View.Details;
@@ -138,7 +138,7 @@
             groupBox4.Controls.Add(c_summaryListView);
             groupBox4.Location = new System.Drawing.Point(7, 26);
             groupBox4.Name = "groupBox4";
-            groupBox4.Size = new System.Drawing.Size(545, 148);
+            groupBox4.Size = new System.Drawing.Size(549, 148);
             groupBox4.TabIndex = 4;
             groupBox4.TabStop = false;
             groupBox4.Text = "Summary";
@@ -152,7 +152,7 @@
             c_summaryListView.GridLines = true;
             c_summaryListView.Location = new System.Drawing.Point(3, 19);
             c_summaryListView.Name = "c_summaryListView";
-            c_summaryListView.Size = new System.Drawing.Size(539, 126);
+            c_summaryListView.Size = new System.Drawing.Size(543, 126);
             c_summaryListView.TabIndex = 16;
             c_summaryListView.UseCompatibleStateImageBehavior = false;
             c_summaryListView.View = System.Windows.Forms.View.Details;
@@ -161,14 +161,13 @@
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             Controls.Add(groupBox4);
             Controls.Add(groupBox3);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             Controls.Add(c_headerLabel);
             Name = "ReflectColumnControl";
-            Size = new System.Drawing.Size(555, 917);
+            Size = new System.Drawing.Size(559, 921);
             groupBox1.ResumeLayout(false);
             groupBox2.ResumeLayout(false);
             groupBox3.ResumeLayout(false);

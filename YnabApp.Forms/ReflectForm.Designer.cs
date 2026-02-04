@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             groupBox1 = new System.Windows.Forms.GroupBox();
+            groupBox9 = new System.Windows.Forms.GroupBox();
+            c_chkBoxHideZeroCategories = new System.Windows.Forms.CheckBox();
             groupBox8 = new System.Windows.Forms.GroupBox();
             c_radioPersonShar = new System.Windows.Forms.RadioButton();
             c_radioPersonJay = new System.Windows.Forms.RadioButton();
@@ -60,9 +62,8 @@
             c_radioDurationMonthly = new System.Windows.Forms.RadioButton();
             c_reflectControlsPanel = new System.Windows.Forms.Panel();
             c_reflectControlsTable = new System.Windows.Forms.TableLayoutPanel();
-            groupBox9 = new System.Windows.Forms.GroupBox();
-            c_chkBoxHideZeroCategories = new System.Windows.Forms.CheckBox();
             groupBox1.SuspendLayout();
+            groupBox9.SuspendLayout();
             groupBox8.SuspendLayout();
             groupBox7.SuspendLayout();
             groupBox6.SuspendLayout();
@@ -71,7 +72,6 @@
             groupBox3.SuspendLayout();
             groupBox2.SuspendLayout();
             c_reflectControlsPanel.SuspendLayout();
-            groupBox9.SuspendLayout();
             SuspendLayout();
             // 
             // groupBox1
@@ -99,6 +99,28 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Criteria";
             // 
+            // groupBox9
+            // 
+            groupBox9.Controls.Add(c_chkBoxHideZeroCategories);
+            groupBox9.Location = new System.Drawing.Point(983, 21);
+            groupBox9.Name = "groupBox9";
+            groupBox9.Size = new System.Drawing.Size(153, 49);
+            groupBox9.TabIndex = 24;
+            groupBox9.TabStop = false;
+            groupBox9.Text = "Options";
+            // 
+            // c_chkBoxHideZeroCategories
+            // 
+            c_chkBoxHideZeroCategories.AutoSize = true;
+            c_chkBoxHideZeroCategories.Checked = true;
+            c_chkBoxHideZeroCategories.CheckState = System.Windows.Forms.CheckState.Checked;
+            c_chkBoxHideZeroCategories.Location = new System.Drawing.Point(7, 21);
+            c_chkBoxHideZeroCategories.Name = "c_chkBoxHideZeroCategories";
+            c_chkBoxHideZeroCategories.Size = new System.Drawing.Size(143, 19);
+            c_chkBoxHideZeroCategories.TabIndex = 0;
+            c_chkBoxHideZeroCategories.Text = "Hide 'Zero' Categories";
+            c_chkBoxHideZeroCategories.UseVisualStyleBackColor = true;
+            // 
             // groupBox8
             // 
             groupBox8.Controls.Add(c_radioPersonShar);
@@ -109,7 +131,7 @@
             groupBox8.Size = new System.Drawing.Size(95, 97);
             groupBox8.TabIndex = 23;
             groupBox8.TabStop = false;
-            groupBox8.Text = "Select Person";
+            groupBox8.Text = "Person";
             // 
             // c_radioPersonShar
             // 
@@ -443,28 +465,6 @@
             c_reflectControlsTable.Size = new System.Drawing.Size(1603, 622);
             c_reflectControlsTable.TabIndex = 0;
             // 
-            // groupBox9
-            // 
-            groupBox9.Controls.Add(c_chkBoxHideZeroCategories);
-            groupBox9.Location = new System.Drawing.Point(983, 21);
-            groupBox9.Name = "groupBox9";
-            groupBox9.Size = new System.Drawing.Size(153, 49);
-            groupBox9.TabIndex = 24;
-            groupBox9.TabStop = false;
-            groupBox9.Text = "Options";
-            // 
-            // c_chkBoxHideZeroCategories
-            // 
-            c_chkBoxHideZeroCategories.AutoSize = true;
-            c_chkBoxHideZeroCategories.Checked = true;
-            c_chkBoxHideZeroCategories.CheckState = System.Windows.Forms.CheckState.Checked;
-            c_chkBoxHideZeroCategories.Location = new System.Drawing.Point(7, 21);
-            c_chkBoxHideZeroCategories.Name = "c_chkBoxHideZeroCategories";
-            c_chkBoxHideZeroCategories.Size = new System.Drawing.Size(143, 19);
-            c_chkBoxHideZeroCategories.TabIndex = 0;
-            c_chkBoxHideZeroCategories.Text = "Hide 'Zero' Categories";
-            c_chkBoxHideZeroCategories.UseVisualStyleBackColor = true;
-            // 
             // ReflectForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -477,6 +477,8 @@
             Load += ReflectForm_Load;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
+            groupBox9.ResumeLayout(false);
+            groupBox9.PerformLayout();
             groupBox8.ResumeLayout(false);
             groupBox8.PerformLayout();
             groupBox7.ResumeLayout(false);
@@ -492,8 +494,6 @@
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
             c_reflectControlsPanel.ResumeLayout(false);
-            groupBox9.ResumeLayout(false);
-            groupBox9.PerformLayout();
             ResumeLayout(false);
         }
 

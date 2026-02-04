@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using YnabApp.BL.ListCategories;
 using YnabApp.BL.ListTransactions;
 using YnabApp.BL.Reflect;
+using YnabApp.UI.Reflect;
 
 namespace YnabApp.Forms
 {
@@ -21,8 +22,11 @@ namespace YnabApp.Forms
         ReflectCategoryGroupData _catGroupData;
         ReflectCategoryData _catData;
         ReflectIncomeData _incomeData;
+
         DateTime _asOfDate;
         bool _isYearlyReport;
+        PersonSelected _personSelected;
+
         TransactionData[] _transactionDatas;
         List<TransactionData> _filteredTransactions = null;
 
@@ -36,28 +40,43 @@ namespace YnabApp.Forms
             this.Close();
         }
 
-        public void SetData(ReflectCategoryGroupData catGroupData, ReflectCategoryData catData, ReflectIncomeData incomeData, DateTime asOfDate, bool isYearlyReport, TransactionData[] transactionDatas)
+        public void SetData(ReflectCategoryGroupData catGroupData, ReflectCategoryData catData, ReflectIncomeData incomeData, DateTime asOfDate, bool isYearlyReport, PersonSelected personSelected, TransactionData[] transactionDatas)
         {
             _catGroupData = catGroupData;
             _catData = catData;
             _incomeData = incomeData;
             _asOfDate = asOfDate;
             _isYearlyReport = isYearlyReport;
+            _personSelected = personSelected;
             _transactionDatas = transactionDatas;
 
             DataCruncherForReflection dataCruncher = new();
             if (catGroupData != null)
-                _filteredTransactions = dataCruncher.FilterCategoryGroupTransactions(catGroupData, transactionDatas, isYearlyReport, asOfDate);
+                _filteredTransactions = dataCruncher.FilterCategoryGroupTransactions(catGroupData, transactionDatas, isYearlyReport, asOfDate, BL_Person);
             else if(catData != null)
-                _filteredTransactions = dataCruncher.FilterCategoryTransactions(catData, transactionDatas, isYearlyReport, asOfDate);
+                _filteredTransactions = dataCruncher.FilterCategoryTransactions(catData, transactionDatas, isYearlyReport, asOfDate, BL_Person);
             else if(incomeData != null)
-                _filteredTransactions = dataCruncher.FilterIncomeTransactions(incomeData, transactionDatas, isYearlyReport, asOfDate);
+                _filteredTransactions = dataCruncher.FilterIncomeTransactions(incomeData, transactionDatas, isYearlyReport, asOfDate, BL_Person);
 
             _filteredTransactions = _filteredTransactions.OrderBy(t => t.Amount).ToList();
 
             ShowData();
         }
 
+
+        private Person BL_Person
+        {
+            get
+            {
+                switch (_personSelected)
+                {
+                    case PersonSelected.All: return Person.All;
+                    case PersonSelected.Jay: return Person.Jay;
+                    case PersonSelected.Shar: return Person.Shar;
+                    default: return Person.All;
+                }
+            }
+        }
 
         private void ShowData()
         {
@@ -96,20 +115,20 @@ namespace YnabApp.Forms
             c_transactionsGrid.DataSource = _filteredTransactions;            
         }
 
-        public static void ShowModal(ReflectCategoryGroupData catGroupData, ReflectCategoryData catData, DateTime asOfDate, bool isYearlyReport, TransactionData[] transactionDatas)
+        public static void ShowModal(ReflectCategoryGroupData catGroupData, ReflectCategoryData catData, DateTime asOfDate, bool isYearlyReport, PersonSelected personSelected, TransactionData[] transactionDatas)
         {
             ReflectTransactionsForm reflectTransactionsForm = new ReflectTransactionsForm();
             reflectTransactionsForm.Activate();
-            reflectTransactionsForm.SetData(catGroupData, catData, null, asOfDate, isYearlyReport, transactionDatas);
+            reflectTransactionsForm.SetData(catGroupData, catData, null, asOfDate, isYearlyReport, personSelected, transactionDatas);
             reflectTransactionsForm.ShowDialog();
         }
 
 
-        public static void ShowModal(ReflectIncomeData incomeData, DateTime asOfDate, bool isYearlyReport, TransactionData[] transactionDatas)
+        public static void ShowModal(ReflectIncomeData incomeData, DateTime asOfDate, bool isYearlyReport, PersonSelected personSelected, TransactionData[] transactionDatas)
         {
             ReflectTransactionsForm reflectTransactionsForm = new ReflectTransactionsForm();
             reflectTransactionsForm.Activate();
-            reflectTransactionsForm.SetData(null, null, incomeData, asOfDate, isYearlyReport, transactionDatas);
+            reflectTransactionsForm.SetData(null, null, incomeData, asOfDate, isYearlyReport, personSelected, transactionDatas);
             reflectTransactionsForm.ShowDialog();
         }
 
