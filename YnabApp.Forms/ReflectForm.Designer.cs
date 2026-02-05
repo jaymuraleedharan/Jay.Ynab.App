@@ -337,6 +337,8 @@
             // c_chkBoxData2
             // 
             c_chkBoxData2.AutoSize = true;
+            c_chkBoxData2.Checked = true;
+            c_chkBoxData2.CheckState = System.Windows.Forms.CheckState.Checked;
             c_chkBoxData2.Location = new System.Drawing.Point(16, 26);
             c_chkBoxData2.Name = "c_chkBoxData2";
             c_chkBoxData2.Size = new System.Drawing.Size(15, 14);
@@ -455,6 +457,8 @@
             // 
             // c_reflectControlsTable
             // 
+            c_reflectControlsTable.BackColor = System.Drawing.SystemColors.Control;
+            c_reflectControlsTable.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             c_reflectControlsTable.ColumnCount = 1;
             c_reflectControlsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             c_reflectControlsTable.Dock = System.Windows.Forms.DockStyle.Fill;

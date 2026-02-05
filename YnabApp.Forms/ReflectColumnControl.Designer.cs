@@ -45,13 +45,13 @@
             // 
             // c_headerLabel
             // 
-            c_headerLabel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             c_headerLabel.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            c_headerLabel.Dock = System.Windows.Forms.DockStyle.Top;
             c_headerLabel.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
             c_headerLabel.ForeColor = System.Drawing.SystemColors.HighlightText;
-            c_headerLabel.Location = new System.Drawing.Point(-2, 0);
+            c_headerLabel.Location = new System.Drawing.Point(0, 0);
             c_headerLabel.Name = "c_headerLabel";
-            c_headerLabel.Size = new System.Drawing.Size(558, 23);
+            c_headerLabel.Size = new System.Drawing.Size(559, 23);
             c_headerLabel.TabIndex = 0;
             c_headerLabel.Text = "Jan / 2025";
             c_headerLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
