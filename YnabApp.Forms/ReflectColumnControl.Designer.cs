@@ -62,7 +62,7 @@
             c_summaryListView.GridLines = true;
             c_summaryListView.Location = new System.Drawing.Point(5, 26);
             c_summaryListView.Name = "c_summaryListView";
-            c_summaryListView.Size = new System.Drawing.Size(546, 145);
+            c_summaryListView.Size = new System.Drawing.Size(546, 119);
             c_summaryListView.TabIndex = 17;
             c_summaryListView.UseCompatibleStateImageBehavior = false;
             c_summaryListView.View = System.Windows.Forms.View.Details;
@@ -80,9 +80,9 @@
             c_incomeListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { columnHeader2 });
             c_incomeListView.FullRowSelect = true;
             c_incomeListView.GridLines = true;
-            c_incomeListView.Location = new System.Drawing.Point(5, 174);
+            c_incomeListView.Location = new System.Drawing.Point(5, 151);
             c_incomeListView.Name = "c_incomeListView";
-            c_incomeListView.Size = new System.Drawing.Size(546, 177);
+            c_incomeListView.Size = new System.Drawing.Size(546, 163);
             c_incomeListView.TabIndex = 18;
             c_incomeListView.UseCompatibleStateImageBehavior = false;
             c_incomeListView.View = System.Windows.Forms.View.Details;
@@ -99,9 +99,9 @@
             c_categoryGroupDataListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             c_categoryGroupDataListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { columnHeader3 });
             c_categoryGroupDataListView.FullRowSelect = true;
-            c_categoryGroupDataListView.Location = new System.Drawing.Point(5, 354);
+            c_categoryGroupDataListView.Location = new System.Drawing.Point(5, 320);
             c_categoryGroupDataListView.Name = "c_categoryGroupDataListView";
-            c_categoryGroupDataListView.Size = new System.Drawing.Size(546, 168);
+            c_categoryGroupDataListView.Size = new System.Drawing.Size(546, 155);
             c_categoryGroupDataListView.TabIndex = 19;
             c_categoryGroupDataListView.UseCompatibleStateImageBehavior = false;
             c_categoryGroupDataListView.View = System.Windows.Forms.View.Details;
@@ -119,9 +119,9 @@
             c_categoryDataListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             c_categoryDataListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { columnHeader4 });
             c_categoryDataListView.FullRowSelect = true;
-            c_categoryDataListView.Location = new System.Drawing.Point(5, 528);
+            c_categoryDataListView.Location = new System.Drawing.Point(5, 481);
             c_categoryDataListView.Name = "c_categoryDataListView";
-            c_categoryDataListView.Size = new System.Drawing.Size(546, 390);
+            c_categoryDataListView.Size = new System.Drawing.Size(546, 436);
             c_categoryDataListView.TabIndex = 20;
             c_categoryDataListView.UseCompatibleStateImageBehavior = false;
             c_categoryDataListView.View = System.Windows.Forms.View.Details;
