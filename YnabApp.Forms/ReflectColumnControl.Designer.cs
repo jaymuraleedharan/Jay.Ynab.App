@@ -97,6 +97,7 @@
             c_categoryGroupDataListView.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             c_categoryGroupDataListView.BackColor = System.Drawing.SystemColors.Control;
             c_categoryGroupDataListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            c_categoryGroupDataListView.CheckBoxes = true;
             c_categoryGroupDataListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { columnHeader3 });
             c_categoryGroupDataListView.FullRowSelect = true;
             c_categoryGroupDataListView.Location = new System.Drawing.Point(5, 320);
@@ -105,6 +106,7 @@
             c_categoryGroupDataListView.TabIndex = 19;
             c_categoryGroupDataListView.UseCompatibleStateImageBehavior = false;
             c_categoryGroupDataListView.View = System.Windows.Forms.View.Details;
+            c_categoryGroupDataListView.ItemChecked += c_categoryGroupDataListView_ItemChecked;
             c_categoryGroupDataListView.DoubleClick += c_categoryGroupDataListView_DoubleClick;
             // 
             // columnHeader3

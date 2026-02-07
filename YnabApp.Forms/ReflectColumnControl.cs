@@ -28,6 +28,7 @@ namespace YnabApp.Forms
         CategoryGroupData[] _categoryDatas;
         TransactionData[] _transactionDatas;
 
+        List<ReflectCategoryData> _categoryResults;
 
         decimal TotalIncome { get; set; }
 
@@ -58,7 +59,7 @@ namespace YnabApp.Forms
         {
             get
             {
-                switch(_personSelected)
+                switch (_personSelected)
                 {
                     case PersonSelected.All: return Person.All;
                     case PersonSelected.Jay: return Person.Jay;
@@ -137,6 +138,9 @@ namespace YnabApp.Forms
 
             var categoryGroupResults = await dataCruncher.CrunchCategroyGroupDataAsync(categoryDatas, transactionDatas, _isYearlyReport, _asOfDate, TotalIncome, BL_Person);
 
+            //Disabling Checked Event during data load            
+            c_categoryGroupDataListView.ItemChecked -= c_categoryGroupDataListView_ItemChecked;
+
             foreach (var categoryGroup in categoryGroupResults)
             {
                 ListViewItem item = new ListViewItem(categoryGroup.CategoryGroupName);
@@ -144,6 +148,8 @@ namespace YnabApp.Forms
                 item.SubItems.Add(categoryGroup.Percentage.ToString("#0.00"));
                 if (_isYearlyReport)
                     item.SubItems.Add(categoryGroup.MonthlyAmountAccurate(_asOfDate).ToString("#,###,##0.00"));
+
+                item.Checked = true;
                 item.Tag = categoryGroup;
                 item.BackColor = ReflectColorizer.GetBackColor(categoryGroup.CategoryGroupName);
                 item.ForeColor = ReflectColorizer.GetFontColor(categoryGroup.CategoryGroupName);
@@ -152,26 +158,17 @@ namespace YnabApp.Forms
 
             c_categoryGroupDataListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
 
+            //Enabling back Checked Event
+            c_categoryGroupDataListView.ItemChecked += c_categoryGroupDataListView_ItemChecked;
+
+
             //-------------------------------------------//
             // Categories
             //-------------------------------------------//
 
-            var categoryResults = await dataCruncher.CrunchCategroyDataAsync(categoryDatas, transactionDatas, _isYearlyReport, _asOfDate, TotalIncome, BL_Person);
+            _categoryResults = await dataCruncher.CrunchCategroyDataAsync(categoryDatas, transactionDatas, _isYearlyReport, _asOfDate, TotalIncome, BL_Person);
 
-            foreach (var category in categoryResults)
-            {
-                ListViewItem item = new ListViewItem(category.FullCategoryName);
-                item.SubItems.Add(category.Amount.ToString("#,###,##0.00"));
-                item.SubItems.Add(category.Percentage.ToString("#0.00"));
-                if (_isYearlyReport)
-                    item.SubItems.Add(category.MonthlyAmountAccurate(_asOfDate).ToString("#,###,##0.00"));
-                item.Tag = category;
-                item.BackColor = ReflectColorizer.GetBackColor(category.CategoryGroupName);
-                item.ForeColor = ReflectColorizer.GetFontColor(category.CategoryGroupName);
-                c_categoryDataListView.Items.Add(item);
-            }
-
-            c_categoryDataListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            ShowCategoriesFilteredByCatGroups();
 
             //-------------------------------------------//
 
@@ -255,6 +252,47 @@ namespace YnabApp.Forms
                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             }
+        }
+
+        private void c_categoryGroupDataListView_ItemChecked(object sender, ItemCheckedEventArgs e)
+        {
+            try
+            {                
+                ResetListView(c_categoryDataListView, "Category", _isYearlyReport);
+                ShowCategoriesFilteredByCatGroups();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"{ex.Message}{Environment.NewLine}{ex.StackTrace}",
+               "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
+        }
+
+        private void ShowCategoriesFilteredByCatGroups()
+        {
+            List<ReflectCategoryGroupData> selectedCatGroups = new List<ReflectCategoryGroupData>();
+            foreach(ListViewItem item in c_categoryGroupDataListView.Items)
+                if(item.Checked)
+                    selectedCatGroups.Add(item.Tag as ReflectCategoryGroupData);            
+
+            foreach (var category in _categoryResults)
+            {
+                if (selectedCatGroups.Exists(cg => cg.CategoryGroupName == category.CategoryGroupName))
+                {
+                    ListViewItem item = new ListViewItem(category.FullCategoryName);
+                    item.SubItems.Add(category.Amount.ToString("#,###,##0.00"));
+                    item.SubItems.Add(category.Percentage.ToString("#0.00"));
+                    if (_isYearlyReport)
+                        item.SubItems.Add(category.MonthlyAmountAccurate(_asOfDate).ToString("#,###,##0.00"));
+                    item.Tag = category;
+                    item.BackColor = ReflectColorizer.GetBackColor(category.CategoryGroupName);
+                    item.ForeColor = ReflectColorizer.GetFontColor(category.CategoryGroupName);
+                    c_categoryDataListView.Items.Add(item);
+                }
+            }
+
+            c_categoryDataListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
         }
     }
 
