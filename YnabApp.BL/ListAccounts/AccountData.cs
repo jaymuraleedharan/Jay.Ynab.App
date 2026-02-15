@@ -29,5 +29,16 @@ namespace YnabApp.BL.ListAccounts
         public decimal NetChange { get; set; }
 
         public decimal CrunchedAmount { get; set; }
+
+        public AccountGroup Group { get; set; }
+    }
+
+    public enum AccountGroup
+    {
+        Deposits = 0,
+        Stocks = 1,
+        HomeEquity = 3,
+        Liability = 4,
+        Retirement = 5
     }
 }

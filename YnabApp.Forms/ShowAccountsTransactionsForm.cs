@@ -53,6 +53,8 @@ namespace YnabApp.Forms
 
                 PresentAccountsData();
 
+                PresentAllAssets();
+
                 c_startDatePicker.ValueChanged += C_startDatePicker_ValueChanged;
             }
             catch (Exception ex)
@@ -69,6 +71,7 @@ namespace YnabApp.Forms
         private void ResetUI()
         {
             c_ownerList.SelectedIndex = 0;
+            c_personList.SelectedIndex = 0;
 
             c_startDatePicker.ValueChanged -= C_startDatePicker_ValueChanged;
             c_startDatePicker.MaxDate = DateTime.Now;
@@ -78,6 +81,7 @@ namespace YnabApp.Forms
             ResetAccountTreeView();
             ResetTransactionListView();
             ResetAccountsListView();
+            ResetAllAssetsListView();
         }
 
         private async void C_startDatePicker_ValueChanged(object sender, EventArgs e)
@@ -87,6 +91,7 @@ namespace YnabApp.Forms
                 ResetAccountTreeView();
                 ResetTransactionListView();
                 ResetAccountsListView();
+                ResetAllAssetsListView();
 
                 await GetAccountsDataAsync();
 
@@ -172,7 +177,7 @@ namespace YnabApp.Forms
 
             var rootAll = c_AccountsTreeView.Nodes.Add("CATEGORIES", "CATEGORIES");
 
-            foreach(var catGroupData in _categoriesData)
+            foreach (var catGroupData in _categoriesData)
             {
                 if (catGroupData.IsDeleted || catGroupData.IsHidden)
                     continue;
@@ -237,12 +242,12 @@ namespace YnabApp.Forms
                     {
                         var catGroupData = c_AccountsTreeView.SelectedNode.Tag as CategoryGroupData;
                         var catData = c_AccountsTreeView.SelectedNode.Tag as CategoryData;
-                        if(catGroupData!=null)
+                        if (catGroupData != null)
                         {
                             var filteredTransactions = FilterTransactions(catGroupData);
                             PresentTransactionData(filteredTransactions);
                         }
-                        else if (catData!= null)
+                        else if (catData != null)
                         {
                             var filteredTransactions = FilterTransactions(catData);
                             PresentTransactionData(filteredTransactions);
@@ -324,10 +329,10 @@ namespace YnabApp.Forms
 
                 decimal totalAmount = 0;
                 foreach (TransactionData transData in filteredTransactions)
-                {                    
+                {
                     var item = new ListViewItem(new string[]
                     {
-                        transData.TransactionDate, transData.CategoryName, transData.AccountName, transData.PayeeName,  transData.Memo, 
+                        transData.TransactionDate, transData.CategoryName, transData.AccountName, transData.PayeeName,  transData.Memo,
                         transData.Amount.Format()
                     });
                     totalAmount += transData.Amount;
@@ -365,6 +370,17 @@ namespace YnabApp.Forms
         }
 
 
+        private void ResetAllAssetsListView()
+        {
+            c_allAssetsListView.Columns.Clear();
+            c_allAssetsListView.Columns.Add("Name");
+            c_allAssetsListView.Columns.Add("Type");
+            c_allAssetsListView.Columns.Add("Balance", 300, HorizontalAlignment.Right);
+
+            c_allAssetsListView.Groups.Clear();
+            c_allAssetsListView.Items.Clear();
+        }
+
         private void PresentAccountsData(AccountData[] accountData)
         {
             if (accountData != null)
@@ -392,6 +408,10 @@ namespace YnabApp.Forms
                     {
                         if (accData.IsClosed || accData.IsDeleted)
                             continue;
+
+                        //Correcting Negative Balances for liabilities
+                        if (accData.Type == "otherLiability" && accData.Balance > 0)
+                            accData.Balance = -(accData.Balance);
 
                         var item = new ListViewItem(new string[]
                         {
@@ -448,9 +468,91 @@ namespace YnabApp.Forms
             }
         }
 
+        private void PresentAllAssets()
+        {
+            PresentAllAssets(_accountsData);
+        }
+
+        private void PresentAllAssets(AccountData[] accountDatas)
+        {
+            if (accountDatas == null)
+                return;
+
+            c_allAssetsListView.SuspendLayout();
+
+            decimal nwBalance = 0;
+
+            //Group Acounts by Account Type
+            var groups = (from a in accountDatas select a.Group).Distinct();
+            foreach (var group in groups)
+            {
+                //GROUP
+                var typeGroup = new ListViewGroup(group.ToString(), HorizontalAlignment.Left);
+                c_allAssetsListView.Groups.Add(typeGroup);
+
+                //GROUP ITEMS
+                var accountsInGroup = accountDatas.Where(a => a.Group == group);
+                if (accountsInGroup.Count() == 0)
+                    continue;
+
+                decimal balanceTotal = 0, groupTotalCredit = 0, groupTotalDebit = 0, groupNetChange = 0;
+
+                foreach (var accData in accountsInGroup)
+                {
+                    if (accData.IsClosed || accData.IsDeleted)
+                        continue;
+
+                    //Correcting Negative Balances for liabilities
+                    if (accData.Type == "otherLiability" && accData.Balance > 0)
+                        accData.Balance = -(accData.Balance);
+
+                    var item = new ListViewItem(new string[]
+                    {
+                            accData.Name, accData.Type, accData.Balance.Format()
+                    });
+
+                    c_allAssetsListView.Items.Add(item);
+                    ColorizeAsset(item, accData);
+                    item.Group = typeGroup;
+
+                    balanceTotal += accData.Balance;
+                    groupTotalCredit += accData.CreditTotal;
+                    groupTotalDebit += accData.DebitTotal;
+                    groupNetChange += accData.NetChange;
+                    nwBalance += accData.Balance;
+                }
+
+                //GROUP TOTAL
+                var groupTotal = new ListViewItem(new string[]
+                    {
+                            "TOTAL", string.Empty, balanceTotal.Format()
+                    });
+                groupTotal.Font = new Font(groupTotal.Font, FontStyle.Bold);
+                c_allAssetsListView.Items.Add(groupTotal);
+                groupTotal.Group = typeGroup;
+            }
+
+            //Net Worth Group & Total
+            var nwGroup = new ListViewGroup("NET WORTH", HorizontalAlignment.Left);
+            c_allAssetsListView.Groups.Add(nwGroup);
+            var nwTotal = new ListViewItem(new string[]
+                {
+                            "TOTAL", string.Empty, nwBalance.Format()
+                });
+            nwTotal.Font = new Font(nwTotal.Font, FontStyle.Bold);
+            c_allAssetsListView.Items.Add(nwTotal);
+            nwTotal.Group = nwGroup;
+
+
+            c_allAssetsListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+
+            c_allAssetsListView.ResumeLayout();
+
+        }
+
         private void Colorize(ListViewItem item, AccountData accData)
         {
-            switch(accData.Type)
+            switch (accData.Type)
             {
                 case "creditCard":
                 case "otherLiability":
@@ -465,5 +567,30 @@ namespace YnabApp.Forms
             }
         }
 
+        private void ColorizeAsset(ListViewItem item, AccountData accData)
+        {
+            switch (accData.Group)
+            {
+                case AccountGroup.Liability:
+                    item.BackColor = ListAccountsPresenter.LIGHTRED; break;
+                default:
+                    item.BackColor = ListAccountsPresenter.LIGHTGREEN; break;
+            }
+        }
+
+        private void c_personList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                var person = c_personList.SelectedItem as string;
+                var filteredAccs = _presenter.FilterAccounts(_accountsData, person);
+                ResetAllAssetsListView();
+                PresentAllAssets(filteredAccs);
+            }
+            catch (Exception ex)
+            {
+                ShowError(ex);
+            }
+        }
     }
 }

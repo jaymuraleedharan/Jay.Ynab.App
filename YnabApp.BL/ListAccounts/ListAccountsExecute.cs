@@ -45,9 +45,33 @@ namespace YnabApp.BL.ListAccounts
                         Balance = Decimal.Parse(account["balance"].ToString()) / 1000,
                         UnclearedBalance = Decimal.Parse(account["uncleared_balance"].ToString()) / 1000,
                         IsDeleted = Boolean.Parse(account["deleted"].ToString()),
+                        Group = GetAccountGroup(account)
                     });
 
             return list.ToArray();
+        }
+
+        protected AccountGroup GetAccountGroup(JToken account)
+        {
+            switch (account["type"].ToString())
+            {
+                case "checking":
+                case "savings":
+                    if (account["name"].ToString().Contains("_HSA", StringComparison.InvariantCultureIgnoreCase))
+                        return AccountGroup.Retirement;
+                    else
+                        return AccountGroup.Deposits;
+
+                case "creditCard":
+                case "otherLiability":
+                     return AccountGroup.Liability;
+
+                case "otherAsset":
+                    return AccountGroup.Stocks;
+
+                default:
+                    return AccountGroup.Deposits;
+            }
         }
     }
 }

@@ -7,11 +7,18 @@ using YnabApp.BL.ListBudgets;
 using YnabApp.BL.ListAccounts;
 using YnabApp.BL.ListTransactions;
 using YnabApp.BL.ListCategories;
+using System.Drawing;
 
 namespace YnabApp.UI.ListAccounts
 {
     public class ListAccountsPresenter
     {
+        public static readonly Color LIGHTYELLOW = Color.FromArgb(255, 255, 204);
+        public static readonly Color LIGHTGREEN = Color.FromArgb(204, 255, 204);
+        public static readonly Color LIGHTRED = Color.FromArgb(255, 204, 204);
+        public static readonly Color LIGHTBLUE = Color.FromArgb(204, 236, 255);
+
+
         private readonly IListAccountsView _view;
 
         public ListAccountsPresenter(IListAccountsView view)
