@@ -21,6 +21,7 @@ namespace YnabApp.BL.ListAccounts
             "f6f763c1-9a1f-42a7-a4ab-182927880ab1", //J_BAC_HSA (0361)
             "f3f36e34-053a-4aab-a532-2aab0f2deab7", //J_CSB_NRO
             "9a514d8b-2565-4435-a4af-6124b32a36c1", //J_FTD_STK
+            "f0b7eaa8-7bf0-434f-8653-e211d93786f5", //J_BAC_INV
             "4480b204-ce5c-47bd-ba78-27df76446e6e", //HRA
             //"128cc0ab-3cfb-49ec-a067-4d529907a9ef", //Mortgage
             "7020baec-4691-42cf-b855-8b29f6808c54" //Lending
