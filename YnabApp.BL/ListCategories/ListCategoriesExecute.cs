@@ -9,6 +9,8 @@ namespace YnabApp.BL.ListCategories
 {
     public class ListCategoriesExecute : ExecuteBase
     {
+        public ListCategoriesExecute() : base() { }
+
         protected override string ExecuteUrl
         {
             get { return $"/budgets/{BudgetID}/categories"; }

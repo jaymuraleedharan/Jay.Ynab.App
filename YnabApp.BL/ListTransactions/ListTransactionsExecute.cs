@@ -9,6 +9,8 @@ namespace YnabApp.BL.ListTransactions
 {
     public class ListTransactionsExecute : ExecuteBase
     {
+        public ListTransactionsExecute() : base() { }
+
         protected override string ExecuteUrl
         {
             get { return $"/budgets/{BudgetID}/transactions?since_date={StartDate.IsoFormat()}"; }
