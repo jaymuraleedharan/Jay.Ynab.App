@@ -9,6 +9,7 @@ namespace YnabApp.BL.ListBudgets
 {
     public class ListBudgetsExecute : ExecuteBase
     {
+        public ListBudgetsExecute() : base() { }
 
         protected override string ExecuteUrl => "/budgets?include_accounts=false";
 

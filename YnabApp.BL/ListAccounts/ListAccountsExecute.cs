@@ -9,6 +9,8 @@ namespace YnabApp.BL.ListAccounts
 {
     public class ListAccountsExecute : ExecuteBase
     {
+        public ListAccountsExecute() : base() { }
+
         protected override string ExecuteUrl
         {
             get { return $"/budgets/{BudgetID}/accounts"; }
