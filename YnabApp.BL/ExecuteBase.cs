@@ -45,7 +45,7 @@ namespace YnabApp.BL
             RawResponse = await response.Content.ReadAsStringAsync();
         }
 
-        protected bool IsError()
+        protected bool ParseRawResponse()
         {
             JsonResponse = JObject.Parse(RawResponse);
 

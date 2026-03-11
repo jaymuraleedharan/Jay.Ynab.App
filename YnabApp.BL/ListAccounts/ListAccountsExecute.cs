@@ -22,9 +22,20 @@ namespace YnabApp.BL.ListAccounts
         {
             BudgetID = budgetID;
 
-            await base.ExecuteAsync();
+            CacheManager cache = new CacheManager(CacheType.Accounts);
+            string dataFromCache = await cache.GetDataFromCacheAsync();
+            if (!string.IsNullOrEmpty(dataFromCache))
+            {
+                RawResponse = dataFromCache;
+            }
+            else
+            {
+                await base.ExecuteAsync();
+                await cache.SaveToCacheAsync(base.RawResponse);
+            }
 
-            if (IsError())
+
+            if (ParseRawResponse())
                 throw new YnabException("Error while getting Account List", GetError());
 
             return ConvertData();
