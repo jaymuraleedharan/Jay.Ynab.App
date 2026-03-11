@@ -25,9 +25,19 @@ namespace YnabApp.BL.ListTransactions
             BudgetID = budgetID;
             StartDate = startDate;
 
-            await base.ExecuteAsync();
+            CacheManager cache = new CacheManager(CacheType.Transactions);
+            string dataFromCache = await cache.GetDataFromCacheAsync(startDate);
+            if (!string.IsNullOrEmpty(dataFromCache))
+            {
+                RawResponse = dataFromCache;
+            }
+            else
+            {
+                await base.ExecuteAsync();
+                await cache.SaveToCacheAsync(startDate, base.RawResponse);
+            }
 
-            if (IsError())
+            if (ParseRawResponse())
                 throw new YnabException("Error while getting Transactions", GetError());
 
             return ConvertData();

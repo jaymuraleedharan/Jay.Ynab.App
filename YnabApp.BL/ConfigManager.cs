@@ -13,6 +13,8 @@ namespace YnabApp.BL
     {
         public static IConfigurationRoot AllConfig { get; internal set; }
 
+        public static EnvSettings Env = new EnvSettings();
+
         public static AppSettings App { get; private set; }
 
         public static UISettings UI { get; private set; }
@@ -36,6 +38,14 @@ namespace YnabApp.BL
         }
     }
 
+    public sealed class EnvSettings
+    {
+        public string LocalBinFolder
+        {
+            get { return new Uri(AppContext.BaseDirectory).LocalPath; }
+        }
+    }
+
     public sealed class AppSettings
     {
         public YnabApiSettings YnabApi { get; set; }
@@ -52,7 +62,11 @@ namespace YnabApp.BL
 
     public sealed class YnabCacheSettings
     {
+        public bool IsCachingEnabled { get; set; }
+
         public string CacheFolder { get; set; } = null;
+
+        public int HistoryStartYear { get; set; }
 
         public int AutoExpirationInDays { get; set; } = 0;
     }

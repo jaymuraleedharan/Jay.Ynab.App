@@ -17,7 +17,7 @@ namespace YnabApp.BL.ListBudgets
         {
             await base.ExecuteAsync();
 
-            if (IsError())
+            if (ParseRawResponse())
                 throw new YnabException("Error while getting Budget List", GetError());
 
             return ConvertData();

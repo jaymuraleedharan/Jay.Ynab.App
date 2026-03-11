@@ -22,9 +22,19 @@ namespace YnabApp.BL.ListCategories
         {
             BudgetID = budgetID;
 
-            await base.ExecuteAsync();
+            CacheManager cache = new CacheManager(CacheType.Categories);
+            string dataFromCache = await cache.GetDataFromCacheAsync();
+            if (!string.IsNullOrEmpty(dataFromCache))
+            {
+                RawResponse = dataFromCache;
+            }
+            else
+            {
+                await base.ExecuteAsync();
+                await cache.SaveToCacheAsync(base.RawResponse);
+            }
 
-            if (IsError())
+            if (ParseRawResponse())
                 throw new YnabException("Error while getting Categories List", GetError());
 
             return ConvertData();
