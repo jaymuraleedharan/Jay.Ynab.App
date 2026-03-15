@@ -172,6 +172,13 @@ namespace YnabApp.BL
                 return DateTime.MaxValue;
         }
 
+
+        public bool ClearCache()
+        {
+            var files = Directory.EnumerateFiles(CacheFolder, "*.json").ToList();
+            files.ForEach( f => File.Delete(f));
+            return true;
+        }
     }
 
 

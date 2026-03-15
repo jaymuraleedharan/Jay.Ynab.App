@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using YnabApp.BL;
 using YnabApp.BL.ListCategories;
 using YnabApp.BL.ListTransactions;
 
@@ -31,5 +32,10 @@ namespace YnabApp.UI.Reflect
             return data;
         }
 
+        public bool ClearCache()
+        {
+            CacheManager cache = new CacheManager(CacheType.Accounts);
+            return cache.ClearCache();
+        }
     }
 }

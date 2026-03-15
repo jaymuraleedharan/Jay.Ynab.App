@@ -275,7 +275,7 @@ namespace YnabApp.Forms
         {
             try
             {
-                if(c_radioDurationYearly.Checked)
+                if (c_radioDurationYearly.Checked)
                 {
                     if (c_dtPckData1.Value.Year == DateTime.Today.Year)
                         return;
@@ -317,6 +317,22 @@ namespace YnabApp.Forms
                     DateTime start = c_dtPckData1.Value.AddMonths(-1);
                     ShowLastMonths(start);
                 }
+            }
+            catch (Exception ex)
+            {
+                ShowError(ex);
+            }
+        }
+
+        private void c_btnClearCache_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var isSuccess = _presenter.ClearCache();
+                if (isSuccess)
+                    MessageBox.Show("Cache cleared successfully", "Clear Cache", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                else
+                    MessageBox.Show("Failed to clear Cache", "Clear Cache", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch (Exception ex)
             {
