@@ -356,8 +356,8 @@ namespace YnabApp.BL.Reflect
 
             reflectSummaryDatas.Add(incomeSummaryData);
             reflectSummaryDatas.Add(expenseSummaryData);
-            reflectSummaryDatas.Add(indirectSavingsSummaryData);
-            reflectSummaryDatas.Add(unspentSummaryData);
+            //reflectSummaryDatas.Add(indirectSavingsSummaryData);
+            //reflectSummaryDatas.Add(unspentSummaryData);
             reflectSummaryDatas.Add(netChangeSummaryData);
 
             return reflectSummaryDatas;
