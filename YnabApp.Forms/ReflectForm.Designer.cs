@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             groupBox1 = new System.Windows.Forms.GroupBox();
+            c_btnClearCache = new System.Windows.Forms.Button();
             groupBox9 = new System.Windows.Forms.GroupBox();
             c_chkBoxHideZeroCategories = new System.Windows.Forms.CheckBox();
             groupBox8 = new System.Windows.Forms.GroupBox();
@@ -77,6 +78,7 @@
             // groupBox1
             // 
             groupBox1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            groupBox1.Controls.Add(c_btnClearCache);
             groupBox1.Controls.Add(groupBox9);
             groupBox1.Controls.Add(groupBox8);
             groupBox1.Controls.Add(c_moveForwardButton);
@@ -99,12 +101,22 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Criteria";
             // 
+            // c_btnClearCache
+            // 
+            c_btnClearCache.Location = new System.Drawing.Point(970, 82);
+            c_btnClearCache.Name = "c_btnClearCache";
+            c_btnClearCache.Size = new System.Drawing.Size(98, 32);
+            c_btnClearCache.TabIndex = 25;
+            c_btnClearCache.Text = "Clear Cache";
+            c_btnClearCache.UseVisualStyleBackColor = true;
+            c_btnClearCache.Click += c_btnClearCache_Click;
+            // 
             // groupBox9
             // 
             groupBox9.Controls.Add(c_chkBoxHideZeroCategories);
-            groupBox9.Location = new System.Drawing.Point(983, 21);
+            groupBox9.Location = new System.Drawing.Point(970, 21);
             groupBox9.Name = "groupBox9";
-            groupBox9.Size = new System.Drawing.Size(153, 49);
+            groupBox9.Size = new System.Drawing.Size(202, 53);
             groupBox9.TabIndex = 24;
             groupBox9.TabStop = false;
             groupBox9.Text = "Options";
@@ -128,7 +140,7 @@
             groupBox8.Controls.Add(c_radioPersonAll);
             groupBox8.Location = new System.Drawing.Point(882, 21);
             groupBox8.Name = "groupBox8";
-            groupBox8.Size = new System.Drawing.Size(95, 97);
+            groupBox8.Size = new System.Drawing.Size(82, 97);
             groupBox8.TabIndex = 23;
             groupBox8.TabStop = false;
             groupBox8.Text = "Person";
@@ -416,9 +428,9 @@
             // 
             // c_btnShow
             // 
-            c_btnShow.Location = new System.Drawing.Point(983, 84);
+            c_btnShow.Location = new System.Drawing.Point(1074, 81);
             c_btnShow.Name = "c_btnShow";
-            c_btnShow.Size = new System.Drawing.Size(155, 32);
+            c_btnShow.Size = new System.Drawing.Size(98, 32);
             c_btnShow.TabIndex = 13;
             c_btnShow.Text = "Show";
             c_btnShow.UseVisualStyleBackColor = true;
@@ -537,5 +549,6 @@
         private System.Windows.Forms.RadioButton c_radioPersonJay;
         private System.Windows.Forms.GroupBox groupBox9;
         private System.Windows.Forms.CheckBox c_chkBoxHideZeroCategories;
+        private System.Windows.Forms.Button c_btnClearCache;
     }
 }
