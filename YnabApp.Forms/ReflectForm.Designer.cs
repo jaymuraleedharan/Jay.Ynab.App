@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             groupBox1 = new System.Windows.Forms.GroupBox();
-            c_btnClearCache = new System.Windows.Forms.Button();
-            groupBox9 = new System.Windows.Forms.GroupBox();
+            btnShowGraph = new System.Windows.Forms.Button();
             c_chkBoxHideZeroCategories = new System.Windows.Forms.CheckBox();
+            c_btnClearCache = new System.Windows.Forms.Button();
             groupBox8 = new System.Windows.Forms.GroupBox();
             c_radioPersonShar = new System.Windows.Forms.RadioButton();
             c_radioPersonJay = new System.Windows.Forms.RadioButton();
@@ -64,7 +64,6 @@
             c_reflectControlsPanel = new System.Windows.Forms.Panel();
             c_reflectControlsTable = new System.Windows.Forms.TableLayoutPanel();
             groupBox1.SuspendLayout();
-            groupBox9.SuspendLayout();
             groupBox8.SuspendLayout();
             groupBox7.SuspendLayout();
             groupBox6.SuspendLayout();
@@ -78,8 +77,9 @@
             // groupBox1
             // 
             groupBox1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            groupBox1.Controls.Add(btnShowGraph);
+            groupBox1.Controls.Add(c_chkBoxHideZeroCategories);
             groupBox1.Controls.Add(c_btnClearCache);
-            groupBox1.Controls.Add(groupBox9);
             groupBox1.Controls.Add(groupBox8);
             groupBox1.Controls.Add(c_moveForwardButton);
             groupBox1.Controls.Add(c_moveBackButton);
@@ -101,37 +101,37 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Criteria";
             // 
-            // c_btnClearCache
+            // btnShowGraph
             // 
-            c_btnClearCache.Location = new System.Drawing.Point(970, 82);
-            c_btnClearCache.Name = "c_btnClearCache";
-            c_btnClearCache.Size = new System.Drawing.Size(98, 32);
-            c_btnClearCache.TabIndex = 25;
-            c_btnClearCache.Text = "Clear Cache";
-            c_btnClearCache.UseVisualStyleBackColor = true;
-            c_btnClearCache.Click += c_btnClearCache_Click;
-            // 
-            // groupBox9
-            // 
-            groupBox9.Controls.Add(c_chkBoxHideZeroCategories);
-            groupBox9.Location = new System.Drawing.Point(970, 21);
-            groupBox9.Name = "groupBox9";
-            groupBox9.Size = new System.Drawing.Size(202, 53);
-            groupBox9.TabIndex = 24;
-            groupBox9.TabStop = false;
-            groupBox9.Text = "Options";
+            btnShowGraph.Location = new System.Drawing.Point(970, 57);
+            btnShowGraph.Name = "btnShowGraph";
+            btnShowGraph.Size = new System.Drawing.Size(98, 26);
+            btnShowGraph.TabIndex = 26;
+            btnShowGraph.Text = "Graph...";
+            btnShowGraph.UseVisualStyleBackColor = true;
+            btnShowGraph.Click += btnShowGraph_Click;
             // 
             // c_chkBoxHideZeroCategories
             // 
             c_chkBoxHideZeroCategories.AutoSize = true;
             c_chkBoxHideZeroCategories.Checked = true;
             c_chkBoxHideZeroCategories.CheckState = System.Windows.Forms.CheckState.Checked;
-            c_chkBoxHideZeroCategories.Location = new System.Drawing.Point(7, 21);
+            c_chkBoxHideZeroCategories.Location = new System.Drawing.Point(733, 26);
             c_chkBoxHideZeroCategories.Name = "c_chkBoxHideZeroCategories";
             c_chkBoxHideZeroCategories.Size = new System.Drawing.Size(143, 19);
             c_chkBoxHideZeroCategories.TabIndex = 0;
             c_chkBoxHideZeroCategories.Text = "Hide 'Zero' Categories";
             c_chkBoxHideZeroCategories.UseVisualStyleBackColor = true;
+            // 
+            // c_btnClearCache
+            // 
+            c_btnClearCache.Location = new System.Drawing.Point(970, 25);
+            c_btnClearCache.Name = "c_btnClearCache";
+            c_btnClearCache.Size = new System.Drawing.Size(98, 26);
+            c_btnClearCache.TabIndex = 25;
+            c_btnClearCache.Text = "Clear Cache";
+            c_btnClearCache.UseVisualStyleBackColor = true;
+            c_btnClearCache.Click += c_btnClearCache_Click;
             // 
             // groupBox8
             // 
@@ -182,7 +182,7 @@
             // 
             // c_moveForwardButton
             // 
-            c_moveForwardButton.Location = new System.Drawing.Point(659, 21);
+            c_moveForwardButton.Location = new System.Drawing.Point(596, 22);
             c_moveForwardButton.Name = "c_moveForwardButton";
             c_moveForwardButton.Size = new System.Drawing.Size(34, 26);
             c_moveForwardButton.TabIndex = 22;
@@ -192,7 +192,7 @@
             // 
             // c_moveBackButton
             // 
-            c_moveBackButton.Location = new System.Drawing.Point(252, 21);
+            c_moveBackButton.Location = new System.Drawing.Point(269, 21);
             c_moveBackButton.Name = "c_moveBackButton";
             c_moveBackButton.Size = new System.Drawing.Size(34, 26);
             c_moveBackButton.TabIndex = 21;
@@ -408,9 +408,9 @@
             // 
             // c_selectLastThreeMonths
             // 
-            c_selectLastThreeMonths.Location = new System.Drawing.Point(483, 21);
+            c_selectLastThreeMonths.Location = new System.Drawing.Point(453, 21);
             c_selectLastThreeMonths.Name = "c_selectLastThreeMonths";
-            c_selectLastThreeMonths.Size = new System.Drawing.Size(155, 26);
+            c_selectLastThreeMonths.Size = new System.Drawing.Size(137, 26);
             c_selectLastThreeMonths.TabIndex = 15;
             c_selectLastThreeMonths.Text = "Select Recent Months";
             c_selectLastThreeMonths.UseVisualStyleBackColor = true;
@@ -418,9 +418,9 @@
             // 
             // c_selectLastThreeYears
             // 
-            c_selectLastThreeYears.Location = new System.Drawing.Point(307, 21);
+            c_selectLastThreeYears.Location = new System.Drawing.Point(309, 21);
             c_selectLastThreeYears.Name = "c_selectLastThreeYears";
-            c_selectLastThreeYears.Size = new System.Drawing.Size(155, 26);
+            c_selectLastThreeYears.Size = new System.Drawing.Size(138, 26);
             c_selectLastThreeYears.TabIndex = 14;
             c_selectLastThreeYears.Text = "Select Recent Years";
             c_selectLastThreeYears.UseVisualStyleBackColor = true;
@@ -428,9 +428,9 @@
             // 
             // c_btnShow
             // 
-            c_btnShow.Location = new System.Drawing.Point(1074, 81);
+            c_btnShow.Location = new System.Drawing.Point(970, 89);
             c_btnShow.Name = "c_btnShow";
-            c_btnShow.Size = new System.Drawing.Size(98, 32);
+            c_btnShow.Size = new System.Drawing.Size(98, 26);
             c_btnShow.TabIndex = 13;
             c_btnShow.Text = "Show";
             c_btnShow.UseVisualStyleBackColor = true;
@@ -493,8 +493,6 @@
             Load += ReflectForm_Load;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
-            groupBox9.ResumeLayout(false);
-            groupBox9.PerformLayout();
             groupBox8.ResumeLayout(false);
             groupBox8.PerformLayout();
             groupBox7.ResumeLayout(false);
@@ -547,8 +545,8 @@
         private System.Windows.Forms.RadioButton c_radioPersonAll;
         private System.Windows.Forms.RadioButton c_radioPersonShar;
         private System.Windows.Forms.RadioButton c_radioPersonJay;
-        private System.Windows.Forms.GroupBox groupBox9;
         private System.Windows.Forms.CheckBox c_chkBoxHideZeroCategories;
         private System.Windows.Forms.Button c_btnClearCache;
+        private System.Windows.Forms.Button btnShowGraph;
     }
 }

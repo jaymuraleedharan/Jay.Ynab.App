@@ -15,11 +15,18 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.3" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.3" />
+    <PackageReference Include="System.Drawing.Common" Version="10.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\YnabApp.BL\YnabApp.BL.csproj" />
     <ProjectReference Include="..\YnabApp.UI\YnabApp.UI.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Windows.Forms.DataVisualization">
+      <HintPath>..\..\..\PUBLISH\CHARTS\System.Windows.Forms.DataVisualization.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>
