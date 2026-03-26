@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using YnabApp.BL;
 using YnabApp.BL.ListCategories;
 using YnabApp.BL.ListTransactions;
+using YnabApp.BL.Reflect;
 
 namespace YnabApp.UI.Reflect
 {
@@ -36,6 +37,17 @@ namespace YnabApp.UI.Reflect
         {
             CacheManager cache = new CacheManager(CacheType.Accounts);
             return cache.ClearCache();
+        }
+
+        public static Person GetPerson(PersonSelected personSelected)
+        {
+            switch (personSelected)
+            {
+                case PersonSelected.All: return Person.All;
+                case PersonSelected.Jay: return Person.Jay;
+                case PersonSelected.Shar: return Person.Shar;
+                default: return Person.All;
+            }
         }
     }
 }
