@@ -17,7 +17,7 @@ namespace YnabApp.BL.Reflect
 
         public ReflectChartSummary Summary { get; set; }
 
-        public Dictionary<string, decimal> CategoryGroup { get; set; } = new Dictionary<string, decimal>();
+        public ReflectChartCategoryGroup CategoryGroup { get; set; }
     }
 
     public record ReflectTimeChunk(DateTime StartDate, DateTime EndDate, Boolean isYearly)
@@ -37,4 +37,8 @@ namespace YnabApp.BL.Reflect
     public record ReflectChartSummary(decimal Income, decimal Expense, decimal Savings)
     {
     } 
+
+    public record ReflectChartCategoryGroup(decimal Necessities, decimal Discretionary, decimal Help)
+    {
+    }
 }

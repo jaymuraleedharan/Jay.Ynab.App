@@ -32,6 +32,7 @@ namespace YnabApp.Forms
             c_budgetGrid = new System.Windows.Forms.DataGridView();
             c_openBudget = new System.Windows.Forms.Button();
             c_reflectButton = new System.Windows.Forms.Button();
+            c_chartsButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)c_budgetGrid).BeginInit();
             SuspendLayout();
             // 
@@ -61,14 +62,14 @@ namespace YnabApp.Forms
             c_openBudget.Name = "c_openBudget";
             c_openBudget.Size = new System.Drawing.Size(132, 33);
             c_openBudget.TabIndex = 2;
-            c_openBudget.Text = "Open Budget...";
+            c_openBudget.Text = "Net Worth...";
             c_openBudget.UseVisualStyleBackColor = true;
             c_openBudget.Click += c_openBudget_Click;
             // 
             // c_reflectButton
             // 
             c_reflectButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            c_reflectButton.Location = new System.Drawing.Point(1272, 63);
+            c_reflectButton.Location = new System.Drawing.Point(1272, 59);
             c_reflectButton.Name = "c_reflectButton";
             c_reflectButton.Size = new System.Drawing.Size(132, 33);
             c_reflectButton.TabIndex = 3;
@@ -76,11 +77,23 @@ namespace YnabApp.Forms
             c_reflectButton.UseVisualStyleBackColor = true;
             c_reflectButton.Click += c_reflectButton_Click;
             // 
+            // c_chartsButton
+            // 
+            c_chartsButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            c_chartsButton.Location = new System.Drawing.Point(1272, 106);
+            c_chartsButton.Name = "c_chartsButton";
+            c_chartsButton.Size = new System.Drawing.Size(132, 33);
+            c_chartsButton.TabIndex = 4;
+            c_chartsButton.Text = "Charts...";
+            c_chartsButton.UseVisualStyleBackColor = true;
+            c_chartsButton.Click += c_chartsButton_Click;
+            // 
             // OpenBudgetForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(1416, 617);
+            Controls.Add(c_chartsButton);
             Controls.Add(c_reflectButton);
             Controls.Add(c_openBudget);
             Controls.Add(c_budgetGrid);
@@ -96,5 +109,6 @@ namespace YnabApp.Forms
         private System.Windows.Forms.DataGridView c_budgetGrid;
         private System.Windows.Forms.Button c_openBudget;
         private System.Windows.Forms.Button c_reflectButton;
+        private System.Windows.Forms.Button c_chartsButton;
     }
 }

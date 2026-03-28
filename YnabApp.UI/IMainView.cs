@@ -12,5 +12,7 @@ namespace YnabApp.UI
         void ShowAccountsView(BudgetData budgetData);
 
         void ShowReflectView(BudgetData budgetData);
+
+        void ShowChartsView(BudgetData budgetData);
     }
 }

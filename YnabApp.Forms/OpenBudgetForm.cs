@@ -116,5 +116,22 @@ namespace YnabApp.Forms
                 ShowError(ex);
             }
         }
+
+        private void c_chartsButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (c_budgetGrid.SelectedRows.Count > 0)
+                {
+                    BudgetData data = c_budgetGrid.SelectedRows[0].DataBoundItem as BudgetData;
+                    if (data != null)
+                        MainView.ShowChartsView(data);
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowError(ex);
+            }
+        }
     }
 }
