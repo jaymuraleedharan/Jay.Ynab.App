@@ -21,6 +21,7 @@ namespace YnabApp.Forms
         private OpenBudgetForm _openBudgetForm = null;
         private ShowAccountsTransactionsForm _showAccountsForm = null;
         private ReflectForm _reflectForm = null;
+        private ReflectGraphForm _reflectGraphForm = null;
 
         public MainForm()
         {
@@ -114,6 +115,23 @@ namespace YnabApp.Forms
 
             form.Show();
             form.Activate();
+        }
+
+        public void ShowChartsView(BudgetData budgetData)
+        {
+            try
+            {
+                if (_reflectGraphForm == null || _reflectGraphForm.Disposing || _reflectGraphForm.IsDisposed)
+                    _reflectGraphForm = new ReflectGraphForm();
+
+                ConfigureAndShowChildForm(_reflectGraphForm);
+
+                ((IReflectGraphView)_reflectGraphForm).InitializeView(budgetData);
+            }
+            catch (Exception ex)
+            {
+                ShowError(ex);
+            }
         }
     }
 }

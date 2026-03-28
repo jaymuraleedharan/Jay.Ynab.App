@@ -18,6 +18,21 @@ namespace YnabApp.BL.Reflect
             "Uncategorized"
         };
 
+        public async Task<ReflectChartSummary> GenerateSummaryDataAsync(CategoryGroupData[] categoryGroupData, TransactionData[] transactionDatas,
+                                                        bool isYearly, DateTime reportDate, Person person = Person.All)
+        {
+            ReflectChartSummary result = null;
+
+            await Task.Run(() =>
+            {
+                result = GenerateSummaryData(categoryGroupData, transactionDatas, isYearly, reportDate, person);
+
+            });
+
+            return result;
+        }
+
+
 
         public ReflectChartSummary GenerateSummaryData(CategoryGroupData[] categoryGroupData, TransactionData[] transactionDatas,
                                                         bool isYearly, DateTime reportDate, Person person = Person.All)
@@ -45,7 +60,7 @@ namespace YnabApp.BL.Reflect
 
                 if (transaction.IsIncome)
                     income += transaction.Amount;
-                else if (catGroupData == null || !catGroupData.IsActualSavings)
+                else if (catGroupData != null && !catGroupData.IsActualSavings)
                     expense += transaction.Amount;
             }
             expense = Math.Abs(expense);
@@ -56,6 +71,64 @@ namespace YnabApp.BL.Reflect
             return summary;
         }
 
+
+        public async Task<ReflectChartCategoryGroup> GenerateCategoryGroupDataAsync(CategoryGroupData[] categoryGroupData, TransactionData[] transactionDatas,
+                                                        bool isYearly, DateTime reportDate, Person person = Person.All)
+        {
+            ReflectChartCategoryGroup result = null;
+
+            await Task.Run(() =>
+            {
+                result = GenerateCategoryGroupData(categoryGroupData, transactionDatas, isYearly, reportDate, person);
+
+            });
+
+            return result;
+        }
+
+        public ReflectChartCategoryGroup GenerateCategoryGroupData(CategoryGroupData[] categoryGroupData, TransactionData[] transactionDatas,
+                                                        bool isYearly, DateTime reportDate, Person person = Person.All)
+        {
+            //Filter by Date Criteria
+            IEnumerable<TransactionData> matchingTransactions;
+            if (isYearly)
+                matchingTransactions = transactionDatas.Where(t => t.TransDateTime.Year == reportDate.Year);
+            else
+                matchingTransactions = transactionDatas.Where(t => t.TransDateTime.Year == reportDate.Year && t.TransDateTime.Month == reportDate.Month);
+
+            //Filter by Person
+            if (person != Person.All)
+                matchingTransactions = matchingTransactions.Where(t => AccountFilter.IsPersonAccount(t.AccountId, person)).ToList();
+
+            decimal necessities = 0, discretionary = 0, help = 0;
+
+            foreach (var transaction in matchingTransactions)
+            {
+                //Exclude YNAB Formula Categories
+                if (categoryGroupExcludeList.Contains(transaction.CategoryName) || transaction.CategoryName.Contains("[?]"))
+                    continue;
+
+                var catGroupData = GetCategoryGroupFromCategory(categoryGroupData, transaction.CategoryId);
+
+                if (catGroupData == null)
+                    continue;
+
+                else if (catGroupData.Name == "NECESSITIES" || catGroupData.Name == "NECESSITIES-TAX")
+                    necessities += transaction.Amount;
+
+                else if (catGroupData.Name == "DISCRETIONARY")
+                    discretionary += transaction.Amount;
+
+                else if (catGroupData.Name == "HELP")
+                    help += transaction.Amount;
+            }
+
+            necessities = Math.Abs(necessities);
+            discretionary = Math.Abs(discretionary);
+            help = Math.Abs(help);
+
+            return new ReflectChartCategoryGroup(necessities, discretionary, help);
+        }
 
         private CategoryGroupData GetCategoryGroupFromCategory(CategoryGroupData[] categoryGroupData, string categoryId)
         {

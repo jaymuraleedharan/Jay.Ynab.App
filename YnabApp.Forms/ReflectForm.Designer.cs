@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             groupBox1 = new System.Windows.Forms.GroupBox();
-            btnShowGraph = new System.Windows.Forms.Button();
             c_chkBoxHideZeroCategories = new System.Windows.Forms.CheckBox();
             c_btnClearCache = new System.Windows.Forms.Button();
             groupBox8 = new System.Windows.Forms.GroupBox();
@@ -77,7 +76,6 @@
             // groupBox1
             // 
             groupBox1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            groupBox1.Controls.Add(btnShowGraph);
             groupBox1.Controls.Add(c_chkBoxHideZeroCategories);
             groupBox1.Controls.Add(c_btnClearCache);
             groupBox1.Controls.Add(groupBox8);
@@ -96,20 +94,10 @@
             groupBox1.Controls.Add(c_radioDurationMonthly);
             groupBox1.Location = new System.Drawing.Point(10, 11);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new System.Drawing.Size(1603, 128);
+            groupBox1.Size = new System.Drawing.Size(1110, 128);
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "Criteria";
-            // 
-            // btnShowGraph
-            // 
-            btnShowGraph.Location = new System.Drawing.Point(970, 57);
-            btnShowGraph.Name = "btnShowGraph";
-            btnShowGraph.Size = new System.Drawing.Size(98, 26);
-            btnShowGraph.TabIndex = 26;
-            btnShowGraph.Text = "Graph...";
-            btnShowGraph.UseVisualStyleBackColor = true;
-            btnShowGraph.Click += btnShowGraph_Click;
             // 
             // c_chkBoxHideZeroCategories
             // 
@@ -428,7 +416,7 @@
             // 
             // c_btnShow
             // 
-            c_btnShow.Location = new System.Drawing.Point(970, 89);
+            c_btnShow.Location = new System.Drawing.Point(970, 62);
             c_btnShow.Name = "c_btnShow";
             c_btnShow.Size = new System.Drawing.Size(98, 26);
             c_btnShow.TabIndex = 13;
@@ -440,7 +428,7 @@
             // 
             c_radioDurationYearly.AutoSize = true;
             c_radioDurationYearly.Checked = true;
-            c_radioDurationYearly.Location = new System.Drawing.Point(6, 30);
+            c_radioDurationYearly.Location = new System.Drawing.Point(13, 26);
             c_radioDurationYearly.Name = "c_radioDurationYearly";
             c_radioDurationYearly.Size = new System.Drawing.Size(63, 19);
             c_radioDurationYearly.TabIndex = 9;
@@ -451,7 +439,7 @@
             // c_radioDurationMonthly
             // 
             c_radioDurationMonthly.AutoSize = true;
-            c_radioDurationMonthly.Location = new System.Drawing.Point(75, 30);
+            c_radioDurationMonthly.Location = new System.Drawing.Point(82, 26);
             c_radioDurationMonthly.Name = "c_radioDurationMonthly";
             c_radioDurationMonthly.Size = new System.Drawing.Size(77, 19);
             c_radioDurationMonthly.TabIndex = 8;
@@ -464,7 +452,7 @@
             c_reflectControlsPanel.Controls.Add(c_reflectControlsTable);
             c_reflectControlsPanel.Location = new System.Drawing.Point(10, 145);
             c_reflectControlsPanel.Name = "c_reflectControlsPanel";
-            c_reflectControlsPanel.Size = new System.Drawing.Size(1603, 622);
+            c_reflectControlsPanel.Size = new System.Drawing.Size(1110, 622);
             c_reflectControlsPanel.TabIndex = 1;
             // 
             // c_reflectControlsTable
@@ -478,14 +466,14 @@
             c_reflectControlsTable.Name = "c_reflectControlsTable";
             c_reflectControlsTable.RowCount = 1;
             c_reflectControlsTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            c_reflectControlsTable.Size = new System.Drawing.Size(1603, 622);
+            c_reflectControlsTable.Size = new System.Drawing.Size(1110, 622);
             c_reflectControlsTable.TabIndex = 0;
             // 
             // ReflectForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(1625, 779);
+            ClientSize = new System.Drawing.Size(1132, 779);
             Controls.Add(c_reflectControlsPanel);
             Controls.Add(groupBox1);
             Name = "ReflectForm";
@@ -547,6 +535,5 @@
         private System.Windows.Forms.RadioButton c_radioPersonJay;
         private System.Windows.Forms.CheckBox c_chkBoxHideZeroCategories;
         private System.Windows.Forms.Button c_btnClearCache;
-        private System.Windows.Forms.Button btnShowGraph;
     }
 }
