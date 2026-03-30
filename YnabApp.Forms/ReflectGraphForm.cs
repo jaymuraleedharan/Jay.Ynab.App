@@ -209,13 +209,14 @@ namespace YnabApp.Forms
         {
             //CHART
             var ynabChart = new Chart();
-            ynabChart.BackColor = SystemColors.ControlLight;
             ynabChart.Dock = DockStyle.Fill;
+            ynabChart.BackColor = SystemColors.Control;            
             ynabChart.BackGradientStyle = GradientStyle.DiagonalRight;
             ynabChart.Legends.Add(new Legend { Font = this.Font, Docking = Docking.Top, Alignment = StringAlignment.Center, LegendStyle = LegendStyle.Table });
 
             //CHART AREA
             var ynabChartArea = new ChartArea();
+            ynabChartArea.BackColor = SystemColors.Control;
             ynabChartArea.IsSameFontSizeForAllAxes = true;
 
             ynabChartArea.AxisX.TitleFont = this.Font;
@@ -246,8 +247,8 @@ namespace YnabApp.Forms
             return new Series
             {
                 Name = "Income",
-                Color = Color.Green,
-                ChartType = SeriesChartType.Line,
+                Color = Color.LightGreen, // ReflectColorizer.GetSummaryBackColor("All Incomes"), //Color.Green,
+                ChartType = SeriesChartType.Column,
                 IsValueShownAsLabel = true,
                 BorderWidth = 4,
                 LabelFormat = "$ #,###,000",
@@ -262,8 +263,8 @@ namespace YnabApp.Forms
             return new Series
             {
                 Name = "Expense",
-                Color = Color.Red,
-                ChartType = SeriesChartType.Line,
+                Color = Color.LightSalmon, // ReflectColorizer.GetSummaryBackColor("All Expenses"), //Color.Red,
+                ChartType = SeriesChartType.Column,
                 IsValueShownAsLabel = true,
                 BorderWidth = 4,
                 LabelFormat = "$ #,###,000",
@@ -276,8 +277,8 @@ namespace YnabApp.Forms
             return new Series
             {
                 Name = "Savings",
-                Color = Color.Blue,
-                ChartType = SeriesChartType.Line,
+                Color = Color.LightBlue, // ReflectColorizer.GetSummaryBackColor("Savings"),               //Color.Blue,
+                ChartType = SeriesChartType.Column,
                 IsValueShownAsLabel = true,
                 BorderWidth = 4,
                 LabelFormat = "$ #,###,000",
@@ -290,8 +291,8 @@ namespace YnabApp.Forms
             return new Series
             {
                 Name = "Necessities",
-                Color = Color.Yellow, // ReflectColorizer.GetBackColor("NECESSITIES"),
-                ChartType = SeriesChartType.Line,
+                Color = Color.LightYellow, // ReflectColorizer.GetBackColor("NECESSITIES"),
+                ChartType = SeriesChartType.Column,
                 IsValueShownAsLabel = true,
                 BorderWidth = 4,
                 LabelFormat = "$ #,###,000",
@@ -304,8 +305,8 @@ namespace YnabApp.Forms
             return new Series
             {
                 Name = "Discretionary",
-                Color = Color.Salmon, // ReflectColorizer.GetBackColor("DISCRETIONARY"),
-                ChartType = SeriesChartType.Line,
+                Color = Color.LightSalmon, // ReflectColorizer.GetBackColor("DISCRETIONARY"),
+                ChartType = SeriesChartType.Column,
                 IsValueShownAsLabel = true,
                 BorderWidth = 4,
                 LabelFormat = "$ #,###,000",
@@ -318,8 +319,8 @@ namespace YnabApp.Forms
             return new Series
             {
                 Name = "Help",
-                Color = Color.Blue, // ReflectColorizer.GetBackColor("HELP"),
-                ChartType = SeriesChartType.Line,
+                Color = Color.LightBlue, // ReflectColorizer.GetBackColor("HELP"),
+                ChartType = SeriesChartType.Column,
                 IsValueShownAsLabel = true,
                 BorderWidth = 4,
                 LabelFormat = "$ #,###,000",
