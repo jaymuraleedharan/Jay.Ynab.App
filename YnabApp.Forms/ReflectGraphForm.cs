@@ -210,20 +210,30 @@ namespace YnabApp.Forms
             //CHART
             var ynabChart = new Chart();
             ynabChart.Dock = DockStyle.Fill;
-            ynabChart.BackColor = SystemColors.Control;            
-            ynabChart.BackGradientStyle = GradientStyle.DiagonalRight;
+
+            //APPEARANCE
+            ynabChart.BackColor = SystemColors.ControlLight;
+            ynabChart.BackSecondaryColor = SystemColors.ControlDark;
+            ynabChart.BackGradientStyle = GradientStyle.LeftRight;
+            ynabChart.BackHatchStyle = ChartHatchStyle.None;
+
+            ynabChart.BorderlineDashStyle = ChartDashStyle.NotSet;
+            ynabChart.IsSoftShadows = false;
+
             ynabChart.Legends.Add(new Legend { Font = this.Font, Docking = Docking.Top, Alignment = StringAlignment.Center, LegendStyle = LegendStyle.Table });
 
             //CHART AREA
             var ynabChartArea = new ChartArea();
-            ynabChartArea.BackColor = SystemColors.Control;
-            ynabChartArea.IsSameFontSizeForAllAxes = true;
 
-            ynabChartArea.AxisX.TitleFont = this.Font;
+            ynabChartArea.BackColor = SystemColors.ControlLight;
+            
+
+            ynabChartArea.IsSameFontSizeForAllAxes = true;
+            ynabChartArea.AxisX.TitleFont = this.Font;            
+
             ynabChartArea.AxisX.IsMarginVisible = true;
             ynabChartArea.AxisX.IsInterlaced = false;
-
-            ynabChartArea.AxisY.TitleFont = this.Font;
+            
             if (ChartPoints[0].TimeChunk.isYearly)
                 ynabChartArea.AxisY.Interval = 50000;
             else
@@ -237,6 +247,7 @@ namespace YnabApp.Forms
             ynabChartArea.Area3DStyle.Inclination = 0;
             ynabChartArea.Area3DStyle.Rotation = 0;
             ynabChartArea.Area3DStyle.LightStyle = LightStyle.Realistic;
+
             ynabChart.ChartAreas.Add(ynabChartArea);
 
             return ynabChart;
@@ -253,8 +264,8 @@ namespace YnabApp.Forms
                 BorderWidth = 4,
                 LabelFormat = "$ #,###,000",
                 Font = this.Font,
-                LegendText = "Income",
-                IsVisibleInLegend = true
+                ShadowColor = Color.Green,
+                ShadowOffset = 2
             };
         }
 
@@ -268,7 +279,9 @@ namespace YnabApp.Forms
                 IsValueShownAsLabel = true,
                 BorderWidth = 4,
                 LabelFormat = "$ #,###,000",
-                Font = this.Font
+                Font = this.Font,
+                ShadowColor = Color.Salmon,
+                ShadowOffset = 1
             };
         }
 
@@ -282,7 +295,9 @@ namespace YnabApp.Forms
                 IsValueShownAsLabel = true,
                 BorderWidth = 4,
                 LabelFormat = "$ #,###,000",
-                Font = this.Font
+                Font = this.Font,
+                ShadowColor = Color.Blue,
+                ShadowOffset = 2
             };
         }
 
@@ -296,7 +311,9 @@ namespace YnabApp.Forms
                 IsValueShownAsLabel = true,
                 BorderWidth = 4,
                 LabelFormat = "$ #,###,000",
-                Font = this.Font
+                Font = this.Font,
+                ShadowColor = Color.Yellow,
+                ShadowOffset = 1
             };
         }
 
@@ -310,7 +327,9 @@ namespace YnabApp.Forms
                 IsValueShownAsLabel = true,
                 BorderWidth = 4,
                 LabelFormat = "$ #,###,000",
-                Font = this.Font
+                Font = this.Font,
+                ShadowColor = Color.Salmon,
+                ShadowOffset = 1
             };
         }
 
@@ -324,7 +343,9 @@ namespace YnabApp.Forms
                 IsValueShownAsLabel = true,
                 BorderWidth = 4,
                 LabelFormat = "$ #,###,000",
-                Font = this.Font
+                Font = this.Font,
+                ShadowColor = Color.Blue,
+                ShadowOffset = 1
             };
         }
 
@@ -356,8 +377,10 @@ namespace YnabApp.Forms
             Series helpSeries = CreateHelpSeries();
             categoryGroupChart.Series.Add(helpSeries);
 
+            var sortedChartPoints = ChartPoints.OrderByDescending(x => x.TimeChunk.StartDate).ToList();
+
             //ADDING POINTS TO CHARTS
-            foreach (var point in ChartPoints)
+            foreach (var point in sortedChartPoints)
             {
                 incomeSeries.Points.Add(new DataPoint
                 {
