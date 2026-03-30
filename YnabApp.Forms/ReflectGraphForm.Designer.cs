@@ -237,9 +237,8 @@
             c_splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             c_splitContainer.Location = new System.Drawing.Point(0, 108);
             c_splitContainer.Name = "c_splitContainer";
-            c_splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
             c_splitContainer.Size = new System.Drawing.Size(1254, 736);
-            c_splitContainer.SplitterDistance = 377;
+            c_splitContainer.SplitterDistance = 1177;
             c_splitContainer.TabIndex = 1;
             // 
             // ReflectGraphForm

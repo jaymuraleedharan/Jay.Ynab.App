@@ -259,13 +259,13 @@ namespace YnabApp.Forms
             {
                 Name = "Income",
                 Color = Color.LightGreen, // ReflectColorizer.GetSummaryBackColor("All Incomes"), //Color.Green,
-                ChartType = SeriesChartType.Column,
+                ChartType = SeriesChartType.Line,
                 IsValueShownAsLabel = true,
                 BorderWidth = 4,
                 LabelFormat = "$ #,###,000",
                 Font = this.Font,
                 ShadowColor = Color.Green,
-                ShadowOffset = 2
+                ShadowOffset = 2,
             };
         }
 
@@ -275,13 +275,13 @@ namespace YnabApp.Forms
             {
                 Name = "Expense",
                 Color = Color.LightSalmon, // ReflectColorizer.GetSummaryBackColor("All Expenses"), //Color.Red,
-                ChartType = SeriesChartType.Column,
+                ChartType = SeriesChartType.Line,
                 IsValueShownAsLabel = true,
                 BorderWidth = 4,
                 LabelFormat = "$ #,###,000",
                 Font = this.Font,
                 ShadowColor = Color.Salmon,
-                ShadowOffset = 1
+                ShadowOffset = 2
             };
         }
 
@@ -322,13 +322,13 @@ namespace YnabApp.Forms
             return new Series
             {
                 Name = "Discretionary",
-                Color = Color.LightSalmon, // ReflectColorizer.GetBackColor("DISCRETIONARY"),
+                Color = Color.LightCoral, // ReflectColorizer.GetBackColor("DISCRETIONARY"),
                 ChartType = SeriesChartType.Column,
                 IsValueShownAsLabel = true,
                 BorderWidth = 4,
                 LabelFormat = "$ #,###,000",
                 Font = this.Font,
-                ShadowColor = Color.Salmon,
+                ShadowColor = Color.Red,
                 ShadowOffset = 1
             };
         }
@@ -356,6 +356,18 @@ namespace YnabApp.Forms
             //SUMMARY CHART
             var summaryChart = CreateChart();
 
+            //CATEGORY GROUP CHART
+            //var categoryGroupChart = CreateChart();
+
+            Series necessitiesSeries = CreateNecessitiesSeries();
+            summaryChart.Series.Add(necessitiesSeries);
+
+            Series discretionarySeries = CreateDiscretionarySeries();
+            summaryChart.Series.Add(discretionarySeries);
+
+            Series helpSeries = CreateHelpSeries();
+            summaryChart.Series.Add(helpSeries);
+
             Series incomeSeries = CreateIncomeSeries();
             summaryChart.Series.Add(incomeSeries);
 
@@ -365,22 +377,10 @@ namespace YnabApp.Forms
             //Series savingsSeries = CreateSavingsSeries();
             //ynabChart.Series.Add(savingsSeries);
 
-            //CATEGORY GROUP CHART
-            var categoryGroupChart = CreateChart();
-
-            Series necessitiesSeries = CreateNecessitiesSeries();
-            categoryGroupChart.Series.Add(necessitiesSeries);
-
-            Series discretionarySeries = CreateDiscretionarySeries();
-            categoryGroupChart.Series.Add(discretionarySeries);
-
-            Series helpSeries = CreateHelpSeries();
-            categoryGroupChart.Series.Add(helpSeries);
-
-            var sortedChartPoints = ChartPoints.OrderByDescending(x => x.TimeChunk.StartDate).ToList();
+            //var sortedChartPoints = ChartPoints.OrderByDescending(x => x.TimeChunk.StartDate).ToList();
 
             //ADDING POINTS TO CHARTS
-            foreach (var point in sortedChartPoints)
+            foreach (var point in ChartPoints)
             {
                 incomeSeries.Points.Add(new DataPoint
                 {
@@ -422,8 +422,8 @@ namespace YnabApp.Forms
             c_splitContainer.Panel1.Controls.Clear();
             c_splitContainer.Panel1.Controls.Add(summaryChart);
 
-            c_splitContainer.Panel2.Controls.Clear();
-            c_splitContainer.Panel2.Controls.Add(categoryGroupChart);
+            //c_splitContainer.Panel2.Controls.Clear();
+            //c_splitContainer.Panel2.Controls.Add(categoryGroupChart);
 
         }
     }
