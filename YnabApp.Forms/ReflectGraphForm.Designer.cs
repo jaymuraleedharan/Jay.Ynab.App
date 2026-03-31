@@ -238,7 +238,7 @@
             c_splitContainer.Location = new System.Drawing.Point(0, 108);
             c_splitContainer.Name = "c_splitContainer";
             c_splitContainer.Size = new System.Drawing.Size(1254, 736);
-            c_splitContainer.SplitterDistance = 1177;
+            c_splitContainer.SplitterDistance = 739;
             c_splitContainer.TabIndex = 1;
             // 
             // ReflectGraphForm
