@@ -135,5 +135,67 @@ namespace YnabApp.BL.Reflect
             return categoryGroupData.SingleOrDefault(cg => cg.HasCategory(categoryId) == true);
         }
 
+
+        public async Task<List<ReflectCategoryData>> CrunchCategroyData2Async(CategoryGroupData[] categoryGroupDatas, TransactionData[] transactionDatas, DateTime startDate, DateTime endDate,
+                                                                                   decimal totalIncome, Person person = Person.All, bool isHideZeroCategorties = true)
+        {
+            List<ReflectCategoryData> reflectCategoryDatas = new List<ReflectCategoryData>();
+
+            await Task.Run(() =>
+            {
+                reflectCategoryDatas = GenerateCrunchCategoryData2(categoryGroupDatas, transactionDatas, startDate, endDate, totalIncome, person, isHideZeroCategorties);
+            });
+
+            return reflectCategoryDatas;
+        }
+
+        private List<ReflectCategoryData> GenerateCrunchCategoryData2(CategoryGroupData[] categoryGroupDatas, TransactionData[] transactionDatas, DateTime startDate, DateTime endDate,
+                                                                                   decimal totalIncome, Person person = Person.All, bool isHideZeroCategorties = true)
+        {
+            List<ReflectCategoryData> reflectCategoryDatas = new List<ReflectCategoryData>();
+
+            IEnumerable<TransactionData> matchingTransactions;
+            //Match Date limits and ignore refunds (positive amounts)
+            matchingTransactions = transactionDatas.Where(t => t.TransDateTime >= startDate && t.TransDateTime <= endDate);
+
+            //Filter by Person
+            if (person != Person.All)
+            {
+                matchingTransactions = matchingTransactions.Where(t => AccountFilter.IsPersonAccount(t.AccountId, person)).ToList();
+            }
+
+            foreach (var categoryGroup in categoryGroupDatas)
+            {
+                if (categoryGroupExcludeList.Contains(categoryGroup.Name) || categoryGroup.Name.Contains("[?]") 
+                    || categoryGroup.Name.Equals("INVESTMENTS")
+                    || categoryGroup.Name.Equals("SAVINGS"))
+                    continue;
+
+                foreach (var category in categoryGroup.Categories)
+                {
+                    ReflectCategoryData reflectCategory = new(category.Id, categoryGroup.Name, category.Name, category);
+
+                    var categoryTransactions = matchingTransactions.Where(t => t.CategoryId == category.Id);
+                    if (categoryTransactions.Any())
+                    {
+                        decimal categoryTotal = categoryTransactions.Sum(t => t.Amount);
+                        if(categoryTotal > 0)
+                            continue; //Ignore Refunds
+                        reflectCategory.Amount += -(categoryTotal);
+                        reflectCategoryDatas.Add(reflectCategory);
+                    }
+                    else if (!isHideZeroCategorties)
+                    {
+                        //Do not Show if there are not transactions for the Category
+                        reflectCategoryDatas.Add(reflectCategory);
+                    }
+                }
+            }
+
+            //Calculate Percentages
+            reflectCategoryDatas.ForEach(r => r.Percentage = (totalIncome == 0) ? 0 : Math.Abs(r.Amount) * 100 / totalIncome);
+
+            return reflectCategoryDatas.OrderBy(cg => cg.Amount).ToList();
+        }
     }
 }

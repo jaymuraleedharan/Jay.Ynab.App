@@ -23,6 +23,7 @@ namespace YnabApp.Forms
         BudgetData _budgetData = null;
 
         internal List<ReflectChartPoint> ChartPoints { get; set; }
+        internal List<ReflectCategoryData> CategoryResults { get; set; }
 
         public IMainView MainView
         {
@@ -176,6 +177,7 @@ namespace YnabApp.Forms
                 //BUILDING CHART DATA
                 ChartPoints = new List<ReflectChartPoint>();
                 DataCruncherForCharts dataCruncher = new DataCruncherForCharts();
+                decimal TotalIncome = 0;
 
                 foreach (var dateSel in datesSelected)
                 {
@@ -186,11 +188,16 @@ namespace YnabApp.Forms
                     chartPoint = new ReflectChartPoint(chartPointStartDate, chartPointEndDate, IsYearly);
                     
                     chartPoint.Summary = await dataCruncher.GenerateSummaryDataAsync(categoriesData, transactionsData, IsYearly, chartPointStartDate, person);
+                    TotalIncome += chartPoint.Summary.Income;
 
                     chartPoint.CategoryGroup = await dataCruncher.GenerateCategoryGroupDataAsync(categoriesData, transactionsData, IsYearly, chartPointStartDate, person);
 
                     ChartPoints.Add(chartPoint);
                 }
+
+                DateTime catStartDate = ChartPoints.OrderBy(c => c.TimeChunk.StartDate).First().TimeChunk.StartDate;
+                DateTime catEndDate = ChartPoints.OrderBy(c => c.TimeChunk.EndDate).Last().TimeChunk.EndDate;
+                CategoryResults = await dataCruncher.CrunchCategroyData2Async(categoriesData, transactionsData, catStartDate, catEndDate, TotalIncome, person);
 
                 //SHOWING GRAPH
                 ShowGraphs();
@@ -225,7 +232,7 @@ namespace YnabApp.Forms
             //CHART AREA
             var ynabChartArea = new ChartArea();
 
-            ynabChartArea.BackColor = SystemColors.ControlLight;
+            ynabChartArea.BackColor = SystemColors.ControlLightLight;
             
 
             ynabChartArea.IsSameFontSizeForAllAxes = true;
@@ -247,6 +254,52 @@ namespace YnabApp.Forms
             ynabChartArea.Area3DStyle.Inclination = 0;
             ynabChartArea.Area3DStyle.Rotation = 0;
             ynabChartArea.Area3DStyle.LightStyle = LightStyle.Realistic;
+
+            ynabChart.ChartAreas.Add(ynabChartArea);
+
+            return ynabChart;
+        }
+
+
+        private Chart CreateCategoryChart()
+        {
+            //CHART
+            var ynabChart = new Chart();
+            ynabChart.Dock = DockStyle.Fill;
+
+            //APPEARANCE
+            ynabChart.BackColor = SystemColors.ControlLight;
+            ynabChart.BackSecondaryColor = SystemColors.ControlDark;
+            ynabChart.BackGradientStyle = GradientStyle.LeftRight;
+            ynabChart.BackHatchStyle = ChartHatchStyle.None;
+
+            ynabChart.BorderlineDashStyle = ChartDashStyle.NotSet;
+            ynabChart.IsSoftShadows = false;
+
+            ynabChart.Legends.Add(new Legend { Font = this.Font, Docking = Docking.Top, Alignment = StringAlignment.Center, LegendStyle = LegendStyle.Table });
+
+            //CHART AREA
+            var ynabChartArea = new ChartArea();
+
+            ynabChartArea.BackColor = SystemColors.ControlLightLight;
+
+            ynabChartArea.IsSameFontSizeForAllAxes = true;
+
+            ynabChartArea.AxisX.TitleFont = this.Font;
+            ynabChartArea.AxisY.LabelStyle.Format = "$ #,###,000";
+            ynabChartArea.AxisX.IsMarginVisible = true;
+            ynabChartArea.AxisX.IsInterlaced = false;
+            ynabChartArea.AxisX.MajorGrid.Enabled = false;
+            ynabChartArea.AxisX.MinorGrid.Enabled = false;
+
+
+            ynabChartArea.AxisY.IsMarginVisible = false;            
+            ynabChartArea.AxisY.LabelStyle.IntervalType = DateTimeIntervalType.NotSet;
+            ynabChartArea.AxisY.MajorGrid.Enabled = true;
+            ynabChartArea.AxisY.MinorGrid.Enabled = false;
+            ynabChartArea.AxisY.LineDashStyle = ChartDashStyle.NotSet;
+            ynabChartArea.AxisY.IntervalType = DateTimeIntervalType.NotSet;
+            ynabChartArea.AxisY.Interval = 0;
 
             ynabChart.ChartAreas.Add(ynabChartArea);
 
@@ -312,7 +365,7 @@ namespace YnabApp.Forms
                 BorderWidth = 4,
                 LabelFormat = "$ #,###,000",
                 Font = this.Font,
-                ShadowColor = Color.Yellow,
+                ShadowColor = Color.Gray,
                 ShadowOffset = 1
             };
         }
@@ -328,7 +381,7 @@ namespace YnabApp.Forms
                 BorderWidth = 4,
                 LabelFormat = "$ #,###,000",
                 Font = this.Font,
-                ShadowColor = Color.Red,
+                ShadowColor = Color.Gray,
                 ShadowOffset = 1
             };
         }
@@ -344,7 +397,23 @@ namespace YnabApp.Forms
                 BorderWidth = 4,
                 LabelFormat = "$ #,###,000",
                 Font = this.Font,
-                ShadowColor = Color.Blue,
+                ShadowColor = Color.Gray,
+                ShadowOffset = 1
+            };
+        }
+
+        private Series CreateCategorySeries()
+        {
+            return new Series
+            {
+                Name = "Major Expense Categories",
+                Color = Color.LightCoral, // ReflectColorizer.GetBackColor("HELP"),
+                ChartType = SeriesChartType.Bar,
+                IsValueShownAsLabel = true,
+                BorderWidth = 4,
+                LabelFormat = "$ #,###,000",
+                Font = this.Font,
+                ShadowColor = Color.Gray,
                 ShadowOffset = 1
             };
         }
@@ -356,8 +425,8 @@ namespace YnabApp.Forms
             //SUMMARY CHART
             var summaryChart = CreateChart();
 
-            //CATEGORY GROUP CHART
-            //var categoryGroupChart = CreateChart();
+            //CATEGORY CHART
+            var categoryChart = CreateCategoryChart();
 
             Series necessitiesSeries = CreateNecessitiesSeries();
             summaryChart.Series.Add(necessitiesSeries);
@@ -376,6 +445,9 @@ namespace YnabApp.Forms
 
             //Series savingsSeries = CreateSavingsSeries();
             //ynabChart.Series.Add(savingsSeries);
+
+            Series categorySeries = CreateCategorySeries();
+            categoryChart.Series.Add(categorySeries);
 
             //var sortedChartPoints = ChartPoints.OrderByDescending(x => x.TimeChunk.StartDate).ToList();
 
@@ -419,11 +491,22 @@ namespace YnabApp.Forms
                 });
             }
 
+            //Ignore % less than 1% to avoid cluttering the graph with too many categories
+            foreach (var catData in CategoryResults.Where(c => c.Percentage >= 1))
+            {
+                categorySeries.Points.Add(new DataPoint
+                {
+                    YValues = new double[] { (double)catData.Amount },
+                    Label = $"{catData.CategoryGroupName}-{catData.CategoryName} | {catData.Amount.ToString("$ #,###,##0")} | {catData.Percentage.ToString("#0")}%",
+                    Color = ReflectColorizer.GetBackColor(catData.CategoryGroupName)
+                });
+            }
+
             c_splitContainer.Panel1.Controls.Clear();
             c_splitContainer.Panel1.Controls.Add(summaryChart);
 
-            //c_splitContainer.Panel2.Controls.Clear();
-            //c_splitContainer.Panel2.Controls.Add(categoryGroupChart);
+            c_splitContainer.Panel2.Controls.Clear();
+            c_splitContainer.Panel2.Controls.Add(categoryChart);
 
         }
     }
