@@ -84,7 +84,7 @@ namespace YnabApp.Forms
                 c_reflectControlsTable.ColumnCount = datesSelected.Count;
                 float columnWidthPercentage = 100 / datesSelected.Count;
 
-                int controlCounter = 0;
+                int controlCounter = datesSelected.Count - 1;
                 foreach (var reportDate in datesSelected)
                 {
                     c_reflectControlsTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, columnWidthPercentage));
@@ -93,7 +93,7 @@ namespace YnabApp.Forms
 
                     c_reflectControlsTable.Controls.Add(reflectColumnControl, controlCounter, 0);
                     reflectColumnControl.Dock = DockStyle.Fill;
-                    controlCounter++;
+                    controlCounter--;
                 }
 
                 //DOWNLOADING DATA FROM YNAB

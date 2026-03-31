@@ -33,9 +33,12 @@ namespace YnabApp.Forms
             try
             {
                 if (_openBudgetForm == null || _openBudgetForm.Disposing || _openBudgetForm.IsDisposed)
+                {
                     _openBudgetForm = new OpenBudgetForm();
+                    ConfigureChildForm(_openBudgetForm);
+                }
 
-                ConfigureAndShowChildForm(_openBudgetForm);
+                ShowChildForm(_openBudgetForm);
 
                 ((IOpenBudgetView)_openBudgetForm).InitializeView();
             }
@@ -76,9 +79,12 @@ namespace YnabApp.Forms
             try
             {
                 if (_showAccountsForm == null || _showAccountsForm.Disposing || _showAccountsForm.IsDisposed)
+                { 
                     _showAccountsForm = new ShowAccountsTransactionsForm();
+                    ConfigureChildForm(_showAccountsForm);
+                }
 
-                ConfigureAndShowChildForm(_showAccountsForm);
+                ShowChildForm(_showAccountsForm);
 
                 ((IListAccountsView)_showAccountsForm).InitializeView(budgetData);
             }
@@ -93,9 +99,12 @@ namespace YnabApp.Forms
             try
             {
                 if (_reflectForm == null || _reflectForm.Disposing || _reflectForm.IsDisposed)
+                { 
                     _reflectForm = new ReflectForm();
+                    ConfigureChildForm(_reflectForm);
+                }
 
-                ConfigureAndShowChildForm(_reflectForm);
+                ShowChildForm(_reflectForm);
 
                 ((IReflectView)_reflectForm).InitializeView(budgetData);
             }
@@ -105,14 +114,17 @@ namespace YnabApp.Forms
             }
         }
 
-        private void ConfigureAndShowChildForm(Form form)
+        private void ConfigureChildForm(Form form)
         {
             form.ShowInTaskbar = false;
             form.FormBorderStyle = FormBorderStyle.Sizable;
             form.ControlBox = false;
             form.MdiParent = this;
             form.WindowState = FormWindowState.Maximized;
+        }
 
+        private void ShowChildForm(Form form)
+        {
             form.Show();
             form.Activate();
         }
@@ -122,9 +134,12 @@ namespace YnabApp.Forms
             try
             {
                 if (_reflectGraphForm == null || _reflectGraphForm.Disposing || _reflectGraphForm.IsDisposed)
+                { 
                     _reflectGraphForm = new ReflectGraphForm();
+                    ConfigureChildForm(_reflectGraphForm);
+                }
 
-                ConfigureAndShowChildForm(_reflectGraphForm);
+                ShowChildForm(_reflectGraphForm);
 
                 ((IReflectGraphView)_reflectGraphForm).InitializeView(budgetData);
             }
