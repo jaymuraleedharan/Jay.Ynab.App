@@ -12,6 +12,7 @@ using YnabApp.BL.ListBudgets;
 using YnabApp.BL.ListCategories;
 using YnabApp.BL.ListTransactions;
 using YnabApp.BL.Reflect;
+using YnabApp.BL.Export;
 using YnabApp.UI;
 using YnabApp.UI.Reflect;
 
@@ -28,6 +29,9 @@ namespace YnabApp.Forms
         CategoryGroupData[] _categoryDatas;
         TransactionData[] _transactionDatas;
 
+        List<ReflectSummaryData> _summaryResults;
+        List<ReflectIncomeData> _incomeResults;
+        List<ReflectCategoryGroupData> _categoryGroupResults;
         List<ReflectCategoryData> _categoryResults;
 
         decimal TotalIncome { get; set; }
@@ -88,9 +92,9 @@ namespace YnabApp.Forms
             //-------------------------------------------//
             // Summary
             //-------------------------------------------//
-            var summaryResults = await dataCruncher.CrunchSummaryDataAsync(categoryDatas, transactionDatas, _isYearlyReport, _asOfDate, BL_Person);
+            _summaryResults = await dataCruncher.CrunchSummaryDataAsync(categoryDatas, transactionDatas, _isYearlyReport, _asOfDate, BL_Person);
 
-            foreach (var summaryData in summaryResults)
+            foreach (var summaryData in _summaryResults)
             {
                 ListViewItem item = new ListViewItem(summaryData.SummaryName);
                 item.SubItems.Add(summaryData.Amount.ToString("#,###,##0.00"));
@@ -118,9 +122,9 @@ namespace YnabApp.Forms
             //-------------------------------------------//
             // Incomes
             //-------------------------------------------//
-            var incomeResults = await dataCruncher.CrunchIncomeDataAsync(transactionDatas, _isYearlyReport, _asOfDate, BL_Person);
+            _incomeResults = await dataCruncher.CrunchIncomeDataAsync(transactionDatas, _isYearlyReport, _asOfDate, BL_Person);
 
-            foreach (var incomeData in incomeResults)
+            foreach (var incomeData in _incomeResults)
             {
                 ListViewItem item = new ListViewItem(incomeData.FullName);
                 item.SubItems.Add(incomeData.Amount.ToString("#,###,##0.00"));
@@ -136,12 +140,12 @@ namespace YnabApp.Forms
             // Category Groups
             //-------------------------------------------//
 
-            var categoryGroupResults = await dataCruncher.CrunchCategroyGroupDataAsync(categoryDatas, transactionDatas, _isYearlyReport, _asOfDate, TotalIncome, BL_Person);
+            _categoryGroupResults = await dataCruncher.CrunchCategroyGroupDataAsync(categoryDatas, transactionDatas, _isYearlyReport, _asOfDate, TotalIncome, BL_Person);
 
             //Disabling Checked Event during data load            
             c_categoryGroupDataListView.ItemChecked -= c_categoryGroupDataListView_ItemChecked;
 
-            foreach (var categoryGroup in categoryGroupResults)
+            foreach (var categoryGroup in _categoryGroupResults)
             {
                 ListViewItem item = new ListViewItem(categoryGroup.CategoryGroupName);
                 item.SubItems.Add(categoryGroup.Amount.ToString("#,###,##0.00"));
@@ -257,7 +261,7 @@ namespace YnabApp.Forms
         private void c_categoryGroupDataListView_ItemChecked(object sender, ItemCheckedEventArgs e)
         {
             try
-            {                
+            {
                 ResetListView(c_categoryDataListView, "Category", _isYearlyReport);
                 ShowCategoriesFilteredByCatGroups();
             }
@@ -272,9 +276,9 @@ namespace YnabApp.Forms
         private void ShowCategoriesFilteredByCatGroups()
         {
             List<ReflectCategoryGroupData> selectedCatGroups = new List<ReflectCategoryGroupData>();
-            foreach(ListViewItem item in c_categoryGroupDataListView.Items)
-                if(item.Checked)
-                    selectedCatGroups.Add(item.Tag as ReflectCategoryGroupData);            
+            foreach (ListViewItem item in c_categoryGroupDataListView.Items)
+                if (item.Checked)
+                    selectedCatGroups.Add(item.Tag as ReflectCategoryGroupData);
 
             foreach (var category in _categoryResults)
             {
@@ -293,6 +297,25 @@ namespace YnabApp.Forms
             }
 
             c_categoryDataListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+        }
+
+        private void c_menuItemExport_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ReflectExport exporter = new ReflectExport(_isYearlyReport, BL_Person, _asOfDate,  _summaryResults, _incomeResults, _categoryGroupResults, _categoryResults);
+                string filePath = exporter.GenerateReport();
+
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                {
+                    FileName = filePath,
+                    UseShellExecute = true
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);                
+            }
         }
     }
 

@@ -186,7 +186,7 @@ namespace YnabApp.Forms
 
                     ReflectChartPoint chartPoint = null;
                     chartPoint = new ReflectChartPoint(chartPointStartDate, chartPointEndDate, IsYearly);
-                    
+
                     chartPoint.Summary = await dataCruncher.GenerateSummaryDataAsync(categoriesData, transactionsData, IsYearly, chartPointStartDate, person);
                     TotalIncome += chartPoint.Summary.Income;
 
@@ -233,14 +233,14 @@ namespace YnabApp.Forms
             var ynabChartArea = new ChartArea();
 
             ynabChartArea.BackColor = SystemColors.ControlLightLight;
-            
+
 
             ynabChartArea.IsSameFontSizeForAllAxes = true;
-            ynabChartArea.AxisX.TitleFont = this.Font;            
+            ynabChartArea.AxisX.TitleFont = this.Font;
 
             ynabChartArea.AxisX.IsMarginVisible = true;
             ynabChartArea.AxisX.IsInterlaced = false;
-            
+
             if (ChartPoints[0].TimeChunk.isYearly)
                 ynabChartArea.AxisY.Interval = 50000;
             else
@@ -293,7 +293,7 @@ namespace YnabApp.Forms
             ynabChartArea.AxisX.MinorGrid.Enabled = false;
 
 
-            ynabChartArea.AxisY.IsMarginVisible = false;            
+            ynabChartArea.AxisY.IsMarginVisible = false;
             ynabChartArea.AxisY.LabelStyle.IntervalType = DateTimeIntervalType.NotSet;
             ynabChartArea.AxisY.MajorGrid.Enabled = true;
             ynabChartArea.AxisY.MinorGrid.Enabled = false;
@@ -509,7 +509,24 @@ namespace YnabApp.Forms
             c_splitContainer.Panel2.Controls.Add(categoryChart);
 
         }
+
+        private void c_btnClearCache_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                CacheManager cache = new CacheManager(CacheType.Accounts);
+                var isSuccess = cache.ClearCache();
+                if (isSuccess)
+                    MessageBox.Show("Cache cleared successfully", "Clear Cache", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                else
+                    MessageBox.Show("Failed to clear Cache", "Clear Cache", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            catch (Exception ex)
+            {
+                ShowError(ex);
+            }
+        }
     }
-    
+
 }
 

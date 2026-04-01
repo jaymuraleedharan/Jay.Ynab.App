@@ -100,6 +100,7 @@
             c_btnClearCache.TabIndex = 27;
             c_btnClearCache.Text = "Clear Cache";
             c_btnClearCache.UseVisualStyleBackColor = true;
+            c_btnClearCache.Click += c_btnClearCache_Click;
             // 
             // groupBox8
             // 

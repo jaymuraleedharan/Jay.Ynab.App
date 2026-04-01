@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             c_headerLabel = new System.Windows.Forms.Label();
             c_summaryListView = new System.Windows.Forms.ListView();
             columnHeader1 = new System.Windows.Forms.ColumnHeader();
@@ -37,6 +38,9 @@
             columnHeader3 = new System.Windows.Forms.ColumnHeader();
             c_categoryDataListView = new System.Windows.Forms.ListView();
             columnHeader4 = new System.Windows.Forms.ColumnHeader();
+            c_contextMenu = new System.Windows.Forms.ContextMenuStrip(components);
+            c_menuItemExport = new System.Windows.Forms.ToolStripMenuItem();
+            c_contextMenu.SuspendLayout();
             SuspendLayout();
             // 
             // c_headerLabel
@@ -58,6 +62,7 @@
             c_summaryListView.BackColor = System.Drawing.SystemColors.Control;
             c_summaryListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             c_summaryListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { columnHeader1 });
+            c_summaryListView.ContextMenuStrip = c_contextMenu;
             c_summaryListView.FullRowSelect = true;
             c_summaryListView.GridLines = true;
             c_summaryListView.Location = new System.Drawing.Point(5, 26);
@@ -78,6 +83,7 @@
             c_incomeListView.BackColor = System.Drawing.SystemColors.Control;
             c_incomeListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             c_incomeListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { columnHeader2 });
+            c_incomeListView.ContextMenuStrip = c_contextMenu;
             c_incomeListView.FullRowSelect = true;
             c_incomeListView.GridLines = true;
             c_incomeListView.Location = new System.Drawing.Point(5, 151);
@@ -99,6 +105,7 @@
             c_categoryGroupDataListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             c_categoryGroupDataListView.CheckBoxes = true;
             c_categoryGroupDataListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { columnHeader3 });
+            c_categoryGroupDataListView.ContextMenuStrip = c_contextMenu;
             c_categoryGroupDataListView.FullRowSelect = true;
             c_categoryGroupDataListView.Location = new System.Drawing.Point(5, 320);
             c_categoryGroupDataListView.Name = "c_categoryGroupDataListView";
@@ -120,6 +127,7 @@
             c_categoryDataListView.BackColor = System.Drawing.SystemColors.Control;
             c_categoryDataListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             c_categoryDataListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { columnHeader4 });
+            c_categoryDataListView.ContextMenuStrip = c_contextMenu;
             c_categoryDataListView.FullRowSelect = true;
             c_categoryDataListView.Location = new System.Drawing.Point(5, 481);
             c_categoryDataListView.Name = "c_categoryDataListView";
@@ -134,6 +142,19 @@
             columnHeader4.Text = "EXPENSE CATEGORIES";
             columnHeader4.Width = 200;
             // 
+            // c_contextMenu
+            // 
+            c_contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { c_menuItemExport });
+            c_contextMenu.Name = "c_contextMenu";
+            c_contextMenu.Size = new System.Drawing.Size(181, 48);
+            // 
+            // c_menuItemExport
+            // 
+            c_menuItemExport.Name = "c_menuItemExport";
+            c_menuItemExport.Size = new System.Drawing.Size(180, 22);
+            c_menuItemExport.Text = "Export...";
+            c_menuItemExport.Click += c_menuItemExport_Click;
+            // 
             // ReflectColumnControl
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -145,6 +166,7 @@
             Controls.Add(c_headerLabel);
             Name = "ReflectColumnControl";
             Size = new System.Drawing.Size(557, 921);
+            c_contextMenu.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -159,5 +181,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.ListView c_categoryDataListView;
         private System.Windows.Forms.ColumnHeader columnHeader4;
+        private System.Windows.Forms.ContextMenuStrip c_contextMenu;
+        private System.Windows.Forms.ToolStripMenuItem c_menuItemExport;
     }
 }
