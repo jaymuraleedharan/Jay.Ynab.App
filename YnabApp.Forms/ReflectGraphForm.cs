@@ -260,7 +260,6 @@ namespace YnabApp.Forms
             return ynabChart;
         }
 
-
         private Chart CreateCategoryChart()
         {
             //CHART
@@ -508,23 +507,6 @@ namespace YnabApp.Forms
             c_splitContainer.Panel2.Controls.Clear();
             c_splitContainer.Panel2.Controls.Add(categoryChart);
 
-        }
-
-        private void c_btnClearCache_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                CacheManager cache = new CacheManager(CacheType.Accounts);
-                var isSuccess = cache.ClearCache();
-                if (isSuccess)
-                    MessageBox.Show("Cache cleared successfully", "Clear Cache", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                else
-                    MessageBox.Show("Failed to clear Cache", "Clear Cache", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-            catch (Exception ex)
-            {
-                ShowError(ex);
-            }
         }
     }
 

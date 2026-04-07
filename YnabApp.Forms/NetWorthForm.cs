@@ -16,7 +16,7 @@ using YnabApp.UI.ListAccounts;
 
 namespace YnabApp.Forms
 {
-    public partial class ShowAccountsTransactionsForm : FormBase, IListAccountsView
+    public partial class NetWorthForm : FormBase, IListAccountsView
     {
         private readonly ListAccountsPresenter _presenter = null;
         private BudgetData _budgetData = null;
@@ -24,7 +24,7 @@ namespace YnabApp.Forms
         private TransactionData[] _transactionsData = null;
         private CategoryGroupData[] _categoriesData = null;
 
-        public ShowAccountsTransactionsForm()
+        public NetWorthForm()
         {
             InitializeComponent();
 

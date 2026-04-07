@@ -18,11 +18,14 @@ namespace YnabApp.Forms
     {
         private readonly OpenBudgetPresenter _presenter = null;
 
+        public event EventHandler<BudgetData> OpenBudgetClicked;
 
         public IMainView MainView
         {
             get { return this.MdiParent as IMainView; }
         }
+
+        public BudgetData SelectedBudget => c_budgetGrid.SelectedRows.Count > 0 ? c_budgetGrid.SelectedRows[0].DataBoundItem as BudgetData : null;
 
         public OpenBudgetForm()
         {
@@ -52,24 +55,6 @@ namespace YnabApp.Forms
             }
         }
 
-        private void c_openBudget_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (c_budgetGrid.SelectedRows.Count > 0)
-                {
-                    BudgetData data = c_budgetGrid.SelectedRows[0].DataBoundItem as BudgetData;
-                    if (data != null)
-                        MainView.ShowAccountsView(data);
-                }
-            }
-            catch (Exception ex)
-            {
-                ShowError(ex);
-            }
-        }
-
-
         private void PrepareGridView()
         {
             c_budgetGrid.Columns.Clear();
@@ -82,50 +67,35 @@ namespace YnabApp.Forms
             });
             c_budgetGrid.Columns.Add(new DataGridViewTextBoxColumn()
             {
-                Name = "LastModifiedOn",
+                Name = "Last Updated",
                 DataPropertyName = "LastModifiedOn",
                 ValueType = Type.GetType("System.String")
             });
             c_budgetGrid.Columns.Add(new DataGridViewTextBoxColumn()
             {
-                Name = "FirstMonth",
-                DataPropertyName = "FirstMonth",
-                ValueType = Type.GetType("System.String")
+                Name = "From",
+                DataPropertyName = "StartDate",
+                ValueType = Type.GetType("System.DateTime")
             });
             c_budgetGrid.Columns.Add(new DataGridViewTextBoxColumn()
             {
-                Name = "LastMonth",
-                DataPropertyName = "LastMonth",
-                ValueType = Type.GetType("System.String")
+                Name = "To",
+                DataPropertyName = "EndDate",
+                ValueType = Type.GetType("System.DateTime")
             });
         }
 
-        private void c_reflectButton_Click(object sender, EventArgs e)
+        private void c_selectBudgetButton_Click(object sender, EventArgs e)
         {
             try
             {
-                if (c_budgetGrid.SelectedRows.Count > 0)
+                if (SelectedBudget != null)
                 {
-                    BudgetData data = c_budgetGrid.SelectedRows[0].DataBoundItem as BudgetData;
-                    if (data != null)
-                        MainView.ShowReflectView(data);
+                    OpenBudgetClicked?.Invoke(this, SelectedBudget);
                 }
-            }
-            catch (Exception ex)
-            {
-                ShowError(ex);
-            }
-        }
-
-        private void c_chartsButton_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (c_budgetGrid.SelectedRows.Count > 0)
-                {
-                    BudgetData data = c_budgetGrid.SelectedRows[0].DataBoundItem as BudgetData;
-                    if (data != null)
-                        MainView.ShowChartsView(data);
+                else
+                {                    
+                    MessageBox.Show("Select a budget to open.", "No Budget Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             catch (Exception ex)
