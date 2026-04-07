@@ -5,16 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using YnabApp.BL.ListBudgets;
 
-namespace YnabApp.UI.OpenBudget
+namespace YnabApp.UI
 {
-    public interface IOpenBudgetView
+    public interface IBudgetView
     {
         IMainView MainView { get; }
 
-        BudgetData SelectedBudget { get; }
+        BudgetData CurrentBudget { get; }
 
-        void InitializeView();
-
-        event EventHandler<BudgetData> OpenBudgetClicked;
+        void InitializeView(BudgetData budget, IMainView mainView);
     }
 }

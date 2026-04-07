@@ -32,6 +32,13 @@ namespace YnabApp.Forms
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             menuStrip1 = new System.Windows.Forms.MenuStrip();
             c_OpenBudgetMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            c_budgetMenu = new System.Windows.Forms.ToolStripMenuItem();
+            c_netWorthMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            c_reflectMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            c_chartsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            c_clearCacheMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            c_settingsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             c_AboutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             c_QuitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             menuStrip1.SuspendLayout();
@@ -39,7 +46,7 @@ namespace YnabApp.Forms
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { c_OpenBudgetMenuItem, c_AboutMenuItem, c_QuitMenuItem });
+            menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { c_OpenBudgetMenuItem, c_budgetMenu, c_AboutMenuItem, c_QuitMenuItem });
             menuStrip1.Location = new System.Drawing.Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new System.Drawing.Size(1452, 24);
@@ -52,6 +59,54 @@ namespace YnabApp.Forms
             c_OpenBudgetMenuItem.Size = new System.Drawing.Size(98, 20);
             c_OpenBudgetMenuItem.Text = "Open Budget...";
             c_OpenBudgetMenuItem.Click += c_OpenBudgetMenuItem_Click;
+            // 
+            // c_budgetMenu
+            // 
+            c_budgetMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { c_netWorthMenuItem, c_reflectMenuItem, c_chartsMenuItem, toolStripSeparator1, c_clearCacheMenuItem, c_settingsMenuItem });
+            c_budgetMenu.Enabled = false;
+            c_budgetMenu.Name = "c_budgetMenu";
+            c_budgetMenu.Size = new System.Drawing.Size(57, 20);
+            c_budgetMenu.Text = "Budget";
+            // 
+            // c_netWorthMenuItem
+            // 
+            c_netWorthMenuItem.Name = "c_netWorthMenuItem";
+            c_netWorthMenuItem.Size = new System.Drawing.Size(180, 22);
+            c_netWorthMenuItem.Text = "Net Worth...";
+            c_netWorthMenuItem.Click += c_netWorthMenuItem_Click;
+            // 
+            // c_reflectMenuItem
+            // 
+            c_reflectMenuItem.Name = "c_reflectMenuItem";
+            c_reflectMenuItem.Size = new System.Drawing.Size(180, 22);
+            c_reflectMenuItem.Text = "Reflect...";
+            c_reflectMenuItem.Click += c_reflectMenuItem_Click;
+            // 
+            // c_chartsMenuItem
+            // 
+            c_chartsMenuItem.Name = "c_chartsMenuItem";
+            c_chartsMenuItem.Size = new System.Drawing.Size(180, 22);
+            c_chartsMenuItem.Text = "Charts...";
+            c_chartsMenuItem.Click += c_chartsMenuItem_Click;
+            // 
+            // toolStripSeparator1
+            // 
+            toolStripSeparator1.Name = "toolStripSeparator1";
+            toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            // 
+            // c_clearCacheMenuItem
+            // 
+            c_clearCacheMenuItem.Name = "c_clearCacheMenuItem";
+            c_clearCacheMenuItem.Size = new System.Drawing.Size(180, 22);
+            c_clearCacheMenuItem.Text = "Clear Cache";
+            c_clearCacheMenuItem.Click += c_clearCacheMenuItem_Click;
+            // 
+            // c_settingsMenuItem
+            // 
+            c_settingsMenuItem.Name = "c_settingsMenuItem";
+            c_settingsMenuItem.Size = new System.Drawing.Size(180, 22);
+            c_settingsMenuItem.Text = "Settings...";
+            c_settingsMenuItem.Click += c_settingsMenuItem_Click;
             // 
             // c_AboutMenuItem
             // 
@@ -92,5 +147,12 @@ namespace YnabApp.Forms
         private System.Windows.Forms.ToolStripMenuItem c_OpenBudgetMenuItem;
         private System.Windows.Forms.ToolStripMenuItem c_AboutMenuItem;
         private System.Windows.Forms.ToolStripMenuItem c_QuitMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem c_budgetMenu;
+        private System.Windows.Forms.ToolStripMenuItem c_clearCacheMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem c_settingsMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem c_netWorthMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem c_reflectMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem c_chartsMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }

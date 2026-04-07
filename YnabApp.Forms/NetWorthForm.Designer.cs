@@ -1,7 +1,7 @@
 ﻿
 namespace YnabApp.Forms
 {
-    partial class ShowAccountsTransactionsForm
+    partial class NetWorthForm
     {
         /// <summary>
         /// Required designer variable.

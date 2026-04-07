@@ -30,7 +30,6 @@
         {
             groupBox1 = new System.Windows.Forms.GroupBox();
             c_chkBoxHideZeroCategories = new System.Windows.Forms.CheckBox();
-            c_btnClearCache = new System.Windows.Forms.Button();
             groupBox8 = new System.Windows.Forms.GroupBox();
             c_radioPersonShar = new System.Windows.Forms.RadioButton();
             c_radioPersonJay = new System.Windows.Forms.RadioButton();
@@ -77,7 +76,6 @@
             // 
             groupBox1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             groupBox1.Controls.Add(c_chkBoxHideZeroCategories);
-            groupBox1.Controls.Add(c_btnClearCache);
             groupBox1.Controls.Add(groupBox8);
             groupBox1.Controls.Add(c_moveForwardButton);
             groupBox1.Controls.Add(c_moveBackButton);
@@ -110,16 +108,6 @@
             c_chkBoxHideZeroCategories.TabIndex = 0;
             c_chkBoxHideZeroCategories.Text = "Hide 'Zero' Categories";
             c_chkBoxHideZeroCategories.UseVisualStyleBackColor = true;
-            // 
-            // c_btnClearCache
-            // 
-            c_btnClearCache.Location = new System.Drawing.Point(970, 25);
-            c_btnClearCache.Name = "c_btnClearCache";
-            c_btnClearCache.Size = new System.Drawing.Size(98, 26);
-            c_btnClearCache.TabIndex = 25;
-            c_btnClearCache.Text = "Clear Cache";
-            c_btnClearCache.UseVisualStyleBackColor = true;
-            c_btnClearCache.Click += c_btnClearCache_Click;
             // 
             // groupBox8
             // 
@@ -416,7 +404,7 @@
             // 
             // c_btnShow
             // 
-            c_btnShow.Location = new System.Drawing.Point(970, 62);
+            c_btnShow.Location = new System.Drawing.Point(970, 26);
             c_btnShow.Name = "c_btnShow";
             c_btnShow.Size = new System.Drawing.Size(98, 26);
             c_btnShow.TabIndex = 13;
@@ -534,6 +522,5 @@
         private System.Windows.Forms.RadioButton c_radioPersonShar;
         private System.Windows.Forms.RadioButton c_radioPersonJay;
         private System.Windows.Forms.CheckBox c_chkBoxHideZeroCategories;
-        private System.Windows.Forms.Button c_btnClearCache;
     }
 }

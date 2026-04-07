@@ -31,7 +31,6 @@
             c_grpBoxCriteria = new System.Windows.Forms.GroupBox();
             label3 = new System.Windows.Forms.Label();
             btnShowGraph = new System.Windows.Forms.Button();
-            c_btnClearCache = new System.Windows.Forms.Button();
             groupBox8 = new System.Windows.Forms.GroupBox();
             c_radioPersonShar = new System.Windows.Forms.RadioButton();
             c_radioPersonJay = new System.Windows.Forms.RadioButton();
@@ -55,7 +54,6 @@
             // 
             c_grpBoxCriteria.Controls.Add(label3);
             c_grpBoxCriteria.Controls.Add(btnShowGraph);
-            c_grpBoxCriteria.Controls.Add(c_btnClearCache);
             c_grpBoxCriteria.Controls.Add(groupBox8);
             c_grpBoxCriteria.Controls.Add(c_radBtnCustom);
             c_grpBoxCriteria.Controls.Add(c_dtPckCustomEnd);
@@ -84,23 +82,13 @@
             // 
             // btnShowGraph
             // 
-            btnShowGraph.Location = new System.Drawing.Point(637, 55);
+            btnShowGraph.Location = new System.Drawing.Point(637, 17);
             btnShowGraph.Name = "btnShowGraph";
             btnShowGraph.Size = new System.Drawing.Size(98, 26);
             btnShowGraph.TabIndex = 28;
             btnShowGraph.Text = "Show Charts";
             btnShowGraph.UseVisualStyleBackColor = true;
             btnShowGraph.Click += btnShowGraph_Click;
-            // 
-            // c_btnClearCache
-            // 
-            c_btnClearCache.Location = new System.Drawing.Point(637, 23);
-            c_btnClearCache.Name = "c_btnClearCache";
-            c_btnClearCache.Size = new System.Drawing.Size(98, 26);
-            c_btnClearCache.TabIndex = 27;
-            c_btnClearCache.Text = "Clear Cache";
-            c_btnClearCache.UseVisualStyleBackColor = true;
-            c_btnClearCache.Click += c_btnClearCache_Click;
             // 
             // groupBox8
             // 
@@ -275,7 +263,6 @@
         private System.Windows.Forms.RadioButton c_radioPersonShar;
         private System.Windows.Forms.RadioButton c_radioPersonJay;
         private System.Windows.Forms.RadioButton c_radioPersonAll;
-        private System.Windows.Forms.Button c_btnClearCache;
         private System.Windows.Forms.Button btnShowGraph;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.SplitContainer c_splitContainer;
