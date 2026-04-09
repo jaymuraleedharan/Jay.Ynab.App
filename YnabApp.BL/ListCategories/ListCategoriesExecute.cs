@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
+
 namespace YnabApp.BL.ListCategories
 {
     public class ListCategoriesExecute : ExecuteBase
@@ -57,6 +58,9 @@ namespace YnabApp.BL.ListCategories
                         IsDeleted = Boolean.Parse(catGroup["deleted"].ToString()),
                     };
 
+                    if (IsExcludeCategory(categoryGroupData.Name) == true ||  categoryGroupData.Name.Contains("[?]"))
+                        continue;
+
                     JToken categories = catGroup["categories"];
                     if(categories!= null)
                         foreach(var cat in categories)
@@ -75,6 +79,11 @@ namespace YnabApp.BL.ListCategories
                 }
 
             return list.ToArray();
+        }
+
+        private bool? IsExcludeCategory(string catGroupName)
+        {
+            return ConfigManager.App.ExcludeCategories?.ToList().Contains(catGroupName);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace YnabApp.BL
 
         public static EnvSettings Env = new EnvSettings();
 
-        public static AppSettings App { get; private set; }
+        public static AppSettings App { get; private set; }        
 
         public static UISettings UI { get; private set; }
 
@@ -51,6 +51,10 @@ namespace YnabApp.BL
         public YnabApiSettings YnabApi { get; set; }
 
         public YnabCacheSettings YnabCache { get; set; }
+
+        public BudgetCustomizationSettings BudgetCustomization { get; set; }
+
+        public string[] ExcludeCategories { get;set; }
     }
 
     public sealed class YnabApiSettings
@@ -66,9 +70,12 @@ namespace YnabApp.BL
 
         public string CacheFolder { get; set; } = null;
 
-        public int HistoryStartYear { get; set; }
-
         public int AutoExpirationInDays { get; set; } = 0;
+    }
+
+    public sealed class BudgetCustomizationSettings
+    {
+        public string SettingsFolder { get; set; } = null;
     }
 
     public sealed class UISettings
