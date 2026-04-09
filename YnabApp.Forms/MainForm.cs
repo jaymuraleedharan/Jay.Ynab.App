@@ -32,6 +32,25 @@ namespace YnabApp.Forms
             InitializeComponent();
         }
 
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            SizeAndPositionOnScreenDimensions();
+        }
+
+        private void SizeAndPositionOnScreenDimensions()
+        {
+            Rectangle workingArea = Screen.PrimaryScreen.WorkingArea;
+            if(workingArea.Height <= 1080)
+            {
+                this.WindowState = FormWindowState.Maximized;
+            }
+            else
+            {
+                this.Size = new Size(1920, 1080);
+                this.StartPosition = FormStartPosition.CenterScreen;
+            }
+        }
+
         private void ConfigureChildForm(Form form)
         {
             form.ShowInTaskbar = false;
@@ -219,5 +238,6 @@ namespace YnabApp.Forms
         {
             ShowChartsView(CurrentBudget);
         }
+
     }
 }

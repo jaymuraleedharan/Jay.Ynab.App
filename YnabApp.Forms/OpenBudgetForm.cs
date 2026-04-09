@@ -94,7 +94,7 @@ namespace YnabApp.Forms
                     OpenBudgetClicked?.Invoke(this, SelectedBudget);
                 }
                 else
-                {                    
+                {
                     MessageBox.Show("Select a budget to open.", "No Budget Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
@@ -102,6 +102,11 @@ namespace YnabApp.Forms
             {
                 ShowError(ex);
             }
+        }
+
+        private void c_cancelButton_Click(object sender, EventArgs e)
+        {
+            this.Hide();
         }
     }
 }
