@@ -49,7 +49,7 @@ namespace YnabApp.Forms
             menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { c_OpenBudgetMenuItem, c_budgetMenu, c_AboutMenuItem, c_QuitMenuItem });
             menuStrip1.Location = new System.Drawing.Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new System.Drawing.Size(1452, 24);
+            menuStrip1.Size = new System.Drawing.Size(1565, 24);
             menuStrip1.TabIndex = 1;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -71,40 +71,40 @@ namespace YnabApp.Forms
             // c_netWorthMenuItem
             // 
             c_netWorthMenuItem.Name = "c_netWorthMenuItem";
-            c_netWorthMenuItem.Size = new System.Drawing.Size(180, 22);
+            c_netWorthMenuItem.Size = new System.Drawing.Size(138, 22);
             c_netWorthMenuItem.Text = "Net Worth...";
             c_netWorthMenuItem.Click += c_netWorthMenuItem_Click;
             // 
             // c_reflectMenuItem
             // 
             c_reflectMenuItem.Name = "c_reflectMenuItem";
-            c_reflectMenuItem.Size = new System.Drawing.Size(180, 22);
+            c_reflectMenuItem.Size = new System.Drawing.Size(138, 22);
             c_reflectMenuItem.Text = "Reflect...";
             c_reflectMenuItem.Click += c_reflectMenuItem_Click;
             // 
             // c_chartsMenuItem
             // 
             c_chartsMenuItem.Name = "c_chartsMenuItem";
-            c_chartsMenuItem.Size = new System.Drawing.Size(180, 22);
+            c_chartsMenuItem.Size = new System.Drawing.Size(138, 22);
             c_chartsMenuItem.Text = "Charts...";
             c_chartsMenuItem.Click += c_chartsMenuItem_Click;
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            toolStripSeparator1.Size = new System.Drawing.Size(135, 6);
             // 
             // c_clearCacheMenuItem
             // 
             c_clearCacheMenuItem.Name = "c_clearCacheMenuItem";
-            c_clearCacheMenuItem.Size = new System.Drawing.Size(180, 22);
+            c_clearCacheMenuItem.Size = new System.Drawing.Size(138, 22);
             c_clearCacheMenuItem.Text = "Clear Cache";
             c_clearCacheMenuItem.Click += c_clearCacheMenuItem_Click;
             // 
             // c_settingsMenuItem
             // 
             c_settingsMenuItem.Name = "c_settingsMenuItem";
-            c_settingsMenuItem.Size = new System.Drawing.Size(180, 22);
+            c_settingsMenuItem.Size = new System.Drawing.Size(138, 22);
             c_settingsMenuItem.Text = "Settings...";
             c_settingsMenuItem.Click += c_settingsMenuItem_Click;
             // 
@@ -126,7 +126,7 @@ namespace YnabApp.Forms
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(1452, 526);
+            ClientSize = new System.Drawing.Size(1565, 1213);
             Controls.Add(menuStrip1);
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             IsMdiContainer = true;
@@ -134,6 +134,7 @@ namespace YnabApp.Forms
             Name = "MainForm";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "YNAB APP";
+            Load += MainForm_Load;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             ResumeLayout(false);

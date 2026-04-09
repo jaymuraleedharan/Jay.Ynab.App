@@ -31,6 +31,7 @@ namespace YnabApp.Forms
         {
             c_budgetGrid = new System.Windows.Forms.DataGridView();
             c_selectBudgetButton = new System.Windows.Forms.Button();
+            c_cancelButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)c_budgetGrid).BeginInit();
             SuspendLayout();
             // 
@@ -64,12 +65,24 @@ namespace YnabApp.Forms
             c_selectBudgetButton.UseVisualStyleBackColor = true;
             c_selectBudgetButton.Click += c_selectBudgetButton_Click;
             // 
+            // c_cancelButton
+            // 
+            c_cancelButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            c_cancelButton.Location = new System.Drawing.Point(904, 85);
+            c_cancelButton.Name = "c_cancelButton";
+            c_cancelButton.Size = new System.Drawing.Size(235, 47);
+            c_cancelButton.TabIndex = 6;
+            c_cancelButton.Text = "Cancel";
+            c_cancelButton.UseVisualStyleBackColor = true;
+            c_cancelButton.Click += c_cancelButton_Click;
+            // 
             // OpenBudgetForm
             // 
             AcceptButton = c_selectBudgetButton;
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(1181, 617);
+            Controls.Add(c_cancelButton);
             Controls.Add(c_selectBudgetButton);
             Controls.Add(c_budgetGrid);
             Name = "OpenBudgetForm";
@@ -83,5 +96,6 @@ namespace YnabApp.Forms
 
         private System.Windows.Forms.DataGridView c_budgetGrid;
         private System.Windows.Forms.Button c_selectBudgetButton;
+        private System.Windows.Forms.Button c_cancelButton;
     }
 }
