@@ -30,3 +30,4 @@ This project is licensed under the MIT License - see LICENSE.txt file for detail
 
 ## Acknowledgments
 - [YNAB API](https://api.youneedabudget.com/)
+- [WinForms DataVisualization by Angelo Cresta](https://github.com/AngeloCresta/winforms-datavisualization-net)
