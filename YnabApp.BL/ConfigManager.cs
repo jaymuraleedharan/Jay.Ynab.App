@@ -24,7 +24,7 @@ namespace YnabApp.BL
             AllConfig = new ConfigurationBuilder()
                                     .SetBasePath(new Uri(AppContext.BaseDirectory).LocalPath)
                                     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                                    //.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                                    .AddJsonFile("appsettings.secrets.json", optional: true, reloadOnChange: true)
                                     .Build();
 
             App = new AppSettings();

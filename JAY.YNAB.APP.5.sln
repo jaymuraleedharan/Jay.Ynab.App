@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.32002.261
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.37111.16 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YnabApp.BL", "YnabApp.BL\YnabApp.BL.csproj", "{0E4F2BDD-19FA-4927-A12E-4AE742769E44}"
 EndProject
@@ -12,6 +12,11 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YnabApp.Forms", "YnabApp.Forms\YnabApp.Forms.csproj", "{48BD4CDB-5479-4DDC-A967-6BB5EF53C2CC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YnabApp.WPF", "YnabApp.WPF\YnabApp.WPF.csproj", "{119D49CD-8B9A-44EE-A0D0-CBF00E2CFB60}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "README", "README", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		ManageYnabToken.md = ManageYnabToken.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
