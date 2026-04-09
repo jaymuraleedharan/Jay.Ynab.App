@@ -361,3 +361,12 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Secret configuration files
+appsettings.secrets.json
+appsettings.Development.json
+**/secrets.json
+
+# User Secrets
+secrets/
+/YnabApp.Forms/appsettings.json
