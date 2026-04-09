@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using YnabApp.BL.BudgetSettings;
 
 namespace YnabApp.UI.Reflect
 {

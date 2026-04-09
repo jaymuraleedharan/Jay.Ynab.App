@@ -15,12 +15,14 @@ using YnabApp.BL.ListTransactions;
 using YnabApp.BL.Reflect;
 using YnabApp.UI;
 using YnabApp.UI.Reflect;
+using YnabApp.BL.BudgetSettings;
 
 namespace YnabApp.Forms
 {
     public partial class ReflectGraphForm : FormBase, IReflectGraphView
     {
         BudgetData _budgetData = null;
+        BudgetSettings CurrentBudgetSettings { get; set; }
 
         internal List<ReflectChartPoint> ChartPoints { get; set; }
         internal List<ReflectCategoryData> CategoryResults { get; set; }
@@ -39,6 +41,7 @@ namespace YnabApp.Forms
         public void InitializeView(BudgetData budgetData)
         {
             _budgetData = budgetData;
+            CurrentBudgetSettings = BudgetSettings.Load(budgetData.Id);
             ResetUI();
         }
 
@@ -358,7 +361,7 @@ namespace YnabApp.Forms
             return new Series
             {
                 Name = "Necessities",
-                Color = Color.LightYellow, // ReflectColorizer.GetBackColor("NECESSITIES"),
+                Color = CurrentBudgetSettings.GetCatGroupBackColor("NECESSITIES"),
                 ChartType = SeriesChartType.Column,
                 IsValueShownAsLabel = true,
                 BorderWidth = 4,
@@ -374,7 +377,7 @@ namespace YnabApp.Forms
             return new Series
             {
                 Name = "Discretionary",
-                Color = Color.LightCoral, // ReflectColorizer.GetBackColor("DISCRETIONARY"),
+                Color = CurrentBudgetSettings.GetCatGroupBackColor("DISCRETIONARY"),
                 ChartType = SeriesChartType.Column,
                 IsValueShownAsLabel = true,
                 BorderWidth = 4,
@@ -390,7 +393,7 @@ namespace YnabApp.Forms
             return new Series
             {
                 Name = "Help",
-                Color = Color.LightBlue, // ReflectColorizer.GetBackColor("HELP"),
+                Color = CurrentBudgetSettings.GetCatGroupBackColor("HELP"),
                 ChartType = SeriesChartType.Column,
                 IsValueShownAsLabel = true,
                 BorderWidth = 4,
@@ -406,7 +409,7 @@ namespace YnabApp.Forms
             return new Series
             {
                 Name = "Major Expense Categories",
-                Color = Color.LightCoral, // ReflectColorizer.GetBackColor("HELP"),
+                Color = CurrentBudgetSettings.GetCatGroupBackColor("DISCRETIONARY"),
                 ChartType = SeriesChartType.Bar,
                 IsValueShownAsLabel = true,
                 BorderWidth = 4,
@@ -497,7 +500,7 @@ namespace YnabApp.Forms
                 {
                     YValues = new double[] { (double)catData.Amount },
                     Label = $"{catData.CategoryGroupName}-{catData.CategoryName} | {catData.Amount.ToString("$ #,###,##0")} | {catData.Percentage.ToString("#0")}%",
-                    Color = ReflectColorizer.GetBackColor(catData.CategoryGroupName)
+                    Color = CurrentBudgetSettings.GetCatGroupBackColor(catData.CategoryGroupName)
                 });
             }
 

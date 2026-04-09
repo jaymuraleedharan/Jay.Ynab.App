@@ -64,6 +64,14 @@ namespace YnabApp.BL.BudgetSettings
             File.WriteAllText(SettingsFilePath, jsonSettings);
         }
 
+        public Color GetCatGroupBackColor(string catGrpName)
+        {
+            return CategoryGroupColors.Find(c => c.Name == catGrpName)?.BackColor.GetColor() ?? Color.Transparent;
+        }
+        public Color GetCatGroupFontColor(string catGrpName)
+        {
+            return CategoryGroupColors.Find(c => c.Name == catGrpName)?.ForeColor.GetColor() ?? Color.Black;
+        }
     }
 
     public class  PersonSetting : IEquatable<PersonSetting>

@@ -15,12 +15,16 @@ using YnabApp.BL.Reflect;
 using YnabApp.BL.Export;
 using YnabApp.UI;
 using YnabApp.UI.Reflect;
+using YnabApp.BL.BudgetSettings;
 
 namespace YnabApp.Forms
 {
     public partial class ReflectColumnControl : UserControl, IReflectColumnView
     {
         ReflectColumnPresenter _presenter = null;
+
+        BudgetData _budgetData = null;
+        BudgetSettings CurrentBudgetSettings { get; set; }
         DateTime _asOfDate;
         bool _isYearlyReport;
         PersonSelected _personSelected;
@@ -49,8 +53,10 @@ namespace YnabApp.Forms
             get { return this.ParentForm as IReflectView; }
         }
 
-        public void InitializeView(bool isYearlyReport, DateTime reportDate, PersonSelected personSelected, bool isHideZeroCategorties)
+        public void InitializeView(BudgetData budgetData, bool isYearlyReport, DateTime reportDate, PersonSelected personSelected, bool isHideZeroCategorties)
         {
+            _budgetData = budgetData;
+            CurrentBudgetSettings = BudgetSettings.Load(budgetData.Id);
             _isYearlyReport = isYearlyReport;
             _asOfDate = reportDate;
             _personSelected = personSelected;
@@ -155,8 +161,8 @@ namespace YnabApp.Forms
 
                 item.Checked = true;
                 item.Tag = categoryGroup;
-                item.BackColor = ReflectColorizer.GetBackColor(categoryGroup.CategoryGroupName);
-                item.ForeColor = ReflectColorizer.GetFontColor(categoryGroup.CategoryGroupName);
+                item.BackColor = CurrentBudgetSettings.GetCatGroupBackColor(categoryGroup.CategoryGroupName);
+                item.ForeColor = CurrentBudgetSettings.GetCatGroupFontColor(categoryGroup.CategoryGroupName);
                 c_categoryGroupDataListView.Items.Add(item);
             }
 
@@ -290,8 +296,8 @@ namespace YnabApp.Forms
                     if (_isYearlyReport)
                         item.SubItems.Add(category.MonthlyAmountAccurate(_asOfDate).ToString("#,###,##0.00"));
                     item.Tag = category;
-                    item.BackColor = ReflectColorizer.GetBackColor(category.CategoryGroupName);
-                    item.ForeColor = ReflectColorizer.GetFontColor(category.CategoryGroupName);
+                    item.BackColor = CurrentBudgetSettings.GetCatGroupBackColor(category.CategoryGroupName);
+                    item.ForeColor = CurrentBudgetSettings.GetCatGroupFontColor(category.CategoryGroupName);
                     c_categoryDataListView.Items.Add(item);
                 }
             }
