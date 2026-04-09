@@ -37,7 +37,6 @@ namespace YnabApp.Forms
             InitializeComponent();
         }
 
-
         public void InitializeView(BudgetData budgetData)
         {
             _budgetData = budgetData;
@@ -319,7 +318,7 @@ namespace YnabApp.Forms
                 BorderWidth = 4,
                 LabelFormat = "$ #,###,000",
                 Font = this.Font,
-                ShadowColor = Color.Green,
+                ShadowColor = CurrentBudgetSettings.GeneralColors.IncomeColor.GetColor(),
                 ShadowOffset = 2,
             };
         }
@@ -335,7 +334,7 @@ namespace YnabApp.Forms
                 BorderWidth = 4,
                 LabelFormat = "$ #,###,000",
                 Font = this.Font,
-                ShadowColor = Color.Salmon,
+                ShadowColor = CurrentBudgetSettings.GeneralColors.ExpenseColor.GetColor(),
                 ShadowOffset = 2
             };
         }
@@ -351,7 +350,7 @@ namespace YnabApp.Forms
                 BorderWidth = 4,
                 LabelFormat = "$ #,###,000",
                 Font = this.Font,
-                ShadowColor = Color.Blue,
+                ShadowColor = CurrentBudgetSettings.GeneralColors.IncomeColor.GetColor(),
                 ShadowOffset = 2
             };
         }

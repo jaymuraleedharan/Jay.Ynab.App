@@ -51,10 +51,11 @@ namespace YnabApp.BL.BudgetSettings
                 Directory.CreateDirectory(SettingsFolderPath);
         }
 
-
         public List<PersonSetting> People { get; set; } = new List<PersonSetting>();
 
         public List<CategoryGroupColorSetting> CategoryGroupColors { get; set; } = new List<CategoryGroupColorSetting>();
+
+        public GeneralColorSettings GeneralColors { get; set; } = new GeneralColorSettings();
 
         public void Save()
         {
@@ -74,7 +75,7 @@ namespace YnabApp.BL.BudgetSettings
         }
     }
 
-    public class  PersonSetting : IEquatable<PersonSetting>
+    public class PersonSetting : IEquatable<PersonSetting>
     {
         public string Name { get; set; }
 
@@ -82,7 +83,7 @@ namespace YnabApp.BL.BudgetSettings
 
         public PersonSetting()
         {
-                
+
         }
 
         public static PersonSetting CreateNew(string name)
@@ -153,7 +154,7 @@ namespace YnabApp.BL.BudgetSettings
 
         public bool Equals(AccountSetting other)
         {
-            if (other is null) 
+            if (other is null)
                 return false;
 
             //if (ReferenceEquals(this, other)) 
@@ -174,7 +175,7 @@ namespace YnabApp.BL.BudgetSettings
 
         public static bool operator ==(AccountSetting left, AccountSetting right)
         {
-            if (left is null) 
+            if (left is null)
                 return right is null;
 
             return left.Equals(right);
@@ -298,4 +299,14 @@ namespace YnabApp.BL.BudgetSettings
         }
     }
 
+    public class GeneralColorSettings
+    {
+        public ColorSetting IncomeColor { get; set; } = ColorSetting.CreateFromColor(Color.Transparent);
+        public ColorSetting ExpenseColor { get; set; } = ColorSetting.CreateFromColor(Color.Transparent);
+
+        public override string ToString()
+        {
+            return $"Income: {IncomeColor}, Expense: {ExpenseColor}";
+        }
+    }
 }

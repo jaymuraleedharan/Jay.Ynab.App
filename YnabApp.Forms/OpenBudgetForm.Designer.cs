@@ -57,6 +57,7 @@ namespace YnabApp.Forms
             // c_selectBudgetButton
             // 
             c_selectBudgetButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            c_selectBudgetButton.Enabled = false;
             c_selectBudgetButton.Location = new System.Drawing.Point(904, 13);
             c_selectBudgetButton.Name = "c_selectBudgetButton";
             c_selectBudgetButton.Size = new System.Drawing.Size(235, 47);

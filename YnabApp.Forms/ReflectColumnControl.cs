@@ -110,12 +110,12 @@ namespace YnabApp.Forms
                 item.Tag = summaryData;
                 if (summaryData.SummaryName == "Net Change")
                 {
-                    item.BackColor = ReflectColorizer.GetNetChangeBackColor(summaryData.Amount);
+                    item.BackColor = ReflectColorizer.GetNetChangeBackColor(summaryData.Amount, CurrentBudgetSettings);
                     item.ForeColor = ReflectColorizer.GetNetChangeFontColor(summaryData.Amount);
                 }
                 else
                 {
-                    item.BackColor = ReflectColorizer.GetSummaryBackColor(summaryData.SummaryName);
+                    item.BackColor = ReflectColorizer.GetSummaryBackColor(summaryData.SummaryName, CurrentBudgetSettings);
                     item.ForeColor = ReflectColorizer.GetSummaryFontColor(summaryData.SummaryName);
                 }
                 c_summaryListView.Items.Add(item);
@@ -137,6 +137,9 @@ namespace YnabApp.Forms
                 item.SubItems.Add(incomeData.Percentage.ToString("#0.00"));
                 if (_isYearlyReport)
                     item.SubItems.Add(incomeData.MonthlyAmountAccurate(_asOfDate).ToString("#,###,##0.00"));
+                item.BackColor = CurrentBudgetSettings.GeneralColors.IncomeColor.GetColor();
+                item.ForeColor = ReflectColorizer.GetSummaryFontColor("All Incomes");
+
                 item.Tag = incomeData;
                 c_incomeListView.Items.Add(item);
             }

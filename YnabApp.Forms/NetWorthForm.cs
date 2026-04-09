@@ -13,6 +13,7 @@ using YnabApp.BL.ListTransactions;
 using YnabApp.BL.ListCategories;
 using YnabApp.UI;
 using YnabApp.UI.ListAccounts;
+using YnabApp.BL.BudgetSettings;
 
 namespace YnabApp.Forms
 {
@@ -20,6 +21,7 @@ namespace YnabApp.Forms
     {
         private readonly ListAccountsPresenter _presenter = null;
         private BudgetData _budgetData = null;
+        private BudgetSettings CurrentBudgetSettings { get; set; }
         private AccountData[] _accountsData = null;
         private TransactionData[] _transactionsData = null;
         private CategoryGroupData[] _categoriesData = null;
@@ -36,6 +38,7 @@ namespace YnabApp.Forms
             try
             {
                 _budgetData = budgetData;
+                CurrentBudgetSettings = BudgetSettings.Load(_budgetData.Id);
 
                 ResetUI();
 
@@ -572,9 +575,9 @@ namespace YnabApp.Forms
             switch (accData.Group)
             {
                 case AccountGroup.Liability:
-                    item.BackColor = ListAccountsPresenter.LIGHTRED; break;
+                    item.BackColor = CurrentBudgetSettings.GeneralColors.ExpenseColor.GetColor(); break;
                 default:
-                    item.BackColor = ListAccountsPresenter.LIGHTGREEN; break;
+                    item.BackColor = CurrentBudgetSettings.GeneralColors.IncomeColor.GetColor(); break;
             }
         }
 

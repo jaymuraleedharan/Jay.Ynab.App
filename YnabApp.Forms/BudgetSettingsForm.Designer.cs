@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             c_renamePersonButton = new System.Windows.Forms.Button();
             c_removePersonButton = new System.Windows.Forms.Button();
             c_addPersonButton = new System.Windows.Forms.Button();
@@ -42,7 +43,7 @@
             label3 = new System.Windows.Forms.Label();
             c_infoBudgetID = new System.Windows.Forms.TextBox();
             label2 = new System.Windows.Forms.Label();
-            groupBox3 = new System.Windows.Forms.GroupBox();
+            c_accountOwnerBlock = new System.Windows.Forms.GroupBox();
             label8 = new System.Windows.Forms.Label();
             label7 = new System.Windows.Forms.Label();
             c_personAccRemoveButton = new System.Windows.Forms.Button();
@@ -51,14 +52,23 @@
             c_personAccountsAvailableList = new System.Windows.Forms.ListBox();
             label1 = new System.Windows.Forms.Label();
             c_personList = new System.Windows.Forms.ComboBox();
-            groupBox4 = new System.Windows.Forms.GroupBox();
+            c_catGroupColorBlock = new System.Windows.Forms.GroupBox();
+            c_expenseColorButton = new System.Windows.Forms.Button();
+            c_incomeColorButton = new System.Windows.Forms.Button();
             c_fontColorButton = new System.Windows.Forms.Button();
             c_backColorButton = new System.Windows.Forms.Button();
+            c_colorContextMenu = new System.Windows.Forms.ContextMenuStrip(components);
+            toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
+            customColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             c_catGroupListview = new System.Windows.Forms.ListView();
             c_colorDialog = new System.Windows.Forms.ColorDialog();
             groupBox2.SuspendLayout();
-            groupBox3.SuspendLayout();
-            groupBox4.SuspendLayout();
+            c_accountOwnerBlock.SuspendLayout();
+            c_catGroupColorBlock.SuspendLayout();
+            c_colorContextMenu.SuspendLayout();
             SuspendLayout();
             // 
             // c_renamePersonButton
@@ -108,7 +118,7 @@
             groupBox2.Size = new System.Drawing.Size(367, 180);
             groupBox2.TabIndex = 1;
             groupBox2.TabStop = false;
-            groupBox2.Text = "Basic Information";
+            groupBox2.Text = "Budget Information";
             // 
             // c_infoBudgetEndDate
             // 
@@ -195,25 +205,26 @@
             label2.TabIndex = 0;
             label2.Text = "ID:";
             // 
-            // groupBox3
+            // c_accountOwnerBlock
             // 
-            groupBox3.Controls.Add(c_removePersonButton);
-            groupBox3.Controls.Add(c_renamePersonButton);
-            groupBox3.Controls.Add(label8);
-            groupBox3.Controls.Add(label7);
-            groupBox3.Controls.Add(c_addPersonButton);
-            groupBox3.Controls.Add(c_personAccRemoveButton);
-            groupBox3.Controls.Add(c_personAccAddButton);
-            groupBox3.Controls.Add(c_personAccountsAddedList);
-            groupBox3.Controls.Add(c_personAccountsAvailableList);
-            groupBox3.Controls.Add(label1);
-            groupBox3.Controls.Add(c_personList);
-            groupBox3.Location = new System.Drawing.Point(397, 12);
-            groupBox3.Name = "groupBox3";
-            groupBox3.Size = new System.Drawing.Size(368, 360);
-            groupBox3.TabIndex = 2;
-            groupBox3.TabStop = false;
-            groupBox3.Text = "Person && Accounts";
+            c_accountOwnerBlock.Controls.Add(c_removePersonButton);
+            c_accountOwnerBlock.Controls.Add(c_renamePersonButton);
+            c_accountOwnerBlock.Controls.Add(label8);
+            c_accountOwnerBlock.Controls.Add(label7);
+            c_accountOwnerBlock.Controls.Add(c_addPersonButton);
+            c_accountOwnerBlock.Controls.Add(c_personAccRemoveButton);
+            c_accountOwnerBlock.Controls.Add(c_personAccAddButton);
+            c_accountOwnerBlock.Controls.Add(c_personAccountsAddedList);
+            c_accountOwnerBlock.Controls.Add(c_personAccountsAvailableList);
+            c_accountOwnerBlock.Controls.Add(label1);
+            c_accountOwnerBlock.Controls.Add(c_personList);
+            c_accountOwnerBlock.Enabled = false;
+            c_accountOwnerBlock.Location = new System.Drawing.Point(397, 12);
+            c_accountOwnerBlock.Name = "c_accountOwnerBlock";
+            c_accountOwnerBlock.Size = new System.Drawing.Size(368, 408);
+            c_accountOwnerBlock.TabIndex = 2;
+            c_accountOwnerBlock.TabStop = false;
+            c_accountOwnerBlock.Text = "Person && Accounts";
             // 
             // label8
             // 
@@ -260,7 +271,7 @@
             c_personAccountsAddedList.ItemHeight = 15;
             c_personAccountsAddedList.Location = new System.Drawing.Point(201, 76);
             c_personAccountsAddedList.Name = "c_personAccountsAddedList";
-            c_personAccountsAddedList.Size = new System.Drawing.Size(161, 270);
+            c_personAccountsAddedList.Size = new System.Drawing.Size(161, 315);
             c_personAccountsAddedList.TabIndex = 5;
             c_personAccountsAddedList.DoubleClick += c_personAccountsAddedList_DoubleClick;
             // 
@@ -271,7 +282,7 @@
             c_personAccountsAvailableList.ItemHeight = 15;
             c_personAccountsAvailableList.Location = new System.Drawing.Point(9, 76);
             c_personAccountsAvailableList.Name = "c_personAccountsAvailableList";
-            c_personAccountsAvailableList.Size = new System.Drawing.Size(161, 270);
+            c_personAccountsAvailableList.Size = new System.Drawing.Size(161, 315);
             c_personAccountsAvailableList.TabIndex = 4;
             c_personAccountsAvailableList.DoubleClick += c_personAccountsAvailableList_DoubleClick;
             // 
@@ -294,17 +305,42 @@
             c_personList.TabIndex = 0;
             c_personList.SelectedIndexChanged += c_personList_SelectedIndexChanged;
             // 
-            // groupBox4
+            // c_catGroupColorBlock
             // 
-            groupBox4.Controls.Add(c_fontColorButton);
-            groupBox4.Controls.Add(c_backColorButton);
-            groupBox4.Controls.Add(c_catGroupListview);
-            groupBox4.Location = new System.Drawing.Point(12, 198);
-            groupBox4.Name = "groupBox4";
-            groupBox4.Size = new System.Drawing.Size(368, 174);
-            groupBox4.TabIndex = 3;
-            groupBox4.TabStop = false;
-            groupBox4.Text = "Category Group Colors";
+            c_catGroupColorBlock.Controls.Add(c_expenseColorButton);
+            c_catGroupColorBlock.Controls.Add(c_incomeColorButton);
+            c_catGroupColorBlock.Controls.Add(c_fontColorButton);
+            c_catGroupColorBlock.Controls.Add(c_backColorButton);
+            c_catGroupColorBlock.Controls.Add(c_catGroupListview);
+            c_catGroupColorBlock.Enabled = false;
+            c_catGroupColorBlock.Location = new System.Drawing.Point(12, 198);
+            c_catGroupColorBlock.Name = "c_catGroupColorBlock";
+            c_catGroupColorBlock.Size = new System.Drawing.Size(368, 222);
+            c_catGroupColorBlock.TabIndex = 3;
+            c_catGroupColorBlock.TabStop = false;
+            c_catGroupColorBlock.Text = "Category Group Colors";
+            // 
+            // c_expenseColorButton
+            // 
+            c_expenseColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            c_expenseColorButton.Location = new System.Drawing.Point(160, 167);
+            c_expenseColorButton.Name = "c_expenseColorButton";
+            c_expenseColorButton.Size = new System.Drawing.Size(116, 40);
+            c_expenseColorButton.TabIndex = 10;
+            c_expenseColorButton.Text = "General Expense Color";
+            c_expenseColorButton.UseVisualStyleBackColor = true;
+            c_expenseColorButton.Click += c_expenseColorButton_Click;
+            // 
+            // c_incomeColorButton
+            // 
+            c_incomeColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            c_incomeColorButton.Location = new System.Drawing.Point(15, 167);
+            c_incomeColorButton.Name = "c_incomeColorButton";
+            c_incomeColorButton.Size = new System.Drawing.Size(125, 40);
+            c_incomeColorButton.TabIndex = 9;
+            c_incomeColorButton.Text = "General Income Color";
+            c_incomeColorButton.UseVisualStyleBackColor = true;
+            c_incomeColorButton.Click += c_incomeColorButton_Click;
             // 
             // c_fontColorButton
             // 
@@ -318,6 +354,7 @@
             // 
             // c_backColorButton
             // 
+            c_backColorButton.ContextMenuStrip = c_colorContextMenu;
             c_backColorButton.Location = new System.Drawing.Point(282, 48);
             c_backColorButton.Name = "c_backColorButton";
             c_backColorButton.Size = new System.Drawing.Size(75, 38);
@@ -326,8 +363,59 @@
             c_backColorButton.UseVisualStyleBackColor = true;
             c_backColorButton.Click += c_backColorButton_Click;
             // 
+            // c_colorContextMenu
+            // 
+            c_colorContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripMenuItem1, toolStripMenuItem2, toolStripMenuItem3, toolStripMenuItem4, customColorToolStripMenuItem });
+            c_colorContextMenu.Name = "c_colorContextMenu";
+            c_colorContextMenu.Size = new System.Drawing.Size(158, 114);
+            c_colorContextMenu.Tag = "";
+            // 
+            // toolStripMenuItem1
+            // 
+            toolStripMenuItem1.BackColor = System.Drawing.Color.FromArgb(255, 224, 192);
+            toolStripMenuItem1.Name = "toolStripMenuItem1";
+            toolStripMenuItem1.Size = new System.Drawing.Size(157, 22);
+            toolStripMenuItem1.Tag = "LIGHTRED";
+            toolStripMenuItem1.Text = "Light Red";
+            toolStripMenuItem1.Click += c_colorContextMenuItem_Click;
+            // 
+            // toolStripMenuItem2
+            // 
+            toolStripMenuItem2.BackColor = System.Drawing.Color.FromArgb(192, 255, 192);
+            toolStripMenuItem2.Name = "toolStripMenuItem2";
+            toolStripMenuItem2.Size = new System.Drawing.Size(157, 22);
+            toolStripMenuItem2.Tag = "LIGHTGREEN";
+            toolStripMenuItem2.Text = "Light Green";
+            toolStripMenuItem2.Click += c_colorContextMenuItem_Click;
+            // 
+            // toolStripMenuItem3
+            // 
+            toolStripMenuItem3.BackColor = System.Drawing.Color.FromArgb(192, 255, 255);
+            toolStripMenuItem3.Name = "toolStripMenuItem3";
+            toolStripMenuItem3.Size = new System.Drawing.Size(157, 22);
+            toolStripMenuItem3.Tag = "LIGHTBLUE";
+            toolStripMenuItem3.Text = "Light Blue";
+            toolStripMenuItem3.Click += c_colorContextMenuItem_Click;
+            // 
+            // toolStripMenuItem4
+            // 
+            toolStripMenuItem4.BackColor = System.Drawing.Color.FromArgb(255, 255, 192);
+            toolStripMenuItem4.Name = "toolStripMenuItem4";
+            toolStripMenuItem4.Size = new System.Drawing.Size(157, 22);
+            toolStripMenuItem4.Tag = "LIGHTYELLOW";
+            toolStripMenuItem4.Text = "Light Yellow";
+            toolStripMenuItem4.Click += c_colorContextMenuItem_Click;
+            // 
+            // customColorToolStripMenuItem
+            // 
+            customColorToolStripMenuItem.Name = "customColorToolStripMenuItem";
+            customColorToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            customColorToolStripMenuItem.Text = "Custom Color...";
+            customColorToolStripMenuItem.Click += c_colorContextMenuItem_Click;
+            // 
             // c_catGroupListview
             // 
+            c_catGroupListview.ContextMenuStrip = c_colorContextMenu;
             c_catGroupListview.FullRowSelect = true;
             c_catGroupListview.Location = new System.Drawing.Point(15, 22);
             c_catGroupListview.MultiSelect = false;
@@ -343,16 +431,17 @@
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(841, 1014);
-            Controls.Add(groupBox4);
-            Controls.Add(groupBox3);
+            Controls.Add(c_catGroupColorBlock);
+            Controls.Add(c_accountOwnerBlock);
             Controls.Add(groupBox2);
             Name = "BudgetSettingsForm";
             Text = "Budget Settings";
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
-            groupBox3.ResumeLayout(false);
-            groupBox3.PerformLayout();
-            groupBox4.ResumeLayout(false);
+            c_accountOwnerBlock.ResumeLayout(false);
+            c_accountOwnerBlock.PerformLayout();
+            c_catGroupColorBlock.ResumeLayout(false);
+            c_colorContextMenu.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -371,19 +460,27 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox c_infoBudgetID;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox c_accountOwnerBlock;
         private System.Windows.Forms.Button c_personAccRemoveButton;
         private System.Windows.Forms.Button c_personAccAddButton;
         private System.Windows.Forms.ListBox c_personAccountsAddedList;
         private System.Windows.Forms.ListBox c_personAccountsAvailableList;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox c_personList;
-        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.GroupBox c_catGroupColorBlock;
         private System.Windows.Forms.Button c_fontColorButton;
         private System.Windows.Forms.Button c_backColorButton;
         private System.Windows.Forms.ListView c_catGroupListview;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ColorDialog c_colorDialog;
+        private System.Windows.Forms.ContextMenuStrip c_colorContextMenu;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
+        private System.Windows.Forms.ToolStripMenuItem customColorToolStripMenuItem;
+        private System.Windows.Forms.Button c_expenseColorButton;
+        private System.Windows.Forms.Button c_incomeColorButton;
     }
 }

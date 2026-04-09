@@ -53,15 +53,15 @@ namespace YnabApp.UI.Reflect
             }
         }
 
-        public static Color GetSummaryBackColor(string summaryName)
+        public static Color GetSummaryBackColor(string summaryName, BudgetSettings currentBudgetsettings)
         {
             switch (summaryName)
             {
-                case "All Incomes": return LIGHTGREEN;
-                case "All Expenses": return LIGHTRED;
-                case "Savings": return LIGHTGREEN;
-                case "Unspent": return LIGHTGREEN;
-                default: return LIGHTRED;
+                case "All Incomes": return currentBudgetsettings.GeneralColors.IncomeColor.GetColor();
+                case "All Expenses": return currentBudgetsettings.GeneralColors.ExpenseColor.GetColor();
+                case "Savings": return currentBudgetsettings.GeneralColors.IncomeColor.GetColor();
+                case "Unspent": return currentBudgetsettings.GeneralColors.IncomeColor.GetColor();
+                default: return currentBudgetsettings.GeneralColors.IncomeColor.GetColor();
             }
         }
 
@@ -77,14 +77,14 @@ namespace YnabApp.UI.Reflect
             }
         }
 
-        public static Color GetNetChangeBackColor(decimal amount)
+        public static Color GetNetChangeBackColor(decimal amount, BudgetSettings currentBudgetsettings)
         {
             if (amount == 0)
                 return Color.FromKnownColor(KnownColor.Control);
             else if (amount < 0)
-                return LIGHTRED;
+                return currentBudgetsettings.GeneralColors.ExpenseColor.GetColor();
             else
-                return LIGHTGREEN;
+                return currentBudgetsettings.GeneralColors.IncomeColor.GetColor();
         }
 
         public static Color GetNetChangeFontColor(decimal amount)

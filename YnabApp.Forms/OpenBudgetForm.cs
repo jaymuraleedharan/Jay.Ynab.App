@@ -48,6 +48,8 @@ namespace YnabApp.Forms
                 {
                     c_budgetGrid.Rows[0].Selected = true;
                 }
+
+                c_selectBudgetButton.Enabled = true;
             }
             catch (Exception ex)
             {

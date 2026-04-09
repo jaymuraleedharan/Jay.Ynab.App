@@ -62,6 +62,9 @@ namespace YnabApp.Forms
             LoadCurrentBudgetSettings();
             ShowPersonLists();
             ShowCategoryGroupList();
+
+            c_incomeColorButton.BackColor = CurrentBudgetSettings.GeneralColors.IncomeColor.GetColor();
+            c_expenseColorButton.BackColor = CurrentBudgetSettings.GeneralColors.ExpenseColor.GetColor();   
         }
 
         private void ShowPersonLists()
@@ -76,6 +79,8 @@ namespace YnabApp.Forms
                 if (((PersonSetting)item) == currentSelectedPerson)
                     c_personList.SelectedIndex = c_personList.Items.IndexOf(item);
             }
+
+            c_accountOwnerBlock.Enabled = true;
         }
 
         private async void GetAccountsList()
@@ -96,7 +101,7 @@ namespace YnabApp.Forms
             c_catGroupListview.Columns.Clear();
             c_catGroupListview.Groups.Clear();
             c_catGroupListview.Items.Clear();
-            c_catGroupListview.Columns.Add("Category Group Name");
+            c_catGroupListview.Columns.Add("Category Group Name", 200, HorizontalAlignment.Center);
 
             foreach (var catGroup in catGroupData)
             {
@@ -110,18 +115,21 @@ namespace YnabApp.Forms
                 }
                 else
                 {
-                    catGrpSetting = new CategoryGroupColorSetting() { 
-                        Id = catGroup.Id, 
-                        Name = catGroup.Name, 
-                        BackColor = ColorSetting.CreateFromColor(Color.Transparent), 
-                        ForeColor = ColorSetting.CreateFromColor(Color.Black) };
+                    catGrpSetting = new CategoryGroupColorSetting()
+                    {
+                        Id = catGroup.Id,
+                        Name = catGroup.Name,
+                        BackColor = ColorSetting.CreateFromColor(Color.Transparent),
+                        ForeColor = ColorSetting.CreateFromColor(Color.Black)
+                    };
 
                     CurrentBudgetSettings.CategoryGroupColors.Add(catGrpSetting);
                     CurrentBudgetSettings.Save();
                 }
-            }            
-            c_catGroupListview.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-            c_catGroupListview.Columns[0].Width = c_catGroupListview.Width - 10;
+            }
+            //c_catGroupListview.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            //c_catGroupListview.Columns[0].Width = c_catGroupListview.Width - 40;
+            c_catGroupColorBlock.Enabled = true;
         }
 
         #region PEOPLE
@@ -329,7 +337,11 @@ namespace YnabApp.Forms
         {
             try
             {
-                CatGroupEditBackColor();
+                if (c_catGroupListview.SelectedItems.Count > 0)
+                {
+                    c_colorContextMenu.Tag = "CAT-BACKCOLOR";
+                    c_colorContextMenu.Show(c_backColorButton, new Point(0, c_backColorButton.Height));
+                }
             }
             catch (Exception ex)
             {
@@ -341,7 +353,11 @@ namespace YnabApp.Forms
         {
             try
             {
-                CatGroupEditForeColor();
+                if (c_catGroupListview.SelectedItems.Count > 0)
+                {
+                    c_colorContextMenu.Tag = "CAT-FORECOLOR";
+                    c_colorContextMenu.Show(c_fontColorButton, new Point(0, c_fontColorButton.Height));
+                }
             }
             catch (Exception ex)
             {
@@ -353,7 +369,11 @@ namespace YnabApp.Forms
         {
             try
             {
-                CatGroupEditBackColor();
+                if (c_catGroupListview.SelectedItems.Count > 0)
+                {
+                    c_colorContextMenu.Tag = "CAT-BACKCOLOR";
+                    c_colorContextMenu.Show(c_backColorButton, new Point(0, c_backColorButton.Height));
+                }
             }
             catch (Exception ex)
             {
@@ -361,34 +381,128 @@ namespace YnabApp.Forms
             }
         }
 
-        private void CatGroupEditBackColor()
+        private void c_colorContextMenuItem_Click(object sender, EventArgs e)
         {
-            if(c_catGroupListview.SelectedItems.Count > 0)
+            var menuItem = sender as ToolStripMenuItem;
+            Color selectedColor = Color.Transparent;
+            if (menuItem != null)
             {
-                if (c_colorDialog.ShowDialog() == DialogResult.OK)
+                switch (menuItem.Tag?.ToString())
                 {
-                    foreach (ListViewItem item in c_catGroupListview.SelectedItems)
-                    {
-                        item.BackColor = c_colorDialog.Color;
-                        
-                        CategoryGroupColorSetting listCatGrpSetting = item.Tag as CategoryGroupColorSetting;
-                        if(listCatGrpSetting != null)
-                            listCatGrpSetting.BackColor = ColorSetting.CreateFromColor(c_colorDialog.Color);
+                    case "LIGHTRED":
+                        selectedColor = Color.FromArgb(255, 204, 204); break;
 
-                        CategoryGroupColorSetting budgetCatGrpSetting = CurrentBudgetSettings.CategoryGroupColors.Find(cg => cg.Id == listCatGrpSetting.Id);
-                        budgetCatGrpSetting.BackColor = ColorSetting.CreateFromColor(c_colorDialog.Color);
+                    case "LIGHTGREEN":
+                        selectedColor = Color.FromArgb(204, 255, 204); break;
 
-                        CurrentBudgetSettings.Save();
-                    }
+                    case "LIGHTBLUE":
+                        selectedColor = Color.FromArgb(204, 236, 255); break;
+
+                    case "LIGHTYELLOW":
+                        selectedColor = Color.FromArgb(255, 255, 204); break;
+
+                    default:
+                        if (c_colorDialog.ShowDialog() == DialogResult.OK)
+                            selectedColor = c_colorDialog.Color;
+                        break;
                 }
+
+                switch (c_colorContextMenu.Tag?.ToString())
+                {
+                    case "CAT-BACKCOLOR":
+                        ApplyCatGroupBackColor(selectedColor);
+                        break;
+
+                    case "CAT-FORECOLOR":
+                        ApplyCatGroupForeColor(selectedColor);
+                        break;
+
+                    case "GEN-INCOME-BACKCOLOR":
+                        ApplyGenIncomeBackColor(selectedColor);
+                        break;
+
+                    case "GEN-EXPENSE-BACKCOLOR":
+                        ApplyGenExpenseBackColor(selectedColor);
+                        break;
+                }
+                ApplyCatGroupBackColor(selectedColor);
             }
         }
 
-        private void CatGroupEditForeColor()
+        private void ApplyCatGroupBackColor(Color selectedColor)
         {
+            foreach (ListViewItem item in c_catGroupListview.SelectedItems)
+            {
+                item.BackColor = selectedColor;
 
+                CategoryGroupColorSetting listCatGrpSetting = item.Tag as CategoryGroupColorSetting;
+                if (listCatGrpSetting != null)
+                    listCatGrpSetting.BackColor = ColorSetting.CreateFromColor(selectedColor);
+
+                CategoryGroupColorSetting budgetCatGrpSetting = CurrentBudgetSettings.CategoryGroupColors.Find(cg => cg.Id == listCatGrpSetting.Id);
+                budgetCatGrpSetting.BackColor = ColorSetting.CreateFromColor(selectedColor);
+
+                CurrentBudgetSettings.Save();
+            }
+        }
+
+        private void ApplyCatGroupForeColor(Color selectedColor)
+        {
+            foreach (ListViewItem item in c_catGroupListview.SelectedItems)
+            {
+                item.ForeColor = selectedColor;
+
+                CategoryGroupColorSetting listCatGrpSetting = item.Tag as CategoryGroupColorSetting;
+                if (listCatGrpSetting != null)
+                    listCatGrpSetting.ForeColor = ColorSetting.CreateFromColor(selectedColor);
+
+                CategoryGroupColorSetting budgetCatGrpSetting = CurrentBudgetSettings.CategoryGroupColors.Find(cg => cg.Id == listCatGrpSetting.Id);
+                budgetCatGrpSetting.ForeColor = ColorSetting.CreateFromColor(selectedColor);
+
+                CurrentBudgetSettings.Save();
+            }
         }
 
         #endregion
+
+        private void c_incomeColorButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                c_colorContextMenu.Tag = "GEN-INCOME-BACKCOLOR";
+                c_colorContextMenu.Show(c_incomeColorButton, new Point(0, c_incomeColorButton.Height));
+            }
+            catch (Exception ex)
+            {
+                ShowError(ex);
+            }
+        }
+
+        private void c_expenseColorButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                c_colorContextMenu.Tag = "GEN-EXPENSE-BACKCOLOR";
+                c_colorContextMenu.Show(c_expenseColorButton, new Point(0, c_expenseColorButton.Height));
+            }
+            catch (Exception ex)
+            {
+                ShowError(ex);
+            }
+        }
+
+        private void ApplyGenIncomeBackColor(Color selectedColor)
+        {
+            c_incomeColorButton.BackColor = selectedColor;
+            CurrentBudgetSettings.GeneralColors.IncomeColor = ColorSetting.CreateFromColor(selectedColor);
+            CurrentBudgetSettings.Save();
+        }
+
+        private void ApplyGenExpenseBackColor(Color selectedColor)
+        {
+            c_expenseColorButton.BackColor = selectedColor;
+            CurrentBudgetSettings.GeneralColors.ExpenseColor  = ColorSetting.CreateFromColor(selectedColor);
+            CurrentBudgetSettings.Save();
+        }
     }
 }
