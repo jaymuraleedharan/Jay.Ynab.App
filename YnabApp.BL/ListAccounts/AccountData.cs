@@ -31,6 +31,11 @@ namespace YnabApp.BL.ListAccounts
         public decimal CrunchedAmount { get; set; }
 
         public AccountGroup Group { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Name}";
+        }
     }
 
     public enum AccountGroup
