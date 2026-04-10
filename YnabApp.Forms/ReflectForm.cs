@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using YnabApp.BL.BudgetSettings;
+using YnabApp.BL.ListAccounts;
 using YnabApp.BL.ListBudgets;
 using YnabApp.BL.ListTransactions;
 using YnabApp.BL.Reflect;
@@ -19,6 +21,8 @@ namespace YnabApp.Forms
     {
         private readonly ReflectPresenter _presenter = null;
         BudgetData _budgetData = null;
+        BudgetSettings CurrentBudgetSettings { get; set; }
+
         List<ReflectColumnControl> ReflectColumnControls = new List<ReflectColumnControl>();
 
         public ReflectForm()
@@ -49,6 +53,7 @@ namespace YnabApp.Forms
         public void InitializeView(BudgetData budgetData)
         {
             _budgetData = budgetData;
+            CurrentBudgetSettings = BudgetSettings.Load(budgetData.Id);
 
             ResetUI();
         }
@@ -60,6 +65,16 @@ namespace YnabApp.Forms
             c_radioDurationYearly.Checked = true;
 
             ShowLastMonths(DateTime.Today);
+
+            LoadPersonList();
+        }
+
+        private void LoadPersonList()
+        {
+            c_personList.Items.Clear();
+            c_personList.Items.Add("ALL");
+            CurrentBudgetSettings.People.ForEach(p => c_personList.Items.Add(p));
+            c_personList.SelectedIndex = 0;
         }
 
         private async void c_btnShow_Click(object sender, EventArgs e)
@@ -70,6 +85,15 @@ namespace YnabApp.Forms
 
                 var datesSelected = GetSelectedDates();
                 var personSelected = GetPersonSelected();
+
+                //DOWNLOADING DATA FROM YNAB
+                var categoriesData = await _presenter.GetCategoriesAsync(_budgetData.Id);
+                var allAccounts = await _presenter.GetAllAccountsAsync(_budgetData.Id);
+                var personAccounts = PersonAccount.GetPersonAccounts(allAccounts, personSelected);
+
+                DateTime earliestDate = GetEarliestDate();
+                var transactionsData = await _presenter.GetTransactionsAsync(_budgetData.Id, earliestDate);
+
 
                 //CLEAR REFLECT CONTROLS TABLE
                 c_reflectControlsTable.RowCount = 0;
@@ -89,19 +113,12 @@ namespace YnabApp.Forms
                 {
                     c_reflectControlsTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, columnWidthPercentage));
                     ReflectColumnControl reflectColumnControl = new ReflectColumnControl();
-                    reflectColumnControl.InitializeView(_budgetData, c_radioDurationYearly.Checked, reportDate, personSelected, c_chkBoxHideZeroCategories.Checked);
+                    reflectColumnControl.InitializeView(_budgetData, c_radioDurationYearly.Checked, reportDate, personSelected, personAccounts, c_chkBoxHideZeroCategories.Checked);
 
                     c_reflectControlsTable.Controls.Add(reflectColumnControl, controlCounter, 0);
                     reflectColumnControl.Dock = DockStyle.Fill;
                     controlCounter--;
                 }
-
-                //DOWNLOADING DATA FROM YNAB
-                var categoriesData = await _presenter.GetCategoriesAsync(_budgetData.Id);
-
-                DateTime earliestDate = GetEarliestDate();
-
-                var transactionsData = await _presenter.GetTransactionsAsync(_budgetData.Id, earliestDate);
 
                 //RENDERING DATA
                 foreach (Control ctrl in c_reflectControlsTable.Controls)
@@ -174,16 +191,9 @@ namespace YnabApp.Forms
             return earliestDate;
         }
 
-        private PersonSelected GetPersonSelected()
+        private PersonSetting GetPersonSelected()
         {
-            if (c_radioPersonAll.Checked)
-                return PersonSelected.All;
-            else if (c_radioPersonJay.Checked)
-                return PersonSelected.Jay;
-            else if (c_radioPersonShar.Checked)
-                return PersonSelected.Shar;
-            else
-                return PersonSelected.All;
+            return c_personList.SelectedItem as PersonSetting;
         }
 
         private void c_selectLastThreeYears_Click(object sender, EventArgs e)

@@ -46,16 +46,6 @@ namespace YnabApp.Forms
 
                 await GetCategoriesDataAsync();
 
-                //await GetTransactionsAsync();
-
-                //PresentAccountsTreeView();
-
-                //PresentCategoriesTreeView();
-
-                //PresentTransactionData();
-
-                //PresentAccountsData();
-
                 PresentAllAssets();
 
                 //c_startDatePicker.ValueChanged += C_startDatePicker_ValueChanged;
@@ -73,54 +63,33 @@ namespace YnabApp.Forms
 
         private void ResetUI()
         {
-            //c_ownerList.SelectedIndex = 0;
-            c_personList.SelectedIndex = 0;
+            LoadPersonList();
 
-            //c_startDatePicker.ValueChanged -= C_startDatePicker_ValueChanged;
-            //c_startDatePicker.MaxDate = DateTime.Now;
-            //c_startDatePicker.MinDate = DateTime.Now.Subtract(new TimeSpan(60, 0, 0, 0)); //Past 60 days
-            //c_startDatePicker.Value = DateTime.Now.Subtract(new TimeSpan(30, 0, 0, 0)); //Past 30 days
-
-            //ResetAccountTreeView();
-            //ResetTransactionListView();
-            //ResetAccountsListView();
             ResetAllAssetsListView();
         }
 
-        private async void C_startDatePicker_ValueChanged(object sender, EventArgs e)
+        private void LoadPersonList()
+        {
+            c_personList.Items.Clear();
+            c_personList.Items.Add("ALL");
+            CurrentBudgetSettings.People.ForEach(p => c_personList.Items.Add(p));
+            c_personList.SelectedIndex = 0;
+        }
+
+        private void c_personList_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
             {
-                //ResetAccountTreeView();
-                //ResetTransactionListView();
-                //ResetAccountsListView();
+                var person = c_personList.SelectedItem as PersonSetting;
+                var filteredAccs = PersonAccount.GetPersonAccounts(_accountsData, person);
                 ResetAllAssetsListView();
-
-                await GetAccountsDataAsync();
-
-                await GetCategoriesDataAsync();
-
-                //await GetTransactionsAsync();
-
-                //PresentAccountsTreeView();
-
-                //PresentCategoriesTreeView();
-
-                //PresentTransactionData();
-
-                //PresentAccountsData();
+                PresentAllAssets(filteredAccs);
             }
             catch (Exception ex)
             {
                 ShowError(ex);
             }
         }
-
-        //private void ResetAccountTreeView()
-        //{
-        //    c_AccountsTreeView.AfterSelect -= c_AccountsTreeView_AfterSelect;
-        //    c_AccountsTreeView.Nodes.Clear();
-        //}
 
         private async Task GetAccountsDataAsync()
         {
@@ -581,19 +550,5 @@ namespace YnabApp.Forms
             }
         }
 
-        private void c_personList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                var person = c_personList.SelectedItem as string;
-                var filteredAccs = _presenter.FilterAccounts(_accountsData, person);
-                ResetAllAssetsListView();
-                PresentAllAssets(filteredAccs);
-            }
-            catch (Exception ex)
-            {
-                ShowError(ex);
-            }
-        }
     }
 }

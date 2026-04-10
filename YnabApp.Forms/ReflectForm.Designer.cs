@@ -29,11 +29,9 @@
         private void InitializeComponent()
         {
             groupBox1 = new System.Windows.Forms.GroupBox();
+            c_personList = new System.Windows.Forms.ComboBox();
+            label4 = new System.Windows.Forms.Label();
             c_chkBoxHideZeroCategories = new System.Windows.Forms.CheckBox();
-            groupBox8 = new System.Windows.Forms.GroupBox();
-            c_radioPersonShar = new System.Windows.Forms.RadioButton();
-            c_radioPersonJay = new System.Windows.Forms.RadioButton();
-            c_radioPersonAll = new System.Windows.Forms.RadioButton();
             c_moveForwardButton = new System.Windows.Forms.Button();
             c_moveBackButton = new System.Windows.Forms.Button();
             groupBox7 = new System.Windows.Forms.GroupBox();
@@ -62,7 +60,6 @@
             c_reflectControlsPanel = new System.Windows.Forms.Panel();
             c_reflectControlsTable = new System.Windows.Forms.TableLayoutPanel();
             groupBox1.SuspendLayout();
-            groupBox8.SuspendLayout();
             groupBox7.SuspendLayout();
             groupBox6.SuspendLayout();
             groupBox5.SuspendLayout();
@@ -75,8 +72,9 @@
             // groupBox1
             // 
             groupBox1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            groupBox1.Controls.Add(c_personList);
+            groupBox1.Controls.Add(label4);
             groupBox1.Controls.Add(c_chkBoxHideZeroCategories);
-            groupBox1.Controls.Add(groupBox8);
             groupBox1.Controls.Add(c_moveForwardButton);
             groupBox1.Controls.Add(c_moveBackButton);
             groupBox1.Controls.Add(groupBox7);
@@ -92,73 +90,46 @@
             groupBox1.Controls.Add(c_radioDurationMonthly);
             groupBox1.Location = new System.Drawing.Point(10, 11);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new System.Drawing.Size(1110, 128);
+            groupBox1.Size = new System.Drawing.Size(1274, 128);
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "Criteria";
+            // 
+            // c_personList
+            // 
+            c_personList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            c_personList.FormattingEnabled = true;
+            c_personList.Items.AddRange(new object[] { "ALL", "JAY", "SHAR" });
+            c_personList.Location = new System.Drawing.Point(875, 25);
+            c_personList.Name = "c_personList";
+            c_personList.Size = new System.Drawing.Size(105, 23);
+            c_personList.TabIndex = 25;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new System.Drawing.Font("Segoe UI", 9F);
+            label4.Location = new System.Drawing.Point(776, 29);
+            label4.Name = "label4";
+            label4.Size = new System.Drawing.Size(93, 15);
+            label4.TabIndex = 24;
+            label4.Text = "Account Owner:";
             // 
             // c_chkBoxHideZeroCategories
             // 
             c_chkBoxHideZeroCategories.AutoSize = true;
             c_chkBoxHideZeroCategories.Checked = true;
             c_chkBoxHideZeroCategories.CheckState = System.Windows.Forms.CheckState.Checked;
-            c_chkBoxHideZeroCategories.Location = new System.Drawing.Point(733, 26);
+            c_chkBoxHideZeroCategories.Location = new System.Drawing.Point(589, 26);
             c_chkBoxHideZeroCategories.Name = "c_chkBoxHideZeroCategories";
             c_chkBoxHideZeroCategories.Size = new System.Drawing.Size(143, 19);
             c_chkBoxHideZeroCategories.TabIndex = 0;
             c_chkBoxHideZeroCategories.Text = "Hide 'Zero' Categories";
             c_chkBoxHideZeroCategories.UseVisualStyleBackColor = true;
             // 
-            // groupBox8
-            // 
-            groupBox8.Controls.Add(c_radioPersonShar);
-            groupBox8.Controls.Add(c_radioPersonJay);
-            groupBox8.Controls.Add(c_radioPersonAll);
-            groupBox8.Location = new System.Drawing.Point(882, 21);
-            groupBox8.Name = "groupBox8";
-            groupBox8.Size = new System.Drawing.Size(82, 97);
-            groupBox8.TabIndex = 23;
-            groupBox8.TabStop = false;
-            groupBox8.Text = "Person";
-            // 
-            // c_radioPersonShar
-            // 
-            c_radioPersonShar.AutoSize = true;
-            c_radioPersonShar.Location = new System.Drawing.Point(17, 68);
-            c_radioPersonShar.Name = "c_radioPersonShar";
-            c_radioPersonShar.Size = new System.Drawing.Size(48, 19);
-            c_radioPersonShar.TabIndex = 2;
-            c_radioPersonShar.Tag = "c_radioPersonShar";
-            c_radioPersonShar.Text = "Shar";
-            c_radioPersonShar.UseVisualStyleBackColor = true;
-            // 
-            // c_radioPersonJay
-            // 
-            c_radioPersonJay.AutoSize = true;
-            c_radioPersonJay.Location = new System.Drawing.Point(17, 45);
-            c_radioPersonJay.Name = "c_radioPersonJay";
-            c_radioPersonJay.Size = new System.Drawing.Size(41, 19);
-            c_radioPersonJay.TabIndex = 1;
-            c_radioPersonJay.Tag = "c_radioPersonJay";
-            c_radioPersonJay.Text = "Jay";
-            c_radioPersonJay.UseVisualStyleBackColor = true;
-            // 
-            // c_radioPersonAll
-            // 
-            c_radioPersonAll.AutoSize = true;
-            c_radioPersonAll.Checked = true;
-            c_radioPersonAll.Location = new System.Drawing.Point(17, 22);
-            c_radioPersonAll.Name = "c_radioPersonAll";
-            c_radioPersonAll.Size = new System.Drawing.Size(39, 19);
-            c_radioPersonAll.TabIndex = 0;
-            c_radioPersonAll.TabStop = true;
-            c_radioPersonAll.Tag = "c_radioPersonAll";
-            c_radioPersonAll.Text = "All";
-            c_radioPersonAll.UseVisualStyleBackColor = true;
-            // 
             // c_moveForwardButton
             // 
-            c_moveForwardButton.Location = new System.Drawing.Point(596, 22);
+            c_moveForwardButton.Location = new System.Drawing.Point(506, 22);
             c_moveForwardButton.Name = "c_moveForwardButton";
             c_moveForwardButton.Size = new System.Drawing.Size(34, 26);
             c_moveForwardButton.TabIndex = 22;
@@ -168,7 +139,7 @@
             // 
             // c_moveBackButton
             // 
-            c_moveBackButton.Location = new System.Drawing.Point(269, 21);
+            c_moveBackButton.Location = new System.Drawing.Point(179, 21);
             c_moveBackButton.Name = "c_moveBackButton";
             c_moveBackButton.Size = new System.Drawing.Size(34, 26);
             c_moveBackButton.TabIndex = 21;
@@ -384,7 +355,7 @@
             // 
             // c_selectLastThreeMonths
             // 
-            c_selectLastThreeMonths.Location = new System.Drawing.Point(453, 21);
+            c_selectLastThreeMonths.Location = new System.Drawing.Point(363, 21);
             c_selectLastThreeMonths.Name = "c_selectLastThreeMonths";
             c_selectLastThreeMonths.Size = new System.Drawing.Size(137, 26);
             c_selectLastThreeMonths.TabIndex = 15;
@@ -394,7 +365,7 @@
             // 
             // c_selectLastThreeYears
             // 
-            c_selectLastThreeYears.Location = new System.Drawing.Point(309, 21);
+            c_selectLastThreeYears.Location = new System.Drawing.Point(219, 21);
             c_selectLastThreeYears.Name = "c_selectLastThreeYears";
             c_selectLastThreeYears.Size = new System.Drawing.Size(138, 26);
             c_selectLastThreeYears.TabIndex = 14;
@@ -404,9 +375,9 @@
             // 
             // c_btnShow
             // 
-            c_btnShow.Location = new System.Drawing.Point(970, 26);
+            c_btnShow.Location = new System.Drawing.Point(882, 75);
             c_btnShow.Name = "c_btnShow";
-            c_btnShow.Size = new System.Drawing.Size(98, 26);
+            c_btnShow.Size = new System.Drawing.Size(98, 41);
             c_btnShow.TabIndex = 13;
             c_btnShow.Text = "Show";
             c_btnShow.UseVisualStyleBackColor = true;
@@ -440,7 +411,7 @@
             c_reflectControlsPanel.Controls.Add(c_reflectControlsTable);
             c_reflectControlsPanel.Location = new System.Drawing.Point(10, 145);
             c_reflectControlsPanel.Name = "c_reflectControlsPanel";
-            c_reflectControlsPanel.Size = new System.Drawing.Size(1110, 622);
+            c_reflectControlsPanel.Size = new System.Drawing.Size(1274, 622);
             c_reflectControlsPanel.TabIndex = 1;
             // 
             // c_reflectControlsTable
@@ -454,14 +425,14 @@
             c_reflectControlsTable.Name = "c_reflectControlsTable";
             c_reflectControlsTable.RowCount = 1;
             c_reflectControlsTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            c_reflectControlsTable.Size = new System.Drawing.Size(1110, 622);
+            c_reflectControlsTable.Size = new System.Drawing.Size(1274, 622);
             c_reflectControlsTable.TabIndex = 0;
             // 
             // ReflectForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(1132, 779);
+            ClientSize = new System.Drawing.Size(1296, 779);
             Controls.Add(c_reflectControlsPanel);
             Controls.Add(groupBox1);
             Name = "ReflectForm";
@@ -469,8 +440,6 @@
             Load += ReflectForm_Load;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
-            groupBox8.ResumeLayout(false);
-            groupBox8.PerformLayout();
             groupBox7.ResumeLayout(false);
             groupBox7.PerformLayout();
             groupBox6.ResumeLayout(false);
@@ -517,10 +486,8 @@
         private System.Windows.Forms.TableLayoutPanel c_reflectControlsTable;
         private System.Windows.Forms.Button c_moveForwardButton;
         private System.Windows.Forms.Button c_moveBackButton;
-        private System.Windows.Forms.GroupBox groupBox8;
-        private System.Windows.Forms.RadioButton c_radioPersonAll;
-        private System.Windows.Forms.RadioButton c_radioPersonShar;
-        private System.Windows.Forms.RadioButton c_radioPersonJay;
         private System.Windows.Forms.CheckBox c_chkBoxHideZeroCategories;
+        private System.Windows.Forms.ComboBox c_personList;
+        private System.Windows.Forms.Label label4;
     }
 }

@@ -246,6 +246,7 @@
             // 
             // c_personAccRemoveButton
             // 
+            c_personAccRemoveButton.Enabled = false;
             c_personAccRemoveButton.Location = new System.Drawing.Point(171, 171);
             c_personAccRemoveButton.Name = "c_personAccRemoveButton";
             c_personAccRemoveButton.Size = new System.Drawing.Size(27, 23);
@@ -256,6 +257,7 @@
             // 
             // c_personAccAddButton
             // 
+            c_personAccAddButton.Enabled = false;
             c_personAccAddButton.Location = new System.Drawing.Point(171, 142);
             c_personAccAddButton.Name = "c_personAccAddButton";
             c_personAccAddButton.Size = new System.Drawing.Size(27, 23);

@@ -31,10 +31,6 @@
             c_grpBoxCriteria = new System.Windows.Forms.GroupBox();
             label3 = new System.Windows.Forms.Label();
             btnShowGraph = new System.Windows.Forms.Button();
-            groupBox8 = new System.Windows.Forms.GroupBox();
-            c_radioPersonShar = new System.Windows.Forms.RadioButton();
-            c_radioPersonJay = new System.Windows.Forms.RadioButton();
-            c_radioPersonAll = new System.Windows.Forms.RadioButton();
             c_radBtnCustom = new System.Windows.Forms.RadioButton();
             c_dtPckCustomEnd = new System.Windows.Forms.DateTimePicker();
             c_dtPckCustomStart = new System.Windows.Forms.DateTimePicker();
@@ -44,17 +40,19 @@
             label1 = new System.Windows.Forms.Label();
             c_radBtnByMonthThisYear = new System.Windows.Forms.RadioButton();
             c_splitContainer = new System.Windows.Forms.SplitContainer();
+            c_personList = new System.Windows.Forms.ComboBox();
+            label4 = new System.Windows.Forms.Label();
             c_grpBoxCriteria.SuspendLayout();
-            groupBox8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)c_splitContainer).BeginInit();
             c_splitContainer.SuspendLayout();
             SuspendLayout();
             // 
             // c_grpBoxCriteria
             // 
+            c_grpBoxCriteria.Controls.Add(c_personList);
+            c_grpBoxCriteria.Controls.Add(label4);
             c_grpBoxCriteria.Controls.Add(label3);
             c_grpBoxCriteria.Controls.Add(btnShowGraph);
-            c_grpBoxCriteria.Controls.Add(groupBox8);
             c_grpBoxCriteria.Controls.Add(c_radBtnCustom);
             c_grpBoxCriteria.Controls.Add(c_dtPckCustomEnd);
             c_grpBoxCriteria.Controls.Add(c_dtPckCustomStart);
@@ -89,53 +87,6 @@
             btnShowGraph.Text = "Show Charts";
             btnShowGraph.UseVisualStyleBackColor = true;
             btnShowGraph.Click += btnShowGraph_Click;
-            // 
-            // groupBox8
-            // 
-            groupBox8.Controls.Add(c_radioPersonShar);
-            groupBox8.Controls.Add(c_radioPersonJay);
-            groupBox8.Controls.Add(c_radioPersonAll);
-            groupBox8.Location = new System.Drawing.Point(334, 48);
-            groupBox8.Name = "groupBox8";
-            groupBox8.Size = new System.Drawing.Size(288, 47);
-            groupBox8.TabIndex = 24;
-            groupBox8.TabStop = false;
-            groupBox8.Text = "Person";
-            // 
-            // c_radioPersonShar
-            // 
-            c_radioPersonShar.AutoSize = true;
-            c_radioPersonShar.Location = new System.Drawing.Point(125, 20);
-            c_radioPersonShar.Name = "c_radioPersonShar";
-            c_radioPersonShar.Size = new System.Drawing.Size(48, 19);
-            c_radioPersonShar.TabIndex = 2;
-            c_radioPersonShar.Tag = "c_radioPersonShar";
-            c_radioPersonShar.Text = "Shar";
-            c_radioPersonShar.UseVisualStyleBackColor = true;
-            // 
-            // c_radioPersonJay
-            // 
-            c_radioPersonJay.AutoSize = true;
-            c_radioPersonJay.Location = new System.Drawing.Point(70, 20);
-            c_radioPersonJay.Name = "c_radioPersonJay";
-            c_radioPersonJay.Size = new System.Drawing.Size(41, 19);
-            c_radioPersonJay.TabIndex = 1;
-            c_radioPersonJay.Tag = "c_radioPersonJay";
-            c_radioPersonJay.Text = "Jay";
-            c_radioPersonJay.UseVisualStyleBackColor = true;
-            // 
-            // c_radioPersonAll
-            // 
-            c_radioPersonAll.AutoSize = true;
-            c_radioPersonAll.Checked = true;
-            c_radioPersonAll.Location = new System.Drawing.Point(17, 20);
-            c_radioPersonAll.Name = "c_radioPersonAll";
-            c_radioPersonAll.Size = new System.Drawing.Size(39, 19);
-            c_radioPersonAll.TabIndex = 0;
-            c_radioPersonAll.TabStop = true;
-            c_radioPersonAll.Tag = "c_radioPersonAll";
-            c_radioPersonAll.Text = "All";
-            c_radioPersonAll.UseVisualStyleBackColor = true;
             // 
             // c_radBtnCustom
             // 
@@ -230,6 +181,26 @@
             c_splitContainer.SplitterDistance = 739;
             c_splitContainer.TabIndex = 1;
             // 
+            // c_personList
+            // 
+            c_personList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            c_personList.FormattingEnabled = true;
+            c_personList.Items.AddRange(new object[] { "ALL", "JAY", "SHAR" });
+            c_personList.Location = new System.Drawing.Point(517, 48);
+            c_personList.Name = "c_personList";
+            c_personList.Size = new System.Drawing.Size(105, 23);
+            c_personList.TabIndex = 31;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new System.Drawing.Font("Segoe UI", 9F);
+            label4.Location = new System.Drawing.Point(418, 52);
+            label4.Name = "label4";
+            label4.Size = new System.Drawing.Size(93, 15);
+            label4.TabIndex = 30;
+            label4.Text = "Account Owner:";
+            // 
             // ReflectGraphForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -241,8 +212,6 @@
             Text = "Charts";
             c_grpBoxCriteria.ResumeLayout(false);
             c_grpBoxCriteria.PerformLayout();
-            groupBox8.ResumeLayout(false);
-            groupBox8.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)c_splitContainer).EndInit();
             c_splitContainer.ResumeLayout(false);
             ResumeLayout(false);
@@ -259,12 +228,10 @@
         private System.Windows.Forms.DateTimePicker c_dtPckCustomStart;
         private System.Windows.Forms.RadioButton c_radBtnCustom;
         private System.Windows.Forms.DateTimePicker c_dtPckCustomEnd;
-        private System.Windows.Forms.GroupBox groupBox8;
-        private System.Windows.Forms.RadioButton c_radioPersonShar;
-        private System.Windows.Forms.RadioButton c_radioPersonJay;
-        private System.Windows.Forms.RadioButton c_radioPersonAll;
         private System.Windows.Forms.Button btnShowGraph;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.SplitContainer c_splitContainer;
+        private System.Windows.Forms.ComboBox c_personList;
+        private System.Windows.Forms.Label label4;
     }
 }

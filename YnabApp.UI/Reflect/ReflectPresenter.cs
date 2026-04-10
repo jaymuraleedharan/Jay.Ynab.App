@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using YnabApp.BL;
+using YnabApp.BL.ListAccounts;
 using YnabApp.BL.ListCategories;
 using YnabApp.BL.ListTransactions;
 using YnabApp.BL.Reflect;
@@ -17,6 +18,13 @@ namespace YnabApp.UI.Reflect
         public ReflectPresenter(IReflectView view)
         {
             _view = view;
+        }
+
+        public async Task<AccountData[]> GetAllAccountsAsync(string budgetID)
+        {
+            ListAccountsExecute exe = new();
+            var data = await exe.ListAccountsAsync(budgetID);
+            return data;
         }
 
         public async Task<CategoryGroupData[]> GetCategoriesAsync(string budgetID)

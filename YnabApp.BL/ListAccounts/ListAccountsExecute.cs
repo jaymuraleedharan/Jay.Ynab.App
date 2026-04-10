@@ -70,20 +70,17 @@ namespace YnabApp.BL.ListAccounts
             {
                 case "checking":
                 case "savings":
-                    if (account["name"].ToString().Contains("_HSA", StringComparison.InvariantCultureIgnoreCase))
-                        return AccountGroup.Retirement;
-                    else
-                        return AccountGroup.Deposits;
+                        return AccountGroup.Cash;
 
                 case "creditCard":
                 case "otherLiability":
                      return AccountGroup.Liability;
 
                 case "otherAsset":
-                    return AccountGroup.Stocks;
+                    return AccountGroup.Investments;
 
                 default:
-                    return AccountGroup.Deposits;
+                    return AccountGroup.Cash;
             }
         }
     }

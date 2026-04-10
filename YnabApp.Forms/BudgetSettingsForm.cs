@@ -74,10 +74,17 @@ namespace YnabApp.Forms
             c_personList.Items.Clear();
             CurrentBudgetSettings.People.ForEach(p => c_personList.Items.Add(p));
 
-            foreach (var item in c_personList.Items)
+            if (currentSelectedPerson == null)
             {
-                if (((PersonSetting)item) == currentSelectedPerson)
-                    c_personList.SelectedIndex = c_personList.Items.IndexOf(item);
+                c_personList.SelectedIndex = (c_personList.Items.Count > 0) ? 0 : -1;
+            }
+            else
+            {
+                foreach (var item in c_personList.Items)
+                {
+                    if (((PersonSetting)item) == currentSelectedPerson)
+                        c_personList.SelectedIndex = c_personList.Items.IndexOf(item);
+                }
             }
 
             c_accountOwnerBlock.Enabled = true;
@@ -91,6 +98,8 @@ namespace YnabApp.Forms
             foreach (var acc in accountsData)
                 if (!acc.IsDeleted && !acc.IsClosed)
                     AllAccounts.Add(new AccountSetting() { Id = acc.Id, Name = acc.Name });
+
+            ShowPersonAccounts();
         }
 
         private async void ShowCategoryGroupList()
@@ -138,25 +147,33 @@ namespace YnabApp.Forms
         {
             try
             {
-                c_personAccountsAvailableList.Items.Clear();
-                c_personAccountsAddedList.Items.Clear();
-
-                if (c_personList.SelectedIndex >= 0)
-                {
-                    PersonSetting selectedPerson = (PersonSetting)c_personList.SelectedItem;
-
-                    foreach (var acc in AllAccounts)
-                    {
-                        if (selectedPerson.Accounts.Any(a => a.Id == acc.Id))
-                            c_personAccountsAddedList.Items.Add(acc);
-                        else
-                            c_personAccountsAvailableList.Items.Add(acc);
-                    }
-                }
+                ShowPersonAccounts();
             }
             catch (Exception ex)
             {
                 ShowError(ex);
+            }
+        }
+
+        private void ShowPersonAccounts()
+        {
+            c_personAccountsAvailableList.Items.Clear();
+            c_personAccountsAddedList.Items.Clear();
+
+            if (c_personList.SelectedIndex >= 0)
+            {
+                PersonSetting selectedPerson = (PersonSetting)c_personList.SelectedItem;
+
+                foreach (var acc in AllAccounts)
+                {
+                    if (selectedPerson.Accounts.Any(a => a.Id == acc.Id))
+                        c_personAccountsAddedList.Items.Add(acc);
+                    else
+                        c_personAccountsAvailableList.Items.Add(acc);
+                }
+
+                c_personAccAddButton.Enabled = true;
+                c_personAccRemoveButton.Enabled = true;
             }
         }
 
@@ -342,6 +359,10 @@ namespace YnabApp.Forms
                     c_colorContextMenu.Tag = "CAT-BACKCOLOR";
                     c_colorContextMenu.Show(c_backColorButton, new Point(0, c_backColorButton.Height));
                 }
+                else
+                {
+                    MessageBox.Show("Please select a category group to change its background color.", "No Category Group Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
             catch (Exception ex)
             {
@@ -357,6 +378,10 @@ namespace YnabApp.Forms
                 {
                     c_colorContextMenu.Tag = "CAT-FORECOLOR";
                     c_colorContextMenu.Show(c_fontColorButton, new Point(0, c_fontColorButton.Height));
+                }
+                else
+                {
+                    MessageBox.Show("Please select a category group to change its font color.", "No Category Group Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             catch (Exception ex)

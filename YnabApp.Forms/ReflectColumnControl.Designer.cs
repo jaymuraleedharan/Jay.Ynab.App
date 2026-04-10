@@ -32,14 +32,14 @@
             c_headerLabel = new System.Windows.Forms.Label();
             c_summaryListView = new System.Windows.Forms.ListView();
             columnHeader1 = new System.Windows.Forms.ColumnHeader();
+            c_contextMenu = new System.Windows.Forms.ContextMenuStrip(components);
+            c_menuItemExport = new System.Windows.Forms.ToolStripMenuItem();
             c_incomeListView = new System.Windows.Forms.ListView();
             columnHeader2 = new System.Windows.Forms.ColumnHeader();
             c_categoryGroupDataListView = new System.Windows.Forms.ListView();
             columnHeader3 = new System.Windows.Forms.ColumnHeader();
             c_categoryDataListView = new System.Windows.Forms.ListView();
             columnHeader4 = new System.Windows.Forms.ColumnHeader();
-            c_contextMenu = new System.Windows.Forms.ContextMenuStrip(components);
-            c_menuItemExport = new System.Windows.Forms.ToolStripMenuItem();
             c_contextMenu.SuspendLayout();
             SuspendLayout();
             // 
@@ -76,6 +76,19 @@
             // 
             columnHeader1.Text = "SUMMARY";
             columnHeader1.Width = 100;
+            // 
+            // c_contextMenu
+            // 
+            c_contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { c_menuItemExport });
+            c_contextMenu.Name = "c_contextMenu";
+            c_contextMenu.Size = new System.Drawing.Size(206, 48);
+            // 
+            // c_menuItemExport
+            // 
+            c_menuItemExport.Name = "c_menuItemExport";
+            c_menuItemExport.Size = new System.Drawing.Size(205, 22);
+            c_menuItemExport.Text = "Export Column to Excel...";
+            c_menuItemExport.Click += c_menuItemExport_Click;
             // 
             // c_incomeListView
             // 
@@ -141,19 +154,6 @@
             // 
             columnHeader4.Text = "EXPENSE CATEGORIES";
             columnHeader4.Width = 200;
-            // 
-            // c_contextMenu
-            // 
-            c_contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { c_menuItemExport });
-            c_contextMenu.Name = "c_contextMenu";
-            c_contextMenu.Size = new System.Drawing.Size(181, 48);
-            // 
-            // c_menuItemExport
-            // 
-            c_menuItemExport.Name = "c_menuItemExport";
-            c_menuItemExport.Size = new System.Drawing.Size(180, 22);
-            c_menuItemExport.Text = "Export...";
-            c_menuItemExport.Click += c_menuItemExport_Click;
             // 
             // ReflectColumnControl
             // 

@@ -9,13 +9,14 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using YnabApp.BL;
+using YnabApp.BL.BudgetSettings;
+using YnabApp.BL.ListAccounts;
 using YnabApp.BL.ListBudgets;
 using YnabApp.BL.ListCategories;
 using YnabApp.BL.ListTransactions;
 using YnabApp.BL.Reflect;
 using YnabApp.UI;
 using YnabApp.UI.Reflect;
-using YnabApp.BL.BudgetSettings;
 
 namespace YnabApp.Forms
 {
@@ -48,6 +49,20 @@ namespace YnabApp.Forms
         {
             c_dtPckCustomStart.Value = DateTime.Today;
             c_dtPckCustomStart.Value = DateTime.Today.AddMonths(-12);
+
+            LoadPersonList();
+        }
+
+        private void LoadPersonList()
+        {
+            c_personList.Items.Clear();
+            c_personList.Items.Add("ALL");
+            CurrentBudgetSettings.People.ForEach(p => c_personList.Items.Add(p));
+            c_personList.SelectedIndex = 0;
+        }
+        private PersonSetting PersonSelected
+        {
+            get { return c_personList.SelectedItem as PersonSetting; }
         }
 
         private bool IsYearly
@@ -129,16 +144,11 @@ namespace YnabApp.Forms
             return dates;
         }
 
-        private PersonSelected GetPersonSelected()
+        public async Task<AccountData[]> GetAllAccountsAsync(string budgetID)
         {
-            if (c_radioPersonAll.Checked)
-                return PersonSelected.All;
-            else if (c_radioPersonJay.Checked)
-                return PersonSelected.Jay;
-            else if (c_radioPersonShar.Checked)
-                return PersonSelected.Shar;
-            else
-                return PersonSelected.All;
+            ListAccountsExecute exe = new();
+            var data = await exe.ListAccountsAsync(budgetID);
+            return data;
         }
 
         public async Task<CategoryGroupData[]> GetCategoriesAsync(string budgetID)
@@ -169,10 +179,11 @@ namespace YnabApp.Forms
 
                 //BUILDING PARAMETERS
                 var datesSelected = GetSelectedDatesForCharts();
-                var personSelected = GetPersonSelected();
-                Person person = ReflectPresenter.GetPerson(personSelected);
+                var personSelected = PersonSelected;
 
                 //DOWNLOADING DATA FROM YNAB
+                var accountsData = await GetAllAccountsAsync(_budgetData.Id);
+                var personAccounts = PersonAccount.GetPersonAccounts(accountsData, personSelected);
                 var categoriesData = await GetCategoriesAsync(_budgetData.Id);
                 var transactionsData = await GetTransactionsAsync(_budgetData.Id, StartDate);
 
@@ -189,17 +200,17 @@ namespace YnabApp.Forms
                     ReflectChartPoint chartPoint = null;
                     chartPoint = new ReflectChartPoint(chartPointStartDate, chartPointEndDate, IsYearly);
 
-                    chartPoint.Summary = await dataCruncher.GenerateSummaryDataAsync(categoriesData, transactionsData, IsYearly, chartPointStartDate, person);
+                    chartPoint.Summary = await dataCruncher.GenerateSummaryDataAsync(categoriesData, transactionsData, IsYearly, chartPointStartDate, personAccounts);
                     TotalIncome += chartPoint.Summary.Income;
 
-                    chartPoint.CategoryGroup = await dataCruncher.GenerateCategoryGroupDataAsync(categoriesData, transactionsData, IsYearly, chartPointStartDate, person);
+                    chartPoint.CategoryGroup = await dataCruncher.GenerateCategoryGroupDataAsync(categoriesData, transactionsData, IsYearly, chartPointStartDate, personAccounts);
 
                     ChartPoints.Add(chartPoint);
                 }
 
                 DateTime catStartDate = ChartPoints.OrderBy(c => c.TimeChunk.StartDate).First().TimeChunk.StartDate;
                 DateTime catEndDate = ChartPoints.OrderBy(c => c.TimeChunk.EndDate).Last().TimeChunk.EndDate;
-                CategoryResults = await dataCruncher.CrunchCategroyData2Async(categoriesData, transactionsData, catStartDate, catEndDate, TotalIncome, person);
+                CategoryResults = await dataCruncher.CrunchCategroyData2Async(categoriesData, transactionsData, catStartDate, catEndDate, TotalIncome, personAccounts);
 
                 //SHOWING GRAPH
                 ShowGraphs();
@@ -312,7 +323,7 @@ namespace YnabApp.Forms
             return new Series
             {
                 Name = "Income",
-                Color = Color.LightGreen, // ReflectColorizer.GetSummaryBackColor("All Incomes"), //Color.Green,
+                Color = CurrentBudgetSettings.GeneralColors.IncomeColor.GetColor(),
                 ChartType = SeriesChartType.Line,
                 IsValueShownAsLabel = true,
                 BorderWidth = 4,
@@ -328,7 +339,7 @@ namespace YnabApp.Forms
             return new Series
             {
                 Name = "Expense",
-                Color = Color.LightSalmon, // ReflectColorizer.GetSummaryBackColor("All Expenses"), //Color.Red,
+                Color = CurrentBudgetSettings.GeneralColors.ExpenseColor.GetColor(),
                 ChartType = SeriesChartType.Line,
                 IsValueShownAsLabel = true,
                 BorderWidth = 4,
@@ -344,7 +355,7 @@ namespace YnabApp.Forms
             return new Series
             {
                 Name = "Savings",
-                Color = Color.LightBlue, // ReflectColorizer.GetSummaryBackColor("Savings"),               //Color.Blue,
+                Color = CurrentBudgetSettings.GeneralColors.IncomeColor.GetColor(),
                 ChartType = SeriesChartType.Column,
                 IsValueShownAsLabel = true,
                 BorderWidth = 4,

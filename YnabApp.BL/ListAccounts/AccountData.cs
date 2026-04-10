@@ -40,10 +40,8 @@ namespace YnabApp.BL.ListAccounts
 
     public enum AccountGroup
     {
-        Deposits = 0,
-        Stocks = 1,
-        HomeEquity = 3,
-        Liability = 4,
-        Retirement = 5
+        Cash = 0,
+        Investments = 1,
+        Liability = 2
     }
 }

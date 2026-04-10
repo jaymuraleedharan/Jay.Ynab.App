@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using YnabApp.BL.ListCategories;
 using YnabApp.BL.ListTransactions;
 using YnabApp.BL.Reflect;
+using YnabApp.BL.BudgetSettings;
 using ClosedXML.Excel;
 using System.IO;
 using System.Data;
@@ -23,7 +24,7 @@ namespace YnabApp.BL.Export
         TransactionData[] TransactionDatas;
         bool IsYearly;
         DateTime StartDate;
-        Person Person;
+        PersonSetting Person;
         bool IsHideZeroCategories;
 
         private int CurrentRowNum { get; set; } = 0;
@@ -36,7 +37,7 @@ namespace YnabApp.BL.Export
         List<ReflectCategoryGroupData> _categoryGroupResults;
         List<ReflectCategoryData> _categoryResults; 
 
-        public ReflectExport(bool isYearly, Person person, DateTime startDate, List<ReflectSummaryData> summaryResults, List<ReflectIncomeData> incomeResults, List<ReflectCategoryGroupData> categoryGroupResults, List<ReflectCategoryData> categoryResults)
+        public ReflectExport(bool isYearly, PersonSetting person, DateTime startDate, List<ReflectSummaryData> summaryResults, List<ReflectIncomeData> incomeResults, List<ReflectCategoryGroupData> categoryGroupResults, List<ReflectCategoryData> categoryResults)
         {
             IsYearly = isYearly;
             Person = person;
@@ -51,10 +52,11 @@ namespace YnabApp.BL.Export
         {
             get
             {
+                var personName = (Person == null) ? "All" : Person.Name;
                 if (IsYearly)
-                    return $"ReflectViewReport-Yearly-{Person.ToString()}-{StartDate:yyyy}.xlsx";
+                    return $"ReflectViewReport-Yearly-{personName}-{StartDate:yyyy}.xlsx";
                 else
-                    return $"ReflectViewReport-Monthly-{Person.ToString()}-{StartDate:yyyy-MM}.xlsx";
+                    return $"ReflectViewReport-Monthly-{personName}-{StartDate:yyyy-MM}.xlsx";
             }
         }
 

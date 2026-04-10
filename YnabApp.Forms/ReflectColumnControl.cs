@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using YnabApp.BL.ListBudgets;
+using YnabApp.BL.ListAccounts;
 using YnabApp.BL.ListCategories;
 using YnabApp.BL.ListTransactions;
 using YnabApp.BL.Reflect;
@@ -27,7 +28,8 @@ namespace YnabApp.Forms
         BudgetSettings CurrentBudgetSettings { get; set; }
         DateTime _asOfDate;
         bool _isYearlyReport;
-        PersonSelected _personSelected;
+        PersonSetting _personSelected;
+        AccountData[] _personAccounts;
         bool _isHideZeroCategorties;
 
         CategoryGroupData[] _categoryDatas;
@@ -53,31 +55,19 @@ namespace YnabApp.Forms
             get { return this.ParentForm as IReflectView; }
         }
 
-        public void InitializeView(BudgetData budgetData, bool isYearlyReport, DateTime reportDate, PersonSelected personSelected, bool isHideZeroCategorties)
+        public void InitializeView(BudgetData budgetData, bool isYearlyReport, DateTime reportDate, PersonSetting personSelected, AccountData[] personAccounts, bool isHideZeroCategorties)
         {
             _budgetData = budgetData;
             CurrentBudgetSettings = BudgetSettings.Load(budgetData.Id);
             _isYearlyReport = isYearlyReport;
             _asOfDate = reportDate;
             _personSelected = personSelected;
+            _personAccounts = personAccounts;
             _isHideZeroCategorties = isHideZeroCategorties;
 
             ResetUI(isYearlyReport);
         }
 
-        private Person BL_Person
-        {
-            get
-            {
-                switch (_personSelected)
-                {
-                    case PersonSelected.All: return Person.All;
-                    case PersonSelected.Jay: return Person.Jay;
-                    case PersonSelected.Shar: return Person.Shar;
-                    default: return Person.All;
-                }
-            }
-        }
 
         public async void ShowReport(CategoryGroupData[] categoryDatas, TransactionData[] transactionDatas)
         {
@@ -98,7 +88,7 @@ namespace YnabApp.Forms
             //-------------------------------------------//
             // Summary
             //-------------------------------------------//
-            _summaryResults = await dataCruncher.CrunchSummaryDataAsync(categoryDatas, transactionDatas, _isYearlyReport, _asOfDate, BL_Person);
+            _summaryResults = await dataCruncher.CrunchSummaryDataAsync(categoryDatas, transactionDatas, _isYearlyReport, _asOfDate, _personAccounts);
 
             foreach (var summaryData in _summaryResults)
             {
@@ -128,7 +118,7 @@ namespace YnabApp.Forms
             //-------------------------------------------//
             // Incomes
             //-------------------------------------------//
-            _incomeResults = await dataCruncher.CrunchIncomeDataAsync(transactionDatas, _isYearlyReport, _asOfDate, BL_Person);
+            _incomeResults = await dataCruncher.CrunchIncomeDataAsync(transactionDatas, _isYearlyReport, _asOfDate, _personAccounts);
 
             foreach (var incomeData in _incomeResults)
             {
@@ -149,7 +139,7 @@ namespace YnabApp.Forms
             // Category Groups
             //-------------------------------------------//
 
-            _categoryGroupResults = await dataCruncher.CrunchCategroyGroupDataAsync(categoryDatas, transactionDatas, _isYearlyReport, _asOfDate, TotalIncome, BL_Person);
+            _categoryGroupResults = await dataCruncher.CrunchCategroyGroupDataAsync(categoryDatas, transactionDatas, _isYearlyReport, _asOfDate, TotalIncome, _personAccounts);
 
             //Disabling Checked Event during data load            
             c_categoryGroupDataListView.ItemChecked -= c_categoryGroupDataListView_ItemChecked;
@@ -179,7 +169,7 @@ namespace YnabApp.Forms
             // Categories
             //-------------------------------------------//
 
-            _categoryResults = await dataCruncher.CrunchCategroyDataAsync(categoryDatas, transactionDatas, _isYearlyReport, _asOfDate, TotalIncome, BL_Person);
+            _categoryResults = await dataCruncher.CrunchCategroyDataAsync(categoryDatas, transactionDatas, _isYearlyReport, _asOfDate, TotalIncome, _personAccounts);
 
             ShowCategoriesFilteredByCatGroups();
 
@@ -218,7 +208,7 @@ namespace YnabApp.Forms
                 {
                     var catGroupData = c_categoryGroupDataListView.SelectedItems[0].Tag as ReflectCategoryGroupData;
 
-                    ReflectTransactionsForm.ShowModal(catGroupData, null, _asOfDate, _isYearlyReport, _personSelected, _transactionDatas);
+                    ReflectTransactionsForm.ShowModal(catGroupData, null, _asOfDate, _isYearlyReport, _personSelected, _personAccounts, _transactionDatas);
                 }
             }
             catch (Exception ex)
@@ -237,7 +227,7 @@ namespace YnabApp.Forms
                 {
                     var catData = c_categoryDataListView.SelectedItems[0].Tag as ReflectCategoryData;
 
-                    ReflectTransactionsForm.ShowModal(null, catData, _asOfDate, _isYearlyReport, _personSelected, _transactionDatas);
+                    ReflectTransactionsForm.ShowModal(null, catData, _asOfDate, _isYearlyReport, _personSelected, _personAccounts, _transactionDatas);
                 }
             }
             catch (Exception ex)
@@ -256,7 +246,7 @@ namespace YnabApp.Forms
                 {
                     var incomeData = c_incomeListView.SelectedItems[0].Tag as ReflectIncomeData;
 
-                    ReflectTransactionsForm.ShowModal(incomeData, _asOfDate, _isYearlyReport, _personSelected, _transactionDatas);
+                    ReflectTransactionsForm.ShowModal(incomeData, _asOfDate, _isYearlyReport, _personSelected, _personAccounts, _transactionDatas);
                 }
             }
             catch (Exception ex)
@@ -312,12 +302,12 @@ namespace YnabApp.Forms
         {
             try
             {
-                ReflectExport exporter = new ReflectExport(_isYearlyReport, BL_Person, _asOfDate,  _summaryResults, _incomeResults, _categoryGroupResults, _categoryResults);
+                ReflectExport exporter = new ReflectExport(_isYearlyReport, _personSelected, _asOfDate,  _summaryResults, _incomeResults, _categoryGroupResults, _categoryResults);
                 string filePath = exporter.GenerateReport();
 
                 System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
                 {
-                    FileName = filePath,
+                    FileName = System.IO.Path.GetDirectoryName(filePath),
                     UseShellExecute = true
                 });
             }

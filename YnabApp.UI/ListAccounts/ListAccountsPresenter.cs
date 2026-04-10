@@ -7,6 +7,7 @@ using YnabApp.BL.ListBudgets;
 using YnabApp.BL.ListAccounts;
 using YnabApp.BL.ListTransactions;
 using YnabApp.BL.ListCategories;
+using YnabApp.BL.BudgetSettings;
 using System.Drawing;
 
 namespace YnabApp.UI.ListAccounts
@@ -46,10 +47,12 @@ namespace YnabApp.UI.ListAccounts
             await analyze.ProcessAsync(accounts, transactions);
         }
 
-        public AccountData[] FilterAccounts(AccountData[] accountData, string accountOwner)
+        public AccountData[] FilterAccounts(AccountData[] accountData, PersonSetting accountOwner = null)
         {
-            AccountsFilter filter = new();
-            return filter.Filter(accountData, accountOwner);
+            if(accountOwner == null)
+                return accountData;
+            else
+                return accountData.ToList().Where(a => accountOwner.Accounts.Any(aset => aset.Id == a.Id)).ToArray();
         }
 
         public async Task<CategoryGroupData[]> GetCategoriesAsync(string budgetID)

@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using YnabApp.BL.ListAccounts;
 using YnabApp.BL.ListBudgets;
 using YnabApp.BL.ListCategories;
 using YnabApp.BL.ListTransactions;
+using YnabApp.BL.BudgetSettings;
 
 namespace YnabApp.UI.Reflect
 {
@@ -13,7 +15,7 @@ namespace YnabApp.UI.Reflect
     {
         IReflectView ReflectView { get; }
 
-        void InitializeView(BudgetData budgetData, bool isYearlyReport, DateTime reportDate, PersonSelected personSelected, bool isHideZeroCategorties);
+        void InitializeView(BudgetData budgetData, bool isYearlyReport, DateTime reportDate, PersonSetting personSelected, AccountData[] personAccounts, bool isHideZeroCategorties);
 
         void ShowReport(CategoryGroupData[] categoryDatas, TransactionData[] transactionDatas);
     }
