@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.37111.16 d17.14
+VisualStudioVersion = 17.14.37111.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YnabApp.BL", "YnabApp.BL\YnabApp.BL.csproj", "{0E4F2BDD-19FA-4927-A12E-4AE742769E44}"
 EndProject
@@ -17,8 +17,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "README", "README", "{02EA68
 	ProjectSection(SolutionItems) = preProject
 		Contributing.md = Contributing.md
 		LICENSE.txt = LICENSE.txt
-		ManageYnabToken.md = ManageYnabToken.md
 		README.md = README.md
+		YnabTokenForDevelopment.md = YnabTokenForDevelopment.md
+		YnabTokenForExe.md = YnabTokenForExe.md
 	EndProjectSection
 EndProject
 Global

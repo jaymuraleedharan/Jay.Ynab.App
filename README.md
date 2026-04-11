@@ -5,9 +5,11 @@ A Windows Forms application for managing YNAB (You Need A Budget) data with cust
 ## Features
 - Current Net Worth Breakdown
 - Yearly or Monthly Income and Expense Breakdown
+- Export the breakdown data to Excel for further analysis
 - Customizable Coloring for your Category Groups 
 - Views and charts by individual Account owners
 - Layered Charts for better understanding of your income and expenses
+
 
 ## Prerequisites
 - .NET 8 SDK
@@ -18,7 +20,7 @@ A Windows Forms application for managing YNAB (You Need A Budget) data with cust
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
 
 ## Security
-Please read [ManageYnabToken.md](ManageYnabToken.md) for instructions on securely managing your YNAB API token.
+Please read [YnabTokenForDevelopment.md](YnabTokenForDevelopment.md) for instructions on securely managing your YNAB API token.
 
 **Never commit API tokens or secrets!** Use `appsettings.secrets.json` for local development.
 

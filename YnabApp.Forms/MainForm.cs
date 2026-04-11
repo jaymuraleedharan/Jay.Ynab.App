@@ -35,6 +35,7 @@ namespace YnabApp.Forms
         private void MainForm_Load(object sender, EventArgs e)
         {
             SizeAndPositionOnScreenDimensions();
+            ValidateDevToken();
         }
 
         private void SizeAndPositionOnScreenDimensions()
@@ -100,12 +101,34 @@ namespace YnabApp.Forms
             ShowAccountsView(CurrentBudget);
         }
 
+        private void ValidateDevToken()
+        {
+            if (string.IsNullOrEmpty(ConfigManager.App.YnabApi.DevToken))
+            {
+                MessageBox.Show("Please configure your YNAB API Developer Token.", "Missing Developer Token", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                BrowseToGithub();
+                c_OpenBudgetMenuItem.Enabled = false;
+            }
+            else
+            {
+                c_OpenBudgetMenuItem.PerformClick();
+            }
+        }
+
+        private void BrowseToGithub()
+        {
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+            {
+                FileName = "https://github.com/jaymuraleedharan/Jay.Ynab.App/blob/master/YnabTokenForExe.md",
+                UseShellExecute = true
+            });
+        }
 
         private void c_AboutMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
-                MessageBox.Show(text: $"YNAB Windows App for additional insights into our Personal Finance.{Environment.NewLine}Developed using .NET 8 and YNAB API.",
+                MessageBox.Show(text: $"YNAB Windows App for additional insights into your Finance.{Environment.NewLine}Developed using .NET 8 and YNAB API.{Environment.NewLine}More Information: https://github.com/jaymuraleedharan/Jay.Ynab.App",
                     caption: $"About Jay's YNAB App");
             }
             catch (Exception ex)
