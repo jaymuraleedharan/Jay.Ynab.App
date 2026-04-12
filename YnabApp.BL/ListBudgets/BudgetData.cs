@@ -6,28 +6,6 @@ using System.Threading.Tasks;
 
 namespace YnabApp.BL.ListBudgets
 {
-    /* 
-      {
-                "id": "d4b2040a-64e0-4936-bd03-0bf3aec84dc3",
-                "name": "Jay's Budget",
-                "last_modified_on": "2026-04-04T17:06:26Z",
-                "first_month": "2016-12-01",
-                "last_month": "2026-04-01",
-                "date_format": {
-                    "format": "MM/DD/YYYY"
-                },
-                "currency_format": {
-                    "iso_code": "USD",
-                    "example_format": "123,456.78",
-                    "decimal_digits": 2,
-                    "decimal_separator": ".",
-                    "symbol_first": true,
-                    "group_separator": ",",
-                    "currency_symbol": "$",
-                    "display_symbol": true
-                }
-            },
-    */
     public class BudgetData
     {
         private string _firstMonth, _lastMonth;

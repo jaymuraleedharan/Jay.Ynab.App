@@ -14,10 +14,6 @@ using System.Drawing;
 
 namespace YnabApp.BL.Export
 {
-    /*
-     * Referrence: https://docs.closedxml.io/en/latest/features/cell-format.html
-     */
-
     public class ReflectExport
     {
         CategoryGroupData[] CategoryDatas;

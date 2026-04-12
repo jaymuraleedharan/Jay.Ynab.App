@@ -161,11 +161,6 @@ namespace YnabApp.BL.Reflect
 
             foreach (var categoryGroup in categoryGroupDatas)
             {
-                //if (categoryGroupExcludeList.Contains(categoryGroup.Name) || categoryGroup.Name.Contains("[?]") 
-                //    || categoryGroup.Name.Equals("INVESTMENTS")
-                //    || categoryGroup.Name.Equals("SAVINGS"))
-                //    continue;
-
                 foreach (var category in categoryGroup.Categories)
                 {
                     ReflectCategoryData reflectCategory = new(category.Id, categoryGroup.Name, category.Name, category);

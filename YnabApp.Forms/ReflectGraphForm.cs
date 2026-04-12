@@ -399,16 +399,6 @@ namespace YnabApp.Forms
 
             CategoryChartSeries.AsEnumerable().ToList().ForEach(s => summaryChart.Series.Add(s.Value));
 
-            //Series necessitiesSeries = CreateNecessitiesSeries();
-            //summaryChart.Series.Add(necessitiesSeries);
-
-            //Series discretionarySeries = CreateDiscretionarySeries();
-            //summaryChart.Series.Add(discretionarySeries);
-
-            //Series helpSeries = CreateHelpSeries();
-            //summaryChart.Series.Add(helpSeries);
-
-
             Series incomeSeries = CreateIncomeSeries();
             summaryChart.Series.Add(incomeSeries);
 

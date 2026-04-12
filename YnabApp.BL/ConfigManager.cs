@@ -83,10 +83,4 @@ namespace YnabApp.BL
 
     }
 
-    public sealed class ColorSettings
-    {
-        public string Name { get; set; } = null;
-
-        //public 
-    }
 }

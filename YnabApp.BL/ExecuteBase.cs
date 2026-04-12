@@ -12,10 +12,6 @@ namespace YnabApp.BL
 {
     public abstract class ExecuteBase
     {
-        //protected const string DevToken = @"0b93be518a2694b9614c62b81cd3e15999e52b9faedf4ee796b2f4a20549afba";
-
-        //protected const string BaseUrl = @"https://api.youneedabudget.com/v1";
-
         protected readonly string DevToken;
 
         protected readonly string BaseUrl;

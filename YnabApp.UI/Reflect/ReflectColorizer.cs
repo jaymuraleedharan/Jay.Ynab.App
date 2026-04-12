@@ -8,15 +8,6 @@ using YnabApp.BL.BudgetSettings;
 
 namespace YnabApp.UI.Reflect
 {
-    public enum CategoryGroupNames
-    {
-        NECESSITIES,
-        NECESSITIES_TAX,
-        DISCRETIONARY,
-        HELP,
-        SAVINGS,
-        INVESTMENTS
-    }
 
     public static class ReflectColorizer
     {
@@ -25,33 +16,6 @@ namespace YnabApp.UI.Reflect
         private static readonly Color LIGHTRED = Color.FromArgb(255, 204, 204);
         private static readonly Color LIGHTBLUE = Color.FromArgb(204, 236, 255);
 
-        public static Color GetBackColor(string categoryGroupName)
-        {
-            switch(categoryGroupName)
-            {
-                case "NECESSITIES": return LIGHTYELLOW;
-                case "NECESSITIES-TAX": return LIGHTYELLOW;
-                case "DISCRETIONARY": return LIGHTRED;
-                case "HELP": return LIGHTBLUE;
-                case "SAVINGS": return LIGHTGREEN;
-                case "INVESTMENTS": return LIGHTGREEN;
-                default: return LIGHTRED;
-            }
-        }
-
-        public static Color GetFontColor(string categoryGroupName)
-        {
-            switch (categoryGroupName)
-            {
-                case "NECESSITIES": return Color.Black;
-                case "NECESSITIES-TAX": return Color.Black;
-                case "DISCRETIONARY": return Color.Black;
-                case "HELP": return Color.Black;
-                case "SAVINGS": return Color.Black;
-                case "INVESTMENTS": return Color.Black;
-                default: return Color.Black;
-            }
-        }
 
         public static Color GetSummaryBackColor(string summaryName, BudgetSettings currentBudgetsettings)
         {

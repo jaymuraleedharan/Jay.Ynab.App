@@ -47,15 +47,5 @@ namespace YnabApp.UI.Reflect
             return cache.ClearCache();
         }
 
-        public static Person GetPerson(PersonSelected personSelected)
-        {
-            switch (personSelected)
-            {
-                case PersonSelected.All: return Person.All;
-                case PersonSelected.Jay: return Person.Jay;
-                case PersonSelected.Shar: return Person.Shar;
-                default: return Person.All;
-            }
-        }
     }
 }
