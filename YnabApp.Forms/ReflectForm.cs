@@ -166,6 +166,8 @@ namespace YnabApp.Forms
                 if (c_chkBoxData6.Checked && c_dtPckData6.Value < earliestDate)
                     earliestDate = new DateTime(c_dtPckData6.Value.Year, 1, 1);
 
+                if(earliestDate.Year < _budgetData.FirstFullYear)
+                    earliestDate = new DateTime(_budgetData.FirstFullYear, 1, 1);
             }
             else
             {
@@ -186,6 +188,9 @@ namespace YnabApp.Forms
 
                 if (c_chkBoxData6.Checked && c_dtPckData6.Value < earliestDate)
                     earliestDate = new DateTime(c_dtPckData6.Value.Year, c_dtPckData6.Value.Month, 1);
+                
+                if(DateTime.Compare(earliestDate, _budgetData.StartDate) < 0)
+                    earliestDate = _budgetData.StartDate;
             }
 
             return earliestDate;
@@ -313,10 +318,12 @@ namespace YnabApp.Forms
         {
             try
             {
-                int minYear = 2016, minMonth = 1;
+                
 
                 if (c_radioDurationYearly.Checked)
                 {
+                    int minYear = _budgetData.FirstFullYear;
+
                     if (c_dtPckData6.Value.Year == minYear)
                         return;
                     DateTime start = c_dtPckData1.Value.AddYears(-1);
@@ -324,6 +331,8 @@ namespace YnabApp.Forms
                 }
                 else
                 {
+                    int minYear = _budgetData.StartDate.Year, minMonth = _budgetData.StartDate.Month;
+
                     if (c_dtPckData6.Value.Year == minYear && c_dtPckData6.Value.Month == minMonth)
                         return;
                     DateTime start = c_dtPckData1.Value.AddMonths(-1);

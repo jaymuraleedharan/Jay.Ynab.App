@@ -99,7 +99,7 @@ namespace YnabApp.Forms
                     return c_dtPckCustomStart.Value;
 
                 else
-                    return new DateTime(2016, 1, 1);
+                    return new DateTime(_budgetData.FirstFullYear, 1, 1);
             }
         }
 
