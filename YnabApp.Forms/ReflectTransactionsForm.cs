@@ -94,7 +94,7 @@ namespace YnabApp.Forms
             var amountCol = new DataGridViewTextBoxColumn() { HeaderText = "Amount", DataPropertyName = "Amount",
                 SortMode = DataGridViewColumnSortMode.Automatic };
             amountCol.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            amountCol.DefaultCellStyle.Format = "##,###,##0.00";
+            amountCol.DefaultCellStyle.Format =  "##,###,##0.00";
             c_transactionsGrid.Columns.Add(amountCol);
             c_transactionsGrid.Columns.Add(new DataGridViewTextBoxColumn() { HeaderText = "Memo", DataPropertyName = "Memo",
                 SortMode = DataGridViewColumnSortMode.Automatic

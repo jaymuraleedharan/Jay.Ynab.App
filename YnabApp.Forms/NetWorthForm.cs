@@ -480,7 +480,7 @@ namespace YnabApp.Forms
 
                     var item = new ListViewItem(new string[]
                     {
-                            accData.Name, accData.Type, accData.Balance.Format()
+                            accData.Name, accData.Type, _budgetData.FormatAmount(accData.Balance)
                     });
 
                     c_allAssetsListView.Items.Add(item);
@@ -497,7 +497,7 @@ namespace YnabApp.Forms
                 //GROUP TOTAL
                 var groupTotal = new ListViewItem(new string[]
                     {
-                            "TOTAL", string.Empty, balanceTotal.Format()
+                            "TOTAL", string.Empty, _budgetData.FormatAmount(balanceTotal)
                     });
                 groupTotal.Font = new Font(groupTotal.Font, FontStyle.Bold);
                 c_allAssetsListView.Items.Add(groupTotal);
@@ -509,7 +509,7 @@ namespace YnabApp.Forms
             c_allAssetsListView.Groups.Add(nwGroup);
             var nwTotal = new ListViewItem(new string[]
                 {
-                            "TOTAL", string.Empty, nwBalance.Format()
+                            "TOTAL", string.Empty, _budgetData.FormatAmount(nwBalance)
                 });
             nwTotal.Font = new Font(nwTotal.Font, FontStyle.Bold);
             c_allAssetsListView.Items.Add(nwTotal);

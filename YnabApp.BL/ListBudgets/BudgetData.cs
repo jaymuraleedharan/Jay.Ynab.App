@@ -65,5 +65,16 @@ namespace YnabApp.BL.ListBudgets
 
         public int FirstFullYear { get; set; }
 
+        public string CurrencySymbol { get; set; }
+
+        public string CurrencyFormat
+        {
+            get { return $"{CurrencySymbol} #,###,##0.00"; }
+        }
+
+        public string FormatAmount(decimal amount)
+        {
+            return amount.ToString(CurrencyFormat);
+        }
     }
 }

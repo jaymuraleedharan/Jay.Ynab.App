@@ -9,11 +9,6 @@ namespace YnabApp.Forms
 {
     public static class Extensions
     {
-        public static string Format(this decimal decValue)
-        {
-            return decValue.ToString("$#,###,##0.00");
-        }
-
         public static void Reload(this ComboBox comboBox, List<string> items )
         {
 

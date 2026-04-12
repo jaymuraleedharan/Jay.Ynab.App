@@ -200,7 +200,7 @@ namespace YnabApp.Forms
                         ChartType = SeriesChartType.Column,
                         IsValueShownAsLabel = true,
                         BorderWidth = 4,
-                        LabelFormat = "$ #,###,000",
+                        LabelFormat = _budgetData.CurrencyFormat,
                         Font = this.Font,
                         ShadowColor = Color.Gray,
                         ShadowOffset = 1
@@ -281,7 +281,7 @@ namespace YnabApp.Forms
                 ynabChartArea.AxisY.Interval = 5000;
 
             ynabChartArea.AxisY.IsStartedFromZero = true;
-            ynabChartArea.AxisY.LabelStyle.Format = "$ #,###,000";
+            ynabChartArea.AxisY.LabelStyle.Format = _budgetData.CurrencyFormat;
 
             ynabChartArea.Area3DStyle.Enable3D = false;
             ynabChartArea.Area3DStyle.IsRightAngleAxes = true;
@@ -319,7 +319,7 @@ namespace YnabApp.Forms
             ynabChartArea.IsSameFontSizeForAllAxes = true;
 
             ynabChartArea.AxisX.TitleFont = this.Font;
-            ynabChartArea.AxisY.LabelStyle.Format = "$ #,###,000";
+            ynabChartArea.AxisY.LabelStyle.Format = _budgetData.CurrencyFormat;
             ynabChartArea.AxisX.IsMarginVisible = true;
             ynabChartArea.AxisX.IsInterlaced = false;
             ynabChartArea.AxisX.MajorGrid.Enabled = false;
@@ -348,7 +348,7 @@ namespace YnabApp.Forms
                 ChartType = SeriesChartType.Line,
                 IsValueShownAsLabel = true,
                 BorderWidth = 4,
-                LabelFormat = "$ #,###,000",
+                LabelFormat = _budgetData.CurrencyFormat,
                 Font = this.Font,
                 ShadowColor = CurrentBudgetSettings.GeneralColors.IncomeColor.GetColor(),
                 ShadowOffset = 2,
@@ -364,74 +364,10 @@ namespace YnabApp.Forms
                 ChartType = SeriesChartType.Line,
                 IsValueShownAsLabel = true,
                 BorderWidth = 4,
-                LabelFormat = "$ #,###,000",
+                LabelFormat = _budgetData.CurrencyFormat,
                 Font = this.Font,
                 ShadowColor = CurrentBudgetSettings.GeneralColors.ExpenseColor.GetColor(),
                 ShadowOffset = 2
-            };
-        }
-
-        private Series CreateSavingsSeries()
-        {
-            return new Series
-            {
-                Name = "Savings",
-                Color = CurrentBudgetSettings.GeneralColors.IncomeColor.GetColor(),
-                ChartType = SeriesChartType.Column,
-                IsValueShownAsLabel = true,
-                BorderWidth = 4,
-                LabelFormat = "$ #,###,000",
-                Font = this.Font,
-                ShadowColor = CurrentBudgetSettings.GeneralColors.IncomeColor.GetColor(),
-                ShadowOffset = 2
-            };
-        }
-
-        private Series CreateNecessitiesSeries()
-        {
-            return new Series
-            {
-                Name = "Necessities",
-                Color = CurrentBudgetSettings.GetCatGroupBackColor("NECESSITIES"),
-                ChartType = SeriesChartType.Column,
-                IsValueShownAsLabel = true,
-                BorderWidth = 4,
-                LabelFormat = "$ #,###,000",
-                Font = this.Font,
-                ShadowColor = Color.Gray,
-                ShadowOffset = 1
-            };
-        }
-
-        private Series CreateDiscretionarySeries()
-        {
-            return new Series
-            {
-                Name = "Discretionary",
-                Color = CurrentBudgetSettings.GetCatGroupBackColor("DISCRETIONARY"),
-                ChartType = SeriesChartType.Column,
-                IsValueShownAsLabel = true,
-                BorderWidth = 4,
-                LabelFormat = "$ #,###,000",
-                Font = this.Font,
-                ShadowColor = Color.Gray,
-                ShadowOffset = 1
-            };
-        }
-
-        private Series CreateHelpSeries()
-        {
-            return new Series
-            {
-                Name = "Help",
-                Color = CurrentBudgetSettings.GetCatGroupBackColor("HELP"),
-                ChartType = SeriesChartType.Column,
-                IsValueShownAsLabel = true,
-                BorderWidth = 4,
-                LabelFormat = "$ #,###,000",
-                Font = this.Font,
-                ShadowColor = Color.Gray,
-                ShadowOffset = 1
             };
         }
 
@@ -444,7 +380,7 @@ namespace YnabApp.Forms
                 ChartType = SeriesChartType.Bar,
                 IsValueShownAsLabel = true,
                 BorderWidth = 4,
-                LabelFormat = "$ #,###,000",
+                LabelFormat = _budgetData.CurrencyFormat,
                 Font = this.Font,
                 ShadowColor = Color.Gray,
                 ShadowOffset = 1
@@ -525,7 +461,7 @@ namespace YnabApp.Forms
                 categorySeries.Points.Add(new DataPoint
                 {
                     YValues = new double[] { (double)catData.Amount },
-                    Label = $"{catData.CategoryGroupName}-{catData.CategoryName} | {catData.Amount.ToString("$ #,###,##0")} | {catData.Percentage.ToString("#0")}%",
+                    Label = $"{catData.CategoryGroupName}-{catData.CategoryName} | {catData.Amount.ToString(_budgetData.CurrencyFormat)} | {catData.Percentage.ToString("#0")}%",
                     Color = CurrentBudgetSettings.GetCatGroupBackColor(catData.CategoryGroupName)
                 });
             }

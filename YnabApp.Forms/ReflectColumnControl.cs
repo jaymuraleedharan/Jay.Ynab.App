@@ -93,10 +93,10 @@ namespace YnabApp.Forms
             foreach (var summaryData in _summaryResults)
             {
                 ListViewItem item = new ListViewItem(summaryData.SummaryName);
-                item.SubItems.Add(summaryData.Amount.ToString("#,###,##0.00"));
+                item.SubItems.Add(_budgetData.FormatAmount(summaryData.Amount));
                 item.SubItems.Add(summaryData.Percentage.ToString("#0.00"));
                 if (_isYearlyReport)
-                    item.SubItems.Add(summaryData.MonthlyAmountAccurate(_asOfDate).ToString("#,###,##0.00"));
+                    item.SubItems.Add(_budgetData.FormatAmount(summaryData.MonthlyAmountAccurate(_asOfDate)));
                 item.Tag = summaryData;
                 if (summaryData.SummaryName == "Net Change")
                 {
@@ -123,10 +123,10 @@ namespace YnabApp.Forms
             foreach (var incomeData in _incomeResults)
             {
                 ListViewItem item = new ListViewItem(incomeData.FullName);
-                item.SubItems.Add(incomeData.Amount.ToString("#,###,##0.00"));
+                item.SubItems.Add(_budgetData.FormatAmount(incomeData.Amount));
                 item.SubItems.Add(incomeData.Percentage.ToString("#0.00"));
                 if (_isYearlyReport)
-                    item.SubItems.Add(incomeData.MonthlyAmountAccurate(_asOfDate).ToString("#,###,##0.00"));
+                    item.SubItems.Add(_budgetData.FormatAmount(incomeData.MonthlyAmountAccurate(_asOfDate)));
                 item.BackColor = CurrentBudgetSettings.GeneralColors.IncomeColor.GetColor();
                 item.ForeColor = ReflectColorizer.GetSummaryFontColor("All Incomes");
 
@@ -147,10 +147,10 @@ namespace YnabApp.Forms
             foreach (var categoryGroup in _categoryGroupResults)
             {
                 ListViewItem item = new ListViewItem(categoryGroup.CategoryGroupName);
-                item.SubItems.Add(categoryGroup.Amount.ToString("#,###,##0.00"));
+                item.SubItems.Add(_budgetData.FormatAmount(categoryGroup.Amount));
                 item.SubItems.Add(categoryGroup.Percentage.ToString("#0.00"));
                 if (_isYearlyReport)
-                    item.SubItems.Add(categoryGroup.MonthlyAmountAccurate(_asOfDate).ToString("#,###,##0.00"));
+                    item.SubItems.Add(_budgetData.FormatAmount(categoryGroup.MonthlyAmountAccurate(_asOfDate)));
 
                 item.Checked = true;
                 item.Tag = categoryGroup;
@@ -284,10 +284,10 @@ namespace YnabApp.Forms
                 if (selectedCatGroups.Exists(cg => cg.CategoryGroupName == category.CategoryGroupName))
                 {
                     ListViewItem item = new ListViewItem(category.FullCategoryName);
-                    item.SubItems.Add(category.Amount.ToString("#,###,##0.00"));
+                    item.SubItems.Add(_budgetData.FormatAmount(category.Amount));
                     item.SubItems.Add(category.Percentage.ToString("#0.00"));
                     if (_isYearlyReport)
-                        item.SubItems.Add(category.MonthlyAmountAccurate(_asOfDate).ToString("#,###,##0.00"));
+                        item.SubItems.Add(_budgetData.FormatAmount(category.MonthlyAmountAccurate(_asOfDate)));
                     item.Tag = category;
                     item.BackColor = CurrentBudgetSettings.GetCatGroupBackColor(category.CategoryGroupName);
                     item.ForeColor = CurrentBudgetSettings.GetCatGroupFontColor(category.CategoryGroupName);

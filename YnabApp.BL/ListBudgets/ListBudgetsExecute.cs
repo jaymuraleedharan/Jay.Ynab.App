@@ -37,6 +37,7 @@ namespace YnabApp.BL.ListBudgets
                         LastModifiedOn = budget["last_modified_on"].ToString(),
                         FirstMonth = budget["first_month"].ToString(),
                         LastMonth = budget["last_month"].ToString(),
+                        CurrencySymbol = budget["currency_format"]["currency_symbol"].ToString(),
                     });
 
             return list.ToArray();
