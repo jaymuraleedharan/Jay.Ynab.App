@@ -28,6 +28,8 @@ namespace YnabApp.Forms
         internal List<ReflectChartPoint> ChartPoints { get; set; }
         internal List<ReflectCategoryData> CategoryResults { get; set; }
 
+        internal Dictionary<string, Series> CategoryChartSeries { get; set; }
+
         public IMainView MainView
         {
             get { return this.MdiParent as IMainView; }
@@ -187,6 +189,25 @@ namespace YnabApp.Forms
                 var categoriesData = await GetCategoriesAsync(_budgetData.Id);
                 var transactionsData = await GetTransactionsAsync(_budgetData.Id, StartDate);
 
+                CategoryChartSeries = new();
+                foreach (var catGroup in categoriesData)
+                {
+
+                    var newSeries = new Series
+                    {
+                        Name = catGroup.Name,
+                        Color = CurrentBudgetSettings.GetCatGroupBackColor(catGroup.Name),
+                        ChartType = SeriesChartType.Column,
+                        IsValueShownAsLabel = true,
+                        BorderWidth = 4,
+                        LabelFormat = "$ #,###,000",
+                        Font = this.Font,
+                        ShadowColor = Color.Gray,
+                        ShadowOffset = 1
+                    };
+                    CategoryChartSeries.Add(catGroup.Name, newSeries);
+                }
+
                 //BUILDING CHART DATA
                 ChartPoints = new List<ReflectChartPoint>();
                 DataCruncherForCharts dataCruncher = new DataCruncherForCharts();
@@ -200,10 +221,10 @@ namespace YnabApp.Forms
                     ReflectChartPoint chartPoint = null;
                     chartPoint = new ReflectChartPoint(chartPointStartDate, chartPointEndDate, IsYearly);
 
-                    chartPoint.Summary = await dataCruncher.GenerateSummaryDataAsync(categoriesData, transactionsData, IsYearly, chartPointStartDate, personAccounts);
-                    TotalIncome += chartPoint.Summary.Income;
+                    await dataCruncher.GenerateSummaryDataForChartPointAsync(chartPoint, categoriesData, transactionsData, IsYearly, chartPointStartDate, personAccounts);
+                    TotalIncome += chartPoint.IncomeAmount;
 
-                    chartPoint.CategoryGroup = await dataCruncher.GenerateCategoryGroupDataAsync(categoriesData, transactionsData, IsYearly, chartPointStartDate, personAccounts);
+                    await dataCruncher.GenerateCategoryGroupDataAsync(chartPoint, categoriesData, transactionsData, IsYearly, chartPointStartDate, personAccounts);
 
                     ChartPoints.Add(chartPoint);
                 }
@@ -440,14 +461,17 @@ namespace YnabApp.Forms
             //CATEGORY CHART
             var categoryChart = CreateCategoryChart();
 
-            Series necessitiesSeries = CreateNecessitiesSeries();
-            summaryChart.Series.Add(necessitiesSeries);
+            CategoryChartSeries.AsEnumerable().ToList().ForEach(s => summaryChart.Series.Add(s.Value));
 
-            Series discretionarySeries = CreateDiscretionarySeries();
-            summaryChart.Series.Add(discretionarySeries);
+            //Series necessitiesSeries = CreateNecessitiesSeries();
+            //summaryChart.Series.Add(necessitiesSeries);
 
-            Series helpSeries = CreateHelpSeries();
-            summaryChart.Series.Add(helpSeries);
+            //Series discretionarySeries = CreateDiscretionarySeries();
+            //summaryChart.Series.Add(discretionarySeries);
+
+            //Series helpSeries = CreateHelpSeries();
+            //summaryChart.Series.Add(helpSeries);
+
 
             Series incomeSeries = CreateIncomeSeries();
             summaryChart.Series.Add(incomeSeries);
@@ -461,46 +485,38 @@ namespace YnabApp.Forms
             Series categorySeries = CreateCategorySeries();
             categoryChart.Series.Add(categorySeries);
 
-            //var sortedChartPoints = ChartPoints.OrderByDescending(x => x.TimeChunk.StartDate).ToList();
 
             //ADDING POINTS TO CHARTS
             foreach (var point in ChartPoints)
             {
                 incomeSeries.Points.Add(new DataPoint
                 {
-                    YValues = new double[] { (double)point.Summary.Income },
+                    YValues = new double[] { (double)point.IncomeAmount },
                     AxisLabel = point.TimeChunk.Label
                 });
 
                 expenseSeries.Points.Add(new DataPoint
                 {
-                    YValues = new double[] { (double)point.Summary.Expense },
+                    YValues = new double[] { (double)point.ExpenseAmount },
                     AxisLabel = point.TimeChunk.Label
                 });
 
                 //savingsSeries.Points.Add(new DataPoint
                 //{
-                //    YValues = new double[] { (double)point.Summary.Savings },
+                //    YValues = new double[] { (double)point.SavingsAmount },
                 //    AxisLabel = point.TimeChunk.Label
                 //});
 
-                necessitiesSeries.Points.Add(new DataPoint
+                //point.CategoryGroup.
+                foreach (var catGrpAmount in point.CategoryGroupAmounts)
                 {
-                    YValues = new double[] { (double)point.CategoryGroup.Necessities },
-                    AxisLabel = point.TimeChunk.Label
-                });
-
-                discretionarySeries.Points.Add(new DataPoint
-                {
-                    YValues = new double[] { (double)point.CategoryGroup.Discretionary },
-                    AxisLabel = point.TimeChunk.Label
-                });
-
-                helpSeries.Points.Add(new DataPoint
-                {
-                    YValues = new double[] { (double)point.CategoryGroup.Help },
-                    AxisLabel = point.TimeChunk.Label
-                });
+                    if(CategoryChartSeries.ContainsKey(catGrpAmount.Key))
+                        CategoryChartSeries[catGrpAmount.Key].Points.Add(new DataPoint
+                        {
+                            YValues = new double[] { (double)catGrpAmount.Value },
+                            AxisLabel = point.TimeChunk.Label
+                        });
+                }
             }
 
             //Ignore % less than 1% to avoid cluttering the graph with too many categories

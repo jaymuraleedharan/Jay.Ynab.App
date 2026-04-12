@@ -21,23 +21,20 @@ namespace YnabApp.BL.Reflect
 
 
 
-        public async Task<ReflectChartSummary> GenerateSummaryDataAsync(CategoryGroupData[] categoryGroupData, TransactionData[] transactionDatas,
+        public async Task GenerateSummaryDataForChartPointAsync(ReflectChartPoint chartPoint, CategoryGroupData[] categoryGroupData, TransactionData[] transactionDatas,
                                                         bool isYearly, DateTime reportDate, AccountData[] personAccounts)
         {
-            ReflectChartSummary result = null;
-
             await Task.Run(() =>
             {
-                result = GenerateSummaryData(categoryGroupData, transactionDatas, isYearly, reportDate, personAccounts);
+                GenerateSummaryDataForChartPoint(chartPoint, categoryGroupData, transactionDatas, isYearly, reportDate, personAccounts);
 
             });
 
-            return result;
         }
 
 
 
-        public ReflectChartSummary GenerateSummaryData(CategoryGroupData[] categoryGroupData, TransactionData[] transactionDatas,
+        public void GenerateSummaryDataForChartPoint(ReflectChartPoint chartPoint, CategoryGroupData[] categoryGroupData, TransactionData[] transactionDatas,
                                                         bool isYearly, DateTime reportDate, AccountData[] personAccounts)
         {
             //Filter by Date Criteria
@@ -71,27 +68,23 @@ namespace YnabApp.BL.Reflect
             expense = Math.Abs(expense);
             savings = income - expense;
 
-            ReflectChartSummary summary = new ReflectChartSummary(income, expense, savings);
-
-            return summary;
+            chartPoint.IncomeAmount = income;
+            chartPoint.ExpenseAmount = expense;
+            chartPoint.SavingsAmount = savings;
         }
 
 
-        public async Task<ReflectChartCategoryGroup> GenerateCategoryGroupDataAsync(CategoryGroupData[] categoryGroupData, TransactionData[] transactionDatas,
+        public async Task GenerateCategoryGroupDataAsync(ReflectChartPoint chartPoint, CategoryGroupData[] categoryGroupData, TransactionData[] transactionDatas,
                                                         bool isYearly, DateTime reportDate, AccountData[] personAccounts)
         {
-            ReflectChartCategoryGroup result = null;
-
             await Task.Run(() =>
             {
-                result = GenerateCategoryGroupData(categoryGroupData, transactionDatas, isYearly, reportDate, personAccounts);
+                GenerateCategoryGroupData(chartPoint, categoryGroupData, transactionDatas, isYearly, reportDate, personAccounts);
 
             });
-
-            return result;
         }
 
-        public ReflectChartCategoryGroup GenerateCategoryGroupData(CategoryGroupData[] categoryGroupData, TransactionData[] transactionDatas,
+        public void GenerateCategoryGroupData(ReflectChartPoint chartPoint, CategoryGroupData[] categoryGroupData, TransactionData[] transactionDatas,
                                                         bool isYearly, DateTime reportDate, AccountData[] personAccounts)
         {
             //Filter by Date Criteria
@@ -107,34 +100,29 @@ namespace YnabApp.BL.Reflect
                 matchingTransactions = matchingTransactions.Where(t => personAccounts.ToList().Exists(pa => pa.Id == t.AccountId)).ToList();
             }
 
-            decimal necessities = 0, discretionary = 0, help = 0;
-
             foreach (var transaction in matchingTransactions)
             {
-                //Exclude YNAB Formula Categories
-                if (categoryGroupExcludeList.Contains(transaction.CategoryName) || transaction.CategoryName.Contains("[?]"))
-                    continue;
+                ////Exclude YNAB Formula Categories
+                //if (categoryGroupExcludeList.Contains(transaction.CategoryName) || transaction.CategoryName.Contains("[?]"))
+                //    continue;
 
                 var catGroupData = GetCategoryGroupFromCategory(categoryGroupData, transaction.CategoryId);
 
                 if (catGroupData == null)
                     continue;
 
-                else if (catGroupData.Name == "NECESSITIES" || catGroupData.Name == "NECESSITIES-TAX")
-                    necessities += transaction.Amount;
-
-                else if (catGroupData.Name == "DISCRETIONARY")
-                    discretionary += transaction.Amount;
-
-                else if (catGroupData.Name == "HELP")
-                    help += transaction.Amount;
+                if (chartPoint.CategoryGroupAmounts.ContainsKey(catGroupData.Name))
+                    chartPoint.CategoryGroupAmounts[catGroupData.Name] = chartPoint.CategoryGroupAmounts[catGroupData.Name] + -(transaction.Amount);
+                else
+                    chartPoint.CategoryGroupAmounts[catGroupData.Name] = -(transaction.Amount);
             }
 
-            necessities = Math.Abs(necessities);
-            discretionary = Math.Abs(discretionary);
-            help = Math.Abs(help);
-
-            return new ReflectChartCategoryGroup(necessities, discretionary, help);
+            //Add Missing CategoryGroups to address the bug in the charting software that does not handle missing categories well
+            foreach (var categoryGroup in categoryGroupData)
+            {
+                if (!chartPoint.CategoryGroupAmounts.ContainsKey(categoryGroup.Name))
+                    chartPoint.CategoryGroupAmounts[categoryGroup.Name] = 0;
+            }
         }
 
         private CategoryGroupData GetCategoryGroupFromCategory(CategoryGroupData[] categoryGroupData, string categoryId)
@@ -173,10 +161,10 @@ namespace YnabApp.BL.Reflect
 
             foreach (var categoryGroup in categoryGroupDatas)
             {
-                if (categoryGroupExcludeList.Contains(categoryGroup.Name) || categoryGroup.Name.Contains("[?]") 
-                    || categoryGroup.Name.Equals("INVESTMENTS")
-                    || categoryGroup.Name.Equals("SAVINGS"))
-                    continue;
+                //if (categoryGroupExcludeList.Contains(categoryGroup.Name) || categoryGroup.Name.Contains("[?]") 
+                //    || categoryGroup.Name.Equals("INVESTMENTS")
+                //    || categoryGroup.Name.Equals("SAVINGS"))
+                //    continue;
 
                 foreach (var category in categoryGroup.Categories)
                 {
