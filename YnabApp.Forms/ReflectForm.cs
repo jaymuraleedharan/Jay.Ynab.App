@@ -81,6 +81,8 @@ namespace YnabApp.Forms
         {
             try
             {
+                c_btnShow.Enabled = false;
+
                 ValidateControls();
 
                 var datesSelected = GetSelectedDates();
@@ -132,7 +134,10 @@ namespace YnabApp.Forms
             {
                 ShowError(ex);
             }
-
+            finally
+            {
+                c_btnShow.Enabled = true;
+            }
         }
 
         private void ValidateControls()
