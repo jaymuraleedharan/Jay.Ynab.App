@@ -94,7 +94,8 @@ namespace YnabApp.Forms
         {
             ListAccountsExecute exe = new();
             var accountsData = await exe.ListAccountsAsync(CurrentBudget.Id);
-
+            
+            AllAccounts.Clear();
             foreach (var acc in accountsData)
                 if (!acc.IsDeleted && !acc.IsClosed)
                     AllAccounts.Add(new AccountSetting() { Id = acc.Id, Name = acc.Name });
