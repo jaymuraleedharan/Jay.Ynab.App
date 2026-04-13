@@ -17,17 +17,23 @@ namespace YnabApp.BL.BudgetSettings
             get { return System.IO.Path.Combine(ConfigManager.Env.LocalBinFolder, ConfigManager.App.BudgetCustomization.SettingsFolder); }
         }
 
-        public static BudgetSettings Load(string budgetId)
+        public static bool IsSettingsExist(string budgetId)
         {
             EnsureSettingsFolderExists();
 
-            string filePath = System.IO.Path.Combine(SettingsFolderPath, $"{budgetId}.json");
-            if (!File.Exists(filePath))
+            string filePath = SettingsFilePath(budgetId);
+            return File.Exists(filePath);
+        }
+
+        public static BudgetSettings Load(string budgetId)
+        {            
+            if ( !IsSettingsExist(budgetId))
             {
                 return new BudgetSettings { BudgetId = budgetId };
             }
             else
             {
+                string filePath = SettingsFilePath(budgetId);
                 string jsonSettings = File.ReadAllText(filePath);
                 return JsonSerializer.Deserialize<BudgetSettings>(jsonSettings);
             }
@@ -35,14 +41,14 @@ namespace YnabApp.BL.BudgetSettings
 
         public string BudgetId { get; set; }
 
-        private string SettingsFileName
+        private static string SettingsFileName(string budgetId)
         {
-            get { return $"{BudgetId}.json"; }
+            return $"{budgetId}.json";
         }
 
-        private string SettingsFilePath
+        private static string SettingsFilePath(string budgetId)
         {
-            get { return System.IO.Path.Combine(SettingsFolderPath, SettingsFileName); }
+            return System.IO.Path.Combine(SettingsFolderPath, SettingsFileName(budgetId));
         }
 
         private static void EnsureSettingsFolderExists()
@@ -62,7 +68,7 @@ namespace YnabApp.BL.BudgetSettings
             string jsonSettings = JsonSerializer.Serialize(this, new JsonSerializerOptions { WriteIndented = true });
 
             EnsureSettingsFolderExists();
-            File.WriteAllText(SettingsFilePath, jsonSettings);
+            File.WriteAllText(SettingsFilePath(BudgetId), jsonSettings);
         }
 
         public Color GetCatGroupBackColor(string catGrpName)

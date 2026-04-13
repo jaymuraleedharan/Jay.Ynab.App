@@ -13,6 +13,7 @@ using YnabApp.UI.OpenBudget;
 using YnabApp.BL;
 using YnabApp.BL.ListBudgets;
 using YnabApp.UI.Reflect;
+using YnabApp.BL.BudgetSettings;
 
 namespace YnabApp.Forms
 {
@@ -98,7 +99,11 @@ namespace YnabApp.Forms
         {
             CurrentBudget = e;
             c_budgetMenu.Enabled = true;
-            ShowAccountsView(CurrentBudget);
+
+            if (!BudgetSettings.IsSettingsExist(CurrentBudget.Id))
+                ShowBudgetSettings(CurrentBudget);
+            else
+                ShowAccountsView(CurrentBudget);
         }
 
         private void ValidateDevToken()

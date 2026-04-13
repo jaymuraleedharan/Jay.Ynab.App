@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DocumentFormat.OpenXml.Office2019.Excel.ThreadedComments;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -38,8 +39,6 @@ namespace YnabApp.Forms
             CurrentBudget = budget;
             MainView = mainView;
 
-            ShowBasicInfo();
-            GetAccountsList();
             RefreshSettingsUI();
         }
 
@@ -59,7 +58,11 @@ namespace YnabApp.Forms
 
         private void RefreshSettingsUI()
         {
+            ShowBasicInfo();
+            
             LoadCurrentBudgetSettings();
+            GetAccountsList();
+
             ShowPersonLists();
             ShowCategoryGroupList();
 
@@ -75,17 +78,11 @@ namespace YnabApp.Forms
             CurrentBudgetSettings.People.ForEach(p => c_personList.Items.Add(p));
 
             if (currentSelectedPerson == null)
-            {
                 c_personList.SelectedIndex = (c_personList.Items.Count > 0) ? 0 : -1;
-            }
             else
-            {
                 foreach (var item in c_personList.Items)
-                {
                     if (((PersonSetting)item) == currentSelectedPerson)
                         c_personList.SelectedIndex = c_personList.Items.IndexOf(item);
-                }
-            }
 
             c_accountOwnerBlock.Enabled = true;
         }
@@ -116,14 +113,7 @@ namespace YnabApp.Forms
             foreach (var catGroup in catGroupData)
             {
                 var catGrpSetting = CurrentBudgetSettings.CategoryGroupColors.Find(cg => cg.Id == catGroup.Id);
-                if (catGrpSetting != null)
-                {
-                    var item = c_catGroupListview.Items.Add(catGrpSetting.Name);
-                    item.BackColor = catGrpSetting.BackColor.GetColor();
-                    item.ForeColor = catGrpSetting.ForeColor.GetColor();
-                    item.Tag = catGrpSetting;
-                }
-                else
+                if (catGrpSetting == null)
                 {
                     catGrpSetting = new CategoryGroupColorSetting()
                     {
@@ -136,9 +126,13 @@ namespace YnabApp.Forms
                     CurrentBudgetSettings.CategoryGroupColors.Add(catGrpSetting);
                     CurrentBudgetSettings.Save();
                 }
+
+                var item = c_catGroupListview.Items.Add(catGrpSetting.Name);
+                item.BackColor = catGrpSetting.BackColor.GetColor();
+                item.ForeColor = catGrpSetting.ForeColor.GetColor();
+                item.Tag = catGrpSetting;
             }
-            //c_catGroupListview.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-            //c_catGroupListview.Columns[0].Width = c_catGroupListview.Width - 40;
+
             c_catGroupColorBlock.Enabled = true;
         }
 
@@ -190,9 +184,12 @@ namespace YnabApp.Forms
                         MessageBox.Show("A person with this name already exists. Please choose a different name.", "Duplicate Person", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
-                    CurrentBudgetSettings.People.Add(PersonSetting.CreateNew(newPersonName));
+                    var newPerson = PersonSetting.CreateNew(newPersonName);
+                    CurrentBudgetSettings.People.Add(newPerson);
                     CurrentBudgetSettings.Save();
                     RefreshSettingsUI();
+
+                    c_personList.SelectedItem = newPerson;
                 }
             }
             catch (Exception ex)
@@ -222,6 +219,8 @@ namespace YnabApp.Forms
                             person.Name = newPersonName;
                             CurrentBudgetSettings.Save();
                             RefreshSettingsUI();
+
+                            c_personList.SelectedItem = person;
                         }
                     }
                 }
@@ -247,6 +246,8 @@ namespace YnabApp.Forms
                     {
                         CurrentBudgetSettings.People.Remove(person);
                         CurrentBudgetSettings.Save();
+
+                        c_personList.Items.Remove(person);
                         RefreshSettingsUI();
                     }
                 }
@@ -293,33 +294,45 @@ namespace YnabApp.Forms
         private void AddSelectedPersonAccount()
         {
             PersonSetting selectedPerson = (PersonSetting)c_personList.SelectedItem;
-            AccountSetting selectedAcc = c_personAccountsAvailableList.SelectedItem as AccountSetting;
 
-            if (selectedPerson != null && selectedAcc != null)
+            object[] selectedObjects = new object[c_personAccountsAvailableList.SelectedItems.Count];
+            c_personAccountsAvailableList.SelectedItems.CopyTo(selectedObjects, 0);
+
+            foreach (var selectedAcc in selectedObjects)
             {
-                c_personAccountsAddedList.Items.Add(selectedAcc);
-                c_personAccountsAvailableList.Items.Remove(selectedAcc);
+                AccountSetting account = selectedAcc as AccountSetting;
+                if (selectedPerson != null && account != null)
+                {
+                    c_personAccountsAddedList.Items.Add(selectedAcc);
+                    c_personAccountsAvailableList.Items.Remove(selectedAcc);
 
-                selectedPerson.Accounts.Add(selectedAcc);
-                CurrentBudgetSettings.People.First(p => p.Id == selectedPerson.Id).Accounts.Add(selectedAcc);
-                CurrentBudgetSettings.Save();
+                    selectedPerson.Accounts.Add(account);
+                    CurrentBudgetSettings.People.First(p => p.Id == selectedPerson.Id).Accounts.Add(account);
+                    CurrentBudgetSettings.Save();
+                }
             }
         }
 
         private void RemoveSelectedPersonAccount()
         {
             PersonSetting selectedPerson = (PersonSetting)c_personList.SelectedItem;
-            AccountSetting selectedAcc = c_personAccountsAddedList.SelectedItem as AccountSetting;
 
-            if (selectedPerson != null && selectedAcc != null)
+            object[] selectedObjects = new object[c_personAccountsAddedList.SelectedItems.Count];
+            c_personAccountsAddedList.SelectedItems.CopyTo(selectedObjects, 0);
+
+            foreach (var selectedAcc in selectedObjects)
             {
-                c_personAccountsAddedList.Items.Remove(selectedAcc);
-                c_personAccountsAvailableList.Items.Add(selectedAcc);
+                AccountSetting account = selectedAcc as AccountSetting;
+                if (selectedPerson != null && account != null)
+                {
+                    c_personAccountsAddedList.Items.Remove(selectedAcc);
+                    c_personAccountsAvailableList.Items.Add(selectedAcc);
 
-                selectedPerson.Accounts.Remove(selectedAcc);
-                CurrentBudgetSettings.People.First(p => p.Id == selectedPerson.Id).Accounts.Remove(selectedAcc);
-                CurrentBudgetSettings.Save();
-            }
+                    selectedPerson.Accounts.Remove(account);
+                    CurrentBudgetSettings.People.First(p => p.Id == selectedPerson.Id).Accounts.Remove(account);
+                    CurrentBudgetSettings.Save();
+                }
+            }            
         }
 
         private void c_personAccRemoveButton_Click(object sender, EventArgs e)

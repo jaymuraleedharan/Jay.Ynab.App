@@ -273,6 +273,7 @@
             c_personAccountsAddedList.ItemHeight = 15;
             c_personAccountsAddedList.Location = new System.Drawing.Point(201, 76);
             c_personAccountsAddedList.Name = "c_personAccountsAddedList";
+            c_personAccountsAddedList.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
             c_personAccountsAddedList.Size = new System.Drawing.Size(161, 315);
             c_personAccountsAddedList.TabIndex = 5;
             c_personAccountsAddedList.DoubleClick += c_personAccountsAddedList_DoubleClick;
@@ -284,6 +285,7 @@
             c_personAccountsAvailableList.ItemHeight = 15;
             c_personAccountsAvailableList.Location = new System.Drawing.Point(9, 76);
             c_personAccountsAvailableList.Name = "c_personAccountsAvailableList";
+            c_personAccountsAvailableList.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             c_personAccountsAvailableList.Size = new System.Drawing.Size(161, 315);
             c_personAccountsAvailableList.TabIndex = 4;
             c_personAccountsAvailableList.DoubleClick += c_personAccountsAvailableList_DoubleClick;
