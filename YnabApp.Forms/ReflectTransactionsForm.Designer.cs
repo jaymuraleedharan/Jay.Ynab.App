@@ -93,10 +93,11 @@
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             c_transactionsGrid.DefaultCellStyle = dataGridViewCellStyle1;
             c_transactionsGrid.Location = new System.Drawing.Point(12, 77);
+            c_transactionsGrid.MultiSelect = false;
             c_transactionsGrid.Name = "c_transactionsGrid";
             c_transactionsGrid.ReadOnly = true;
             c_transactionsGrid.RowHeadersVisible = false;
-            c_transactionsGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            c_transactionsGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             c_transactionsGrid.Size = new System.Drawing.Size(926, 824);
             c_transactionsGrid.TabIndex = 4;
             // 

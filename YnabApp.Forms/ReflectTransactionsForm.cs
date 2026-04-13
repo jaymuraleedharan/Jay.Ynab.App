@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using YnabApp.BL.BudgetSettings;
 using YnabApp.BL.ListAccounts;
+using YnabApp.BL.ListBudgets;
 using YnabApp.BL.ListCategories;
 using YnabApp.BL.ListTransactions;
 using YnabApp.BL.Reflect;
@@ -21,6 +22,9 @@ namespace YnabApp.Forms
 {
     public partial class ReflectTransactionsForm : Form
     {
+        BudgetData _currentBudget;
+        BudgetSettings CurrentBudgetSettings { get; set; }
+
         ReflectCategoryGroupData _catGroupData;
         ReflectCategoryData _catData;
         ReflectIncomeData _incomeData;
@@ -42,8 +46,10 @@ namespace YnabApp.Forms
             this.Close();
         }
 
-        public void SetData(ReflectCategoryGroupData catGroupData, ReflectCategoryData catData, ReflectIncomeData incomeData, DateTime asOfDate, bool isYearlyReport, PersonSetting personSelected, AccountData[] personAccounts, TransactionData[] transactionDatas)
+        public void SetData(BudgetData currentBudget, ReflectCategoryGroupData catGroupData, ReflectCategoryData catData, ReflectIncomeData incomeData, DateTime asOfDate, bool isYearlyReport, PersonSetting personSelected, AccountData[] personAccounts, TransactionData[] transactionDatas)
         {
+            _currentBudget = currentBudget;
+            CurrentBudgetSettings = BudgetSettings.Load(_currentBudget.Id);
             _catGroupData = catGroupData;
             _catData = catData;
             _incomeData = incomeData;
@@ -101,23 +107,30 @@ namespace YnabApp.Forms
             });
             c_transactionsGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
 
+            if (_catGroupData != null)
+                c_transactionsGrid.DefaultCellStyle.BackColor = CurrentBudgetSettings.GetCatGroupBackColor(_catGroupData.CategoryGroupName);
+            else if(_catData != null)
+                c_transactionsGrid.DefaultCellStyle.BackColor = CurrentBudgetSettings.GetCatGroupBackColor(_catData.CategoryGroupName);
+            else if (_incomeData != null)
+                c_transactionsGrid.DefaultCellStyle.BackColor = CurrentBudgetSettings.GeneralColors.IncomeColor.GetColor();
+
             c_transactionsGrid.DataSource = _filteredTransactions;            
         }
 
-        public static void ShowModal(ReflectCategoryGroupData catGroupData, ReflectCategoryData catData, DateTime asOfDate, bool isYearlyReport, PersonSetting personSelected, AccountData[] personAccounts, TransactionData[] transactionDatas)
+        public static void ShowModal(BudgetData currentBudget, ReflectCategoryGroupData catGroupData, ReflectCategoryData catData, DateTime asOfDate, bool isYearlyReport, PersonSetting personSelected, AccountData[] personAccounts, TransactionData[] transactionDatas)
         {
             ReflectTransactionsForm reflectTransactionsForm = new ReflectTransactionsForm();
             reflectTransactionsForm.Activate();
-            reflectTransactionsForm.SetData(catGroupData, catData, null, asOfDate, isYearlyReport, personSelected, personAccounts, transactionDatas);
+            reflectTransactionsForm.SetData(currentBudget, catGroupData, catData, null, asOfDate, isYearlyReport, personSelected, personAccounts, transactionDatas);
             reflectTransactionsForm.ShowDialog();
         }
 
 
-        public static void ShowModal(ReflectIncomeData incomeData, DateTime asOfDate, bool isYearlyReport, PersonSetting personSelected, AccountData[] personAccounts, TransactionData[] transactionDatas)
+        public static void ShowModal(BudgetData currentBudget, ReflectIncomeData incomeData, DateTime asOfDate, bool isYearlyReport, PersonSetting personSelected, AccountData[] personAccounts, TransactionData[] transactionDatas)
         {
             ReflectTransactionsForm reflectTransactionsForm = new ReflectTransactionsForm();
             reflectTransactionsForm.Activate();
-            reflectTransactionsForm.SetData(null, null, incomeData, asOfDate, isYearlyReport, personSelected, personAccounts, transactionDatas);
+            reflectTransactionsForm.SetData(currentBudget, null, null, incomeData, asOfDate, isYearlyReport, personSelected, personAccounts, transactionDatas);
             reflectTransactionsForm.ShowDialog();
         }
 

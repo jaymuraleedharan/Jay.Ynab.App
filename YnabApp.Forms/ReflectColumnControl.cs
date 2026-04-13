@@ -208,7 +208,7 @@ namespace YnabApp.Forms
                 {
                     var catGroupData = c_categoryGroupDataListView.SelectedItems[0].Tag as ReflectCategoryGroupData;
 
-                    ReflectTransactionsForm.ShowModal(catGroupData, null, _asOfDate, _isYearlyReport, _personSelected, _personAccounts, _transactionDatas);
+                    ReflectTransactionsForm.ShowModal(_budgetData, catGroupData, null, _asOfDate, _isYearlyReport, _personSelected, _personAccounts, _transactionDatas);
                 }
             }
             catch (Exception ex)
@@ -227,7 +227,7 @@ namespace YnabApp.Forms
                 {
                     var catData = c_categoryDataListView.SelectedItems[0].Tag as ReflectCategoryData;
 
-                    ReflectTransactionsForm.ShowModal(null, catData, _asOfDate, _isYearlyReport, _personSelected, _personAccounts, _transactionDatas);
+                    ReflectTransactionsForm.ShowModal(_budgetData, null, catData, _asOfDate, _isYearlyReport, _personSelected, _personAccounts, _transactionDatas);
                 }
             }
             catch (Exception ex)
@@ -246,7 +246,7 @@ namespace YnabApp.Forms
                 {
                     var incomeData = c_incomeListView.SelectedItems[0].Tag as ReflectIncomeData;
 
-                    ReflectTransactionsForm.ShowModal(incomeData, _asOfDate, _isYearlyReport, _personSelected, _personAccounts, _transactionDatas);
+                    ReflectTransactionsForm.ShowModal(_budgetData, incomeData, _asOfDate, _isYearlyReport, _personSelected, _personAccounts, _transactionDatas);
                 }
             }
             catch (Exception ex)
