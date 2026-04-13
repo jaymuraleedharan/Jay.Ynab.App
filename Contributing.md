@@ -32,8 +32,8 @@ Thank you for your interest in contributing!
 
 ## Security
 
-**Never commit secrets!** Always use `appsettings.secrets.json` for local configuration.
+Always use `appsettings.secrets.json` for local configuration.
 
 ## Questions?
 
-Open an issue for discussion before starting major work.
+ Please email [jay.muraleedharan@outlook.com](mailto:jay.muraleedharan@outlook.com).
