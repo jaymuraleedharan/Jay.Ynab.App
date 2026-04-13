@@ -12,4 +12,4 @@
   }
 } 
 ```
-5. Close and rerun the application to use the new token.
+5. Close and rerun the application `YnabInsights.exe` to use the new token.
