@@ -19,7 +19,6 @@ namespace YnabApp.Forms
 {
     public partial class MainForm : FormBase, IMainView
     {
-        private readonly MainPresenter _presenter = null;
         private OpenBudgetForm _openBudgetForm = null;
         private NetWorthForm _showAccountsForm = null;
         private ReflectForm _reflectForm = null;

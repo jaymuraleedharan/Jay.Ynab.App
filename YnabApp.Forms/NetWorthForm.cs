@@ -173,6 +173,8 @@ namespace YnabApp.Forms
                         continue;
 
                     //Correcting Negative Balances for liabilities
+                    //if(accData.Group)
+
                     if (accData.Type == "otherLiability" && accData.Balance > 0)
                         accData.Balance = -(accData.Balance);
 
@@ -219,6 +221,11 @@ namespace YnabApp.Forms
             c_allAssetsListView.ResumeLayout();
 
         }
+
+        //private bool IsLiability(AccountData accData)
+        //{
+        //    return accData.Group == AccountGroup.Liability;
+        //}
 
         private void ColorizeAsset(ListViewItem item, AccountData accData)
         {

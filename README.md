@@ -10,6 +10,7 @@ A Windows Forms application for managing YNAB (You Need A Budget) data with cust
 - Views and charts by individual Account owners
 - Layered Charts for better understanding of your income and expenses
 
+[Screenshots](Screenshots.md)
 
 ## Prerequisites
 - .NET 8 SDK

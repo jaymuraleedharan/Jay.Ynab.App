@@ -66,7 +66,8 @@ namespace YnabApp.BL.ListAccounts
 
         protected AccountGroup GetAccountGroup(JToken account)
         {
-            switch (account["type"].ToString())
+            var accountType = account["type"].ToString();
+            switch (accountType)
             {
                 case "checking":
                 case "savings":
@@ -74,13 +75,19 @@ namespace YnabApp.BL.ListAccounts
 
                 case "creditCard":
                 case "otherLiability":
+                case "autoLoan":
                      return AccountGroup.Liability;
 
                 case "otherAsset":
                     return AccountGroup.Investments;
 
                 default:
-                    return AccountGroup.Cash;
+                    if(accountType.Contains("loan", StringComparison.InvariantCultureIgnoreCase) 
+                        || accountType.Contains("debt", StringComparison.InvariantCultureIgnoreCase)
+                        || accountType.Contains("Liability", StringComparison.InvariantCultureIgnoreCase))
+                        return AccountGroup.Liability;
+                    else
+                        return AccountGroup.Cash;
             }
         }
     }

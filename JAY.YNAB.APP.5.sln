@@ -15,9 +15,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YnabApp.WPF", "YnabApp.WPF\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "README", "README", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 	ProjectSection(SolutionItems) = preProject
+		BudgetSettings.jpg = BudgetSettings.jpg
 		Contributing.md = Contributing.md
+		DetailedReflection.jpg = DetailedReflection.jpg
 		LICENSE.txt = LICENSE.txt
 		README.md = README.md
+		NetWorthSummary.jpg = NetWorthSummary.jpg
+		RelectionCharts.jpg = RelectionCharts.jpg
+		Screenshots.md = Screenshots.md
 		YnabTokenForDevelopment.md = YnabTokenForDevelopment.md
 		YnabTokenForExe.md = YnabTokenForExe.md
 	EndProjectSection
