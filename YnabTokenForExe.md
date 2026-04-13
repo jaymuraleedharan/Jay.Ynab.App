@@ -13,3 +13,6 @@
 } 
 ```
 5. Close and rerun the application `YnabInsights.exe` to use the new token.
+6. Preferably, once you are able to open a Budget Plan, go to Budget Settings and set the following to get the best experience:
+    1. Category Group colors 
+    1. Account grouping by Owners
